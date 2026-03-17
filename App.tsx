@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-url-polyfill/auto'
+import { useState, useEffect } from 'react'
+import { supabase } from './lib/supabase'
+import Auth from './components/Auth'
+import { View, Text } from 'react-native'
+import { JwtPayload } from '@supabase/supabase-js'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [claims, setClaims] = useState<JwtPayload | null>(null)
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+    supabase.auth.getClaims().then(({ data }) => {
+      setClaims(data?.claims ?? null)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
+      supabase.auth.getClaims().then(({ data }) => {
+        setClaims(data?.claims ?? null)
+      })
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  return (
+    <View>
+      <Auth />
+      {claims && <Text>{claims.sub}</Text>}
+    </View>
+  )
+}
