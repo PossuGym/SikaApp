@@ -1,6 +1,6 @@
 import "react-native-url-polyfill/auto";
 import { useEffect, useState } from "react";
-import type { Session } from "@supabase/supabase-js";
+import type { JwtPayload } from "@supabase/supabase-js";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -17,20 +17,20 @@ type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
-  const [session, setSession] = useState<Session | null>(null);
+  const [claims, setClaims] = useState<JwtPayload | null>(null);
 
   useEffect(() => {
     const load = async () => {
-      const { data } = await supabase.auth.getSession();
-      setSession(data.session ?? null);
+      const { data } = await supabase.auth.getClaims();
+      setClaims(data?.claims ?? null);
     };
 
     load();
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      setSession(nextSession);
+    } = supabase.auth.onAuthStateChange(() => {
+      load();
     });
 
     return () => subscription.unsubscribe();
@@ -39,7 +39,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {session ? (
+        {claims ? (
           <Stack.Screen name="Home" component={Homepage} />
         ) : (
           <Stack.Screen name="Login" component={Auth} />
