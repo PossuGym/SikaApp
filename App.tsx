@@ -1,31 +1,50 @@
-import 'react-native-url-polyfill/auto'
-import { useState, useEffect } from 'react'
-import { supabase } from './lib/supabase'
-import Auth from './components/Auth'
-import { View, Text } from 'react-native'
-import { JwtPayload } from '@supabase/supabase-js'
+import "react-native-url-polyfill/auto";
+import { useEffect, useState } from "react";
+import type { JwtPayload } from "@supabase/supabase-js";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import { supabase } from "./lib/supabase";
+import Auth from "./components/Auth";
+import { Homepage } from "./components/HomePage";
+
+type RootStackParamList = {
+  Login: undefined;
+  Home: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
-  const [claims, setClaims] = useState<JwtPayload | null>(null)
+  const [claims, setClaims] = useState<JwtPayload | null>(null);
 
   useEffect(() => {
-    supabase.auth.getClaims().then(({ data }) => {
-      setClaims(data?.claims ?? null)
-    })
+    const load = async () => {
+      const { data } = await supabase.auth.getClaims();
+      setClaims(data?.claims ?? null);
+    };
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
-      supabase.auth.getClaims().then(({ data }) => {
-        setClaims(data?.claims ?? null)
-      })
-    })
+    load();
 
-    return () => subscription.unsubscribe()
-  }, [])
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(() => {
+      load();
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
-    <View>
-      <Auth />
-      {claims && <Text>{claims.sub}</Text>}
-    </View>
-  )
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {claims ? (
+          <Stack.Screen name="Home" component={Homepage} />
+        ) : (
+          <Stack.Screen name="Login" component={Auth} />
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
