@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Alert, StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { supabase } from '../lib/supabase'
+import { Button, Text, Card, TextInput } from "react-native-paper";
+
 
 export default function Auth() {
   const [email, setEmail] = useState('')
@@ -16,7 +18,7 @@ export default function Auth() {
 
     if (error) Alert.alert(error.message)
     setLoading(false)
-  }
+  }  
 
   async function signUpWithEmail() {
     setLoading(true)
@@ -26,96 +28,98 @@ export default function Auth() {
     } = await supabase.auth.signUp({
       email: email,
       password: password,
-    })
+    }) 
 
     if (error) Alert.alert(error.message)
-    if (!session) Alert.alert('Please check your inbox for email verification!')
+    if (!session) Alert.alert('Tarkista sähköpostisi ja vahvista tilisi ennen kirjautumista.')
     setLoading(false)
-  }
+  }  
 
-  return (
-    <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          placeholder="email@address.com"
-          autoCapitalize="none"
-          style={styles.input}
-        />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          secureTextEntry={true}
-          placeholder="Password"
-          autoCapitalize="none"
-          style={styles.input}
-        />
-      </View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
-          onPress={() => signInWithEmail()}
-          disabled={loading}
-        >
-          <Text style={styles.buttonText}>Sign in</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.verticallySpaced}>
-        <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
-          onPress={() => signUpWithEmail()}
-          disabled={loading}
-        >
-          <Text style={styles.buttonText}>Sign up</Text>
-        </TouchableOpacity>
-      </View>
+  return ( <View style={styles.container}>
+      <Text variant="headlineSmall" style={styles.header}>Kirjaudu</Text>
+
+      <Card style={styles.card}>
+        <Card.Content>
+          <Text style={styles.inputLabel}>Sähköposti</Text>
+          <TextInput
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            autoCapitalize={'none'}
+            mode="outlined"
+            keyboardType="email-address"
+            style={styles.input}
+          />
+          <Text style={styles.inputLabel}>Salasana</Text>
+          <TextInput
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry={true}
+            autoCapitalize={'none'}
+            mode="outlined"
+            style={styles.input}
+          />
+
+          <View style={styles.buttonContainer}>
+            <Button 
+              mode="contained" 
+              onPress={signInWithEmail} 
+              loading={loading}
+              disabled={loading}
+              style={styles.mainButton}
+            >
+              Kirjaudu
+            </Button>
+
+            <Text style={styles.subText}>Eikö sinulla ole vielä tiliä?</Text>
+
+            <Button 
+              mode="outlined" 
+              onPress={signUpWithEmail} 
+              disabled={loading}
+              style={styles.mainButton}
+            >
+              Luo tunnus
+            </Button>
+          </View>
+        </Card.Content>
+      </Card>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
+    flex: 1,
+    padding: 20,
+    justifyContent: 'center',
   },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: 'stretch',
+  header: {
+    textAlign: 'center',
+    marginBottom: 20,
+    fontWeight: 'bold',
   },
-  mt20: {
-    marginTop: 20,
+  card: {
+    padding: 10,
   },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#86939e',
-    marginBottom: 6,
+  inputLabel: {
+    fontSize: 14,
+    marginBottom: 4,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#86939e',
-    borderRadius: 4,
-    padding: 12,
-    fontSize: 16,
+    marginBottom: 16,
   },
-  button: {
-    backgroundColor: '#2089dc',
-    borderRadius: 4,
-    padding: 12,
+  buttonContainer: {
     alignItems: 'center',
+    marginTop: 10,
   },
-  buttonDisabled: {
-    opacity: 0.5,
+  mainButton: {
+    width: '100%',
+    marginVertical: 8,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-})
+  subText: {
+    marginVertical: 10,
+    fontWeight: 'bold',
+  }
+});
+
+
