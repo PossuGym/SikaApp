@@ -4,6 +4,7 @@ import type { JwtPayload } from "@supabase/supabase-js";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import TabNavigator from "./navigation/TabNavigation";
 
 import { supabase } from "./lib/supabase";
 import Auth from "./components/Auth";
@@ -38,13 +39,19 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {claims ? (
-          <Stack.Screen name="Home" component={Homepage} />
-        ) : (
-          <Stack.Screen name="Login" component={Auth} />
-        )}
-      </Stack.Navigator>
+      <TabNavigator />
     </NavigationContainer>
   );
 }
+
+
+/*
+<Stack.Navigator screenOptions={{ headerShown: false }}>
+  {claims ? (
+    <Stack.Screen name="Home" component={Homepage} />
+  ) : (
+    <Stack.Screen name="Login" component={Auth} />
+  )}
+</Stack.Navigator>
+
+*/
