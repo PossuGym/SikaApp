@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { supabase } from "./lib/supabase";
 import Auth from "./components/Auth";
-import { Homepage } from "./components/HomePage";
+import { Homepage } from "./screens/HomePage";
 
 type RootStackParamList = {
   Login: undefined;
