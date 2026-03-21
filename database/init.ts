@@ -54,11 +54,7 @@ const createWorkoutExerciseTable = async () => {
     );
   `)
 }
-<<<<<<< HEAD
-
-=======
  
->>>>>>> origin/crud
 const createExerciseLogTable = async () => {
   await database.execAsync(`
     CREATE TABLE IF NOT EXISTS exercise_log (
@@ -74,17 +70,10 @@ const createExerciseLogTable = async () => {
     );
   `)
 }
-<<<<<<< HEAD
-
-const createUserProfileTable = async () => {
-  await database.execAsync(`
-    CREATE TABLE IF NOT EXISTS user_profile (
-=======
  
 const createUserProfileTable = async () => {
   await database.execAsync(
     `CREATE TABLE IF NOT EXISTS user_profile (
->>>>>>> origin/crud
       singleton INTEGER PRIMARY KEY CHECK (singleton = 1),
       height REAL,
       steps_goal INTEGER,
@@ -93,10 +82,6 @@ const createUserProfileTable = async () => {
   `)
 }
 
-<<<<<<< HEAD
-=======
- 
->>>>>>> origin/crud
 const createUserDailyTable = async () => {
   await database.execAsync(`
     CREATE TABLE IF NOT EXISTS user_daily (
@@ -107,11 +92,7 @@ const createUserDailyTable = async () => {
     );
   `)
 }
-<<<<<<< HEAD
-
-=======
  
->>>>>>> origin/crud
 const createNutritionTable = async () => {
   await database.execAsync(`
     CREATE TABLE IF NOT EXISTS nutrition (

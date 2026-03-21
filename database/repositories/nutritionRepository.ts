@@ -1,19 +1,9 @@
-import { database } from "./database";
+import { database } from "../database";
+import { Nutrition } from "../../types/types";
 
 /**
  * CRUD-operaatiot ravintotaululle
  */
-
-export type Nutrition = {
-  id?: number
-  name?: string
-  date: number
-  calories?: number
-  protein?: number
-  carbs?: number
-  fats?: number
-}
-
 export const nutritionRepository = {
   
   /**
@@ -102,8 +92,3 @@ export const nutritionRepository = {
   }
 
 }
-
-
-
-
-

@@ -36,14 +36,31 @@ export type ExerciseLog = {
  */
 export type Nutrition = {
   id?: number
-  name: string
-  calories: number
-  protein: number
-  carbs: number
-  fats: number
-  time: number
+  name?: string
+  date: number
+  calories?: number
+  protein?: number
+  carbs?: number
+  fats?: number
 }
 
+/**
+ * Profiilin harvoin asetettavat tiedot
+ */
+export type Profile = {
+  height: number,
+  steps_goal: number,
+  calories_goal: number
+}
+
+/**
+ * Profiilin päivittäin asetettavat tiedot
+ */
+export type Daily = {
+  weight?: number,
+  daily_steps?: number,
+  date: number
+}
 
 /**
  * Koostetyyppi

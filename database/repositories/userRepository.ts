@@ -1,16 +1,5 @@
-import { database } from "./database";
-
-type Profile = {
-  height: number,
-  steps_goal: number,
-  calories_goal: number
-}
-
-type Daily = {
-  weight?: number,
-  daily_steps?: number,
-  date: number
-}
+import { database } from "../database";
+import { Profile, Daily } from "../../types/types";
 
 /**
  * CRUD-operaatiot käyttäjätiedoille
