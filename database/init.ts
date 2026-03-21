@@ -1,15 +1,15 @@
 import { database } from './database'
-
+ 
 /* 
   Tietokannan skeema ja luonti
   Taulut omissa funktioissaan ja luonti initDatabase()-funktiossa.
 */
-
+ 
 export const initDatabase = async () => {
   try {
     // Tätä tarvii, jotta ON DELETE CASCADE toimii
     await database.execAsync(`PRAGMA foreign_keys = ON;`);
-
+ 
     await createExerciseTable();
     await createWorkoutTable();
     await createWorkoutExerciseTable();
@@ -17,13 +17,13 @@ export const initDatabase = async () => {
     await createUserProfileTable();
     await createUserDailyTable();
     await createNutritionTable();
-
+ 
     console.log('Tietokanta luotu.')
   } catch (error) {
     console.error('Tietokannan luominen epäonnistui: ', error)
   }
 }
-
+ 
 const createExerciseTable = async () => {
   await database.execAsync(`
     CREATE TABLE IF NOT EXISTS exercise (
@@ -33,7 +33,7 @@ const createExerciseTable = async () => {
     );
   `)
 }
-
+ 
 const createWorkoutTable = async () => {
   await database.execAsync(`
     CREATE TABLE IF NOT EXISTS workout (
@@ -42,7 +42,7 @@ const createWorkoutTable = async () => {
     );
   `)
 }
-
+ 
 const createWorkoutExerciseTable = async () => {
   await database.execAsync(`
     CREATE TABLE IF NOT EXISTS workout_exercise (
@@ -54,7 +54,11 @@ const createWorkoutExerciseTable = async () => {
     );
   `)
 }
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> origin/crud
 const createExerciseLogTable = async () => {
   await database.execAsync(`
     CREATE TABLE IF NOT EXISTS exercise_log (
@@ -70,10 +74,17 @@ const createExerciseLogTable = async () => {
     );
   `)
 }
+<<<<<<< HEAD
 
 const createUserProfileTable = async () => {
   await database.execAsync(`
     CREATE TABLE IF NOT EXISTS user_profile (
+=======
+ 
+const createUserProfileTable = async () => {
+  await database.execAsync(
+    `CREATE TABLE IF NOT EXISTS user_profile (
+>>>>>>> origin/crud
       singleton INTEGER PRIMARY KEY CHECK (singleton = 1),
       height REAL,
       steps_goal INTEGER,
@@ -82,6 +93,10 @@ const createUserProfileTable = async () => {
   `)
 }
 
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> origin/crud
 const createUserDailyTable = async () => {
   await database.execAsync(`
     CREATE TABLE IF NOT EXISTS user_daily (
@@ -92,7 +107,11 @@ const createUserDailyTable = async () => {
     );
   `)
 }
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> origin/crud
 const createNutritionTable = async () => {
   await database.execAsync(`
     CREATE TABLE IF NOT EXISTS nutrition (
