@@ -1,5 +1,6 @@
 import "react-native-url-polyfill/auto";
 import { useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
 import type { JwtPayload } from "@supabase/supabase-js";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -7,8 +8,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./navigation/TabNavigation";
 
 import { supabase } from "./lib/supabase";
-import Auth from "./components/Auth";
-import { Homepage } from "./screens/HomePage";
+import { initDatabase } from './database/init'; // Paikallinen tietokanta
+import { PaperProvider } from "react-native-paper";
 
 type RootStackParamList = {
   Login: undefined;
@@ -19,7 +20,23 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const [claims, setClaims] = useState<JwtPayload | null>(null);
+  const [dbReady, setDbReady] = useState(false);
 
+  // Paikallisen tietokannan alustus
+  useEffect(() => {
+    async function setupDB() {
+      try {
+        await initDatabase();
+        setDbReady(true);
+      } catch (error) {
+        console.error("Paikallisen tietokannan alustus ei onnistunut:", error);
+        setDbReady(true); 
+      }
+    }
+    setupDB();
+  }, []);
+
+  // Supabase logiikka
   useEffect(() => {
     const load = async () => {
       const { data } = await supabase.auth.getClaims();
@@ -37,10 +54,22 @@ export default function App() {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Näytetään latausindikaattori, kunnes tietokanta on ladattu
+  // Muuten muu koodi saattaa yrittää hakea dataa liian aikaisin.
+  if (!dbReady) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large"/>
+      </View>
+    );
+  }
+
   return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
+    <PaperProvider>
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
 
