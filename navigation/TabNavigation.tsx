@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SessionScreen from "../screens/SessionScreen";
 import { LibraryScreen } from "../screens/LibraryScreen";
-import StatsScreen from "../screens/StatsScreen";
+import StatsScreen from "../screens/stats/StatsScreen";
 import NutritionScreen from "../screens/NutritionScreen";
 import { Homepage } from "../screens/HomePage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
