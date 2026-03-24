@@ -39,6 +39,7 @@ const createWorkoutTable = async () => {
     CREATE TABLE IF NOT EXISTS workout (
       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       name TEXT NOT NULL,
+      favorite INTEGER NOT NULL DEFAULT 0
     );
   `)
 }
@@ -60,7 +61,7 @@ const createExerciseLogTable = async () => {
     CREATE TABLE IF NOT EXISTS exercise_log (
       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       workout_id INTEGER NOT NULL,
-      exercise_id TEXT NOT NULL,
+      exercise_id INTEGER NOT NULL,
       date INTEGER NOT NULL,
       weight REAL,
       reps INTEGER,
