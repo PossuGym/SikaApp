@@ -16,6 +16,18 @@ export const workoutRepository = {
   },
 
   /**
+   * Hakee ohjelman id:n perusteella
+   * @param workoutId Ohjelman id
+   * @returns Palauttaa ```Workout``` tai null
+   */
+  async getWorkoutById(workoutId: number): Promise<Workout | null> {
+    return database.getFirstAsync<Workout>(
+      `SELECT * FROM workout WHERE id = ?`,
+      [workoutId]
+    )
+  },
+
+  /**
    * Luo uuden ohjelman
    * @param {string} name - Ohjelman nimi
    * @param {number[]} exerciseIds - Liikkeiden id:t taulukkona
@@ -75,8 +87,8 @@ export const workoutRepository = {
   async getWorkoutExercises(workoutId: number): Promise<Exercise[]> {
     return database.getAllAsync<Exercise>(
       `SELECT e.* FROM exercise e
-      INNER JOIN workout_exercise we ON e.id = we.exerciseId
-      WHERE w.workoutId = ?`,
+      INNER JOIN workout_exercise we ON e.id = we.exercise_id
+      WHERE we.workout_id = ?`,
       [workoutId]
     )
   },
@@ -90,7 +102,7 @@ export const workoutRepository = {
    */
   async removeExerciseFromWorkout(workoutId: number, exerciseId: number): Promise<boolean> {
     const result = await database.runAsync(
-      `DELETE FROM workout_exercise WHERE workoutId = ? AND exerciseId = ?`,
+      `DELETE FROM workout_exercise WHERE workout_id = ? AND exercise_id = ?`,
       [workoutId, exerciseId]
     )
     return result.changes > 0
@@ -109,4 +121,21 @@ export const workoutRepository = {
     return result.changes > 0
   },
 
+  async getFavorites(): Promise<Workout[]> {
+    return database.getAllAsync<Workout>(
+      `SELECT * FROM workout WHERE favorite = 1`,
+    )
+  },
+
+  /**
+   * Muuttaa ohjelman suosikkitilaa 0/1
+   * @param workoutId Ohjelman id
+   * @param isFavorite true/false
+   */
+  async setFavorite(workoutId: number, isFavorite: boolean) {
+    await database.runAsync(
+      `UPDATE workout SET favorite = ? WHERE id = ?`,
+      [isFavorite ? 1 : 0, workoutId]
+    );
+  }
 }

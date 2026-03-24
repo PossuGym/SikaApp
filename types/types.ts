@@ -5,7 +5,7 @@
  * Yksittäinen liike
  */
 export type Exercise = {
-  id?: number
+  id: number
   name: string
   category: string
 }

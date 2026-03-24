@@ -4,7 +4,6 @@ import { Exercise } from '../../types/types'
 /**
   CRUD-operaatiot tietokannan exercise-taululle.
 */
-
 export const exerciseRepository = {
 
   /**
@@ -26,6 +25,30 @@ export const exerciseRepository = {
     return database.getAllAsync<Exercise>(
       `SELECT * FROM exercise WHERE category = ?`,
       [category]
+    )
+  },
+
+  /**
+   * Hakee liikkeen nimellä
+   * @param name Haettavan liikkeen nimi 
+   * @returns {Promise<Exercise | null>} Palauttaa joko löytyneen liikkeen tai null
+   */
+  async getExerciseByName(name: string): Promise<Exercise | null> {
+    return database.getFirstAsync<Exercise>(
+      `SELECT * FROM exercise WHERE name = ?`,
+      [name]
+    )
+  },
+
+  /**
+   * Hakee liikkeen id:llä
+   * @param exerciseId Haettavan liikkeen id
+   * @returns {Promise<Exercise | null>} Palauttaa joko löytyneen liikkeen tai null
+   */
+  async getExerciseById(exerciseId: number): Promise<Exercise | null> {
+    return database.getFirstAsync<Exercise>(
+      `SELECT * FROM exercise WHERE id = ?`,
+      [exerciseId]
     )
   },
 
@@ -54,7 +77,7 @@ export const exerciseRepository = {
    */
   async updateExercise(exerciseId: number, name: string, category: string): Promise<boolean> {
     const result = await database.runAsync(
-      `UPDATE exercise SET name = ?, category = ? WHERE exerciseId = ?`,
+      `UPDATE exercise SET name = ?, category = ? WHERE id = ?`,
       [name, category, exerciseId]
     )
     return result.changes > 0
@@ -68,12 +91,9 @@ export const exerciseRepository = {
    */
   async deleteExercise(exerciseId: number): Promise<boolean>  {
     const result = await database.runAsync(
-      `DELETE FROM exercise WHERE exerciseId = ?`,
+      `DELETE FROM exercise WHERE id = ?`,
       [exerciseId]
     )
     return result.changes > 0
   }
 }
-
-
-
