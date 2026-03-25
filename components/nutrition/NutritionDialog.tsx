@@ -61,6 +61,7 @@ interface Props {
           <TextInput label="Proteiini" value={protein} onChangeText={setProtein} mode="outlined" style={{marginTop: 10}}/>
           <TextInput label="Hiilihydraatit" value={carbs} onChangeText={setCarbs} mode="outlined" style={{marginTop: 10}}/>
           <TextInput label="Rasvat" value={fats} onChangeText={setFats} mode="outlined" style={{marginTop: 10}}/>
+          <TextInput label="Kalorit" value={calories} onChangeText={setCalories} mode="outlined" style={{marginTop: 10}}/>
         </Dialog.Content>
         <Dialog.Actions>
           <Button onPress={onDismiss}>Peruuta</Button>
