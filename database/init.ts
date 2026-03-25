@@ -1,4 +1,5 @@
 import { database } from './database'
+import { seedDatabase } from './seedDatabase';
  
 /* 
   Tietokannan skeema ja luonti
@@ -17,6 +18,8 @@ export const initDatabase = async () => {
     await createUserProfileTable();
     await createUserDailyTable();
     await createNutritionTable();
+    
+    await seedDatabase();
  
     console.log('Tietokanta luotu.')
   } catch (error) {
