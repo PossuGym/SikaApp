@@ -24,6 +24,7 @@ export const NutritionItem = ({ item, onClick, onDelete }: Props) => {
     >
       <Card.Title
         title={item.name}
+        subtitle={new Date(item.date).toLocaleDateString()}
         right={(props) => onDelete ? ( // Poistonappi näytetään vain, jos sen toiminta välitetään propsina
           <IconButton 
             {...props} 

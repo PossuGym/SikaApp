@@ -19,17 +19,17 @@ export const nutritionService = {
       if (!cleanName) {
         throw new Error("Ruualla täytyy olla nimi.")
       }
-      if (!calories) { 
-        throw new Error("syötä calorit")
+      if (calories == null || Number.isNaN(calories) || calories < 0) { 
+        throw new Error("Syötä kalorit")
       }
-      if (!protein) { 
-      throw new Error("Proteiini")
+      if (protein == null || Number.isNaN(protein) || protein < 0) { 
+      throw new Error("Syötä proteiini")
       }
-      if (! carbs) {
-      throw new Error("Hiilarit")
+      if (carbs == null || Number.isNaN(carbs) || carbs < 0) {
+      throw new Error("Syötä hiilihydraatit")
       }
-      if (! fats) {
-      throw new Error("Rasvat")
+      if (fats == null || Number.isNaN(fats) || fats < 0) {
+      throw new Error("Syötä rasvat")
       }
 
 
@@ -46,8 +46,8 @@ export const nutritionService = {
 },
 
 /**
- * Poistaa liikkeen tietokannasta
- * @param exerciseId Liikkeen id
+ * Poistaa ruoan tietokannasta
+ * @param nutritionId Ruuan id
  */
 async remove(nutritionId: number) {
   const success = await nutritionRepository.deleteMeal(nutritionId);
