@@ -18,6 +18,9 @@ interface Props {
  */
 export const NutritionItem = ({ item, onClick, onDelete }: Props) => {
   return (
+    
+
+
     <Card 
       mode="outlined"
       onPress={() => onClick(item)}

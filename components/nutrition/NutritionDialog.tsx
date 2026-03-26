@@ -3,7 +3,7 @@ import { Dialog, Portal, TextInput, Button } from 'react-native-paper';
 import { Nutrition } from '../../types/types';
 import { View } from 'react-native';
 import { calculateCaloriesFromMacros, formatDateToString, isValidDateString,
-  parseDateString, toNumberOrZero, } from '../../services/NutritionCalculator'
+  parseDateString, toNumberOrZero, } from '../../services/nutritionCalculator'
 // onSave => Promise odottaa true/false hookista ennen sulkeutumista. Dialogi ei suljeudu, jos 
 interface Props {
   visible: boolean;

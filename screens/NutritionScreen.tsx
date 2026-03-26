@@ -3,22 +3,27 @@ import { FAB, Surface } from 'react-native-paper';
 import { useNutrition } from '../hooks/UseNutrition';
 import { NutritionItem } from '../components/nutrition/NutritionItem';
 import { NutritionDialog } from '../components/nutrition/NutritionDialog';
-import { NutritionHeaderCard } from '../components/nutrition/NutritionHeaderCard';
+import { NutritionSumCard } from '../components/nutrition/NutritionSumCards';
+
 
 /*
 * UI tiedosto pysyy hyvin siistinä, kun kaikki toimintalogiikka/funktiot on eristetty muualle. 
 */
 export default function NutritionScreen() {
-  const { 
-    nutrition, 
-    isDialogVisible, 
-    selectedNutrition, 
-    openCreateDialog, 
-    openEditDialog, 
-    closeDialog, 
+  const {
+    nutrition,
+    isDialogVisible,
+    selectedNutrition,
+    openCreateDialog,
+    openEditDialog,
+    closeDialog,
     saveNutrition,
-    deleteMeal
+    deleteMeal,
+    totals,
+    caloriesFromMacros
   } = useNutrition();
+
+
 
   const headerDate = nutrition.length > 0
     ? new Date(nutrition[0].date).toLocaleDateString()
@@ -26,12 +31,15 @@ export default function NutritionScreen() {
 
   return (
     <Surface style={styles.container} elevation={0}>
+      <NutritionSumCard
+        calories={caloriesFromMacros}
+        protein={totals?.protein ?? 0}
+        fats={totals?.fats ?? 0}
+        carbs={totals?.carbs ?? 0}
+      />
 
       <FlatList
         data={nutrition}
-        ListHeaderComponent={
-          <NutritionHeaderCard date={nutrition.length > 0 ? nutrition[0].date : Date.now()} />
-        }
         renderItem={({ item }) => (
           <NutritionItem 
             item={item} 

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { nutritionService } from "../services/nutritionService";
 import { Nutrition } from "../types/types";
 import { Alert } from "react-native";
+import { calculateDailyMacrosTotal, calculateCalories } from '../services/todaysCaloryCalculator';
 
 /**
  * useExercise-hook. Sisältää kaikki tilat ja toiminnallisuudet UI:lle.
@@ -75,6 +76,16 @@ export const useNutrition = () => {
   };
 
 
+  const totals = calculateDailyMacrosTotal(nutrition);
+  
+  const caloriesFromMacros = calculateCalories({
+    protein: totals.protein ?? 0,
+    carb: totals.carb ?? 0,               
+    fat: totals.fat ?? totals.fat ?? 0    
+  });
+
+
+
   // Koukun käytettävät tilat ja toiminnot
   return {
     nutrition,
@@ -85,5 +96,7 @@ export const useNutrition = () => {
     closeDialog,
     saveNutrition,
     deleteMeal,
+    totals,
+    caloriesFromMacros
   };
 }
