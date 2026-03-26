@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Dialog, Portal, TextInput, Button } from 'react-native-paper';
 import { Nutrition } from '../../types/types';
 import { View } from 'react-native';
+import { calculateCaloriesFromMacros, formatDateToString, isValidDateString,
+  parseDateString, toNumberOrZero, } from '../../services/NutritionCalculator'
 // onSave => Promise odottaa true/false hookista ennen sulkeutumista. Dialogi ei suljeudu, jos 
 interface Props {
   visible: boolean;
@@ -25,31 +27,6 @@ interface Props {
   const [date, setDate] = useState(Date.now());
   const [dateInputString, setDateInputString] = useState('');
       const [isCaloriesManual, setIsCaloriesManual] = useState(false);
-
-      const toNumberOrZero = (value: string) => {
-        const parsed = Number(value);
-        return Number.isNaN(parsed) ? 0 : parsed;
-      };
-
-      const formatDateToString = (timestamp: number) => {
-        const d = new Date(timestamp);
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-      };
-
-      const isValidDateString = (dateStr: string) => {
-        const regex = /^\d{4}-\d{2}-\d{2}$/;
-        if (!regex.test(dateStr)) return false;
-        const d = new Date(dateStr + 'T00:00:00');
-        return !isNaN(d.getTime());
-      };
-
-      const parseDateString = (dateStr: string) => {
-        const d = new Date(dateStr + 'T00:00:00');
-        return d.getTime();
-      };
   
 
 
@@ -79,10 +56,10 @@ interface Props {
   useEffect(() => {
     if (!visible || isCaloriesManual) return;
 
-    const calculatedCalories = Math.round(
-      (toNumberOrZero(protein) * 4) +
-      (toNumberOrZero(carbs) * 4) +
-      (toNumberOrZero(fats) * 9)
+    const calculatedCalories = calculateCaloriesFromMacros(
+      toNumberOrZero(protein),
+      toNumberOrZero(carbs),
+      toNumberOrZero(fats)
     );
 
     setCalories(calculatedCalories === 0 ? '' : String(calculatedCalories));
@@ -100,7 +77,7 @@ interface Props {
     const carbsValue = Number(carbs);
     const fatsValue = Number(fats);
     const caloriesValue = calories.trim() === ''
-      ? Math.round((proteinValue * 4) + (carbsValue * 4) + (fatsValue * 9))
+      ? calculateCaloriesFromMacros(proteinValue, carbsValue, fatsValue)
       : Number(calories);
 
     let finalDate = date;

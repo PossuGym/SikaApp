@@ -1,8 +1,9 @@
-import { FlatList, StyleSheet, View, Text } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { FAB, Surface } from 'react-native-paper';
 import { useNutrition } from '../hooks/UseNutrition';
 import { NutritionItem } from '../components/nutrition/NutritionItem';
 import { NutritionDialog } from '../components/nutrition/NutritionDialog';
+import { NutritionHeaderCard } from '../components/nutrition/NutritionHeaderCard';
 
 /*
 * UI tiedosto pysyy hyvin siistinä, kun kaikki toimintalogiikka/funktiot on eristetty muualle. 
@@ -19,12 +20,18 @@ export default function NutritionScreen() {
     deleteMeal
   } = useNutrition();
 
+  const headerDate = nutrition.length > 0
+    ? new Date(nutrition[0].date).toLocaleDateString()
+    : new Date().toLocaleDateString();
+
   return (
     <Surface style={styles.container} elevation={0}>
 
-      {/* Lista liikkeistä, painamalla muokkausdialogi, ikonista poisto*/}
       <FlatList
         data={nutrition}
+        ListHeaderComponent={
+          <NutritionHeaderCard date={nutrition.length > 0 ? nutrition[0].date : Date.now()} />
+        }
         renderItem={({ item }) => (
           <NutritionItem 
             item={item} 
