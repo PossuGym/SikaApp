@@ -44,7 +44,7 @@ export const nutritionRepository = {
 
   async getMealsByDate (start: number, end: number): Promise<Nutrition[]> {
     return await database.getAllAsync<Nutrition>(
-      `SELECT * FROM nutrition WHERE date BETWEEN ? AND ? ORDER BY date ASC`, [start, end]
+      `SELECT * FROM nutrition WHERE date BETWEEN ? AND ? ORDER BY date DESC`, [start, end]
     )
   },
 
