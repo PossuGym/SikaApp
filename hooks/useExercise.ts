@@ -13,8 +13,7 @@ export const useExercise = () => {
   const [isDialogVisible, setIsDialogVisible] = useState(false); // Dialogi
   const [searchQuery, setSearchQuery] = useState(''); // Hakupalkki
 
-  // --- Ladataan tietokannasta kaikki liikkeet exercises tilamuuttujaan ---
-  // Servicestä kutsuttavat funktiot laitetaan try-catch lohkoon, jotta saadaan servicestä mahdollisesti heitetty virhe!
+  // Ladataan kaikki liikkeet
   const loadExercises = useCallback(async () => {
     try {
       const data = await exerciseService.getAll();
@@ -24,14 +23,13 @@ export const useExercise = () => {
     }
   }, [])
 
-  // --- Lataus tapahtuu heti näkymän auetessa ---
   useEffect(() => { loadExercises(); }, [loadExercises]);
 
-  // Suodatetut liikkeet
+  // Suodatetut liikkeet hakutoiminnolle(useMemo ehkä hyödyllinen?)
   const filteredExercises = exercises.filter(e => 
     e.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  // Liikkeiden määrä
+  // Hakutulosten määrä 
   const exerciseCount = filteredExercises.length;
 
 
@@ -55,14 +53,18 @@ export const useExercise = () => {
       {
         text: "Poista",
         onPress: async () => {
-          await exerciseService.remove(id);
-          loadExercises();
+          try {
+            await exerciseService.remove(id);
+            loadExercises();
+          } catch (error: any) {
+            Alert.alert("Virhe", error.message);
+          }
         }
       }
     ]);
   };
 
-  // Muotoiltu liikelista SectionList komponentille
+  // Muotoiltu liikelista SectionList komponentille, käyttää hakutoiminnon tulosta datan lähteenä(Ehkä useMemo?)
   const getSections = () => { 
     const groups = filteredExercises.reduce((acc, exercise) => {
       const category = exercise.category || 'Muut';
@@ -92,11 +94,12 @@ export const useExercise = () => {
 
   // Koukun käytettävät tilat ja toiminnot
   return {
-    exercises: filteredExercises,
+    exercises,
+    filteredExercises,  // Hakutoiminnon tulokset
     selectedExercise,
     isDialogVisible,
     searchQuery,
-    exerciseCount,
+    exerciseCount,      // Hakutoiminnon osumien määrä
     setSearchQuery,
     openCreateDialog,
     openEditDialog,

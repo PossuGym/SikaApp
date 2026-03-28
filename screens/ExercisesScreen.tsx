@@ -23,15 +23,13 @@ export default function ExercisesScreen() {
   } = useExercise();
 
   return (
-    <Surface style={styles.container} elevation={0}>
-
+    <Surface style={styles.container}>
       <Searchbar
         style={styles.searchBar}
         placeholder="Etsi liikkeitä"
         onChangeText={setSearchQuery}
         value={searchQuery}
       />
-
 
       {/* Liikelista kategorioittain */}
       <SectionList
@@ -46,14 +44,12 @@ export default function ExercisesScreen() {
         )}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeader}>
-            <Text variant="titleMedium">
-              {title}
-            </Text>
+            <Text variant="titleMedium">{title}</Text>
           </View>
         )}
         ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
         SectionSeparatorComponent={() => <View style={{ height: 10 }} />}
-        contentContainerStyle={{ paddingBottom: 200 }}
+        contentContainerStyle={styles.listContent}
         ListHeaderComponent={<Text style={styles.subheading}>Liikkeitä: {exerciseCount}</Text>}
       />
 
@@ -82,16 +78,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   searchBar: {
-    paddingHorizontal: 16,
+    marginBottom: 8,
   },
   sectionHeader: {
-    paddingHorizontal: 16,
+    paddingVertical: 4,
   },
   subheading: {
     alignSelf: 'flex-end',
     marginTop: 16,
-    marginRight: 16,
-    marginBottom: -24
+    marginBottom: -24,
+  },
+  listContent: {
+    paddingBottom: 200,
   },
   fab: {
     position: 'absolute',

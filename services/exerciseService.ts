@@ -26,7 +26,8 @@ export const exerciseService = {
     if (!cleanName) {
       throw new Error("Liikkeellä täytyy olla nimi.")
     }
-    if (!category) {
+    const cleanCategory = category.trim();
+    if (!cleanCategory) {
       throw new Error("Liikkeellä täytyy olla kategoria.")
     }
 
@@ -37,9 +38,9 @@ export const exerciseService = {
     }
 
     if (id) { // Jos id löytyy, päivitetään olemassa olevaa
-      return await exerciseRepository.updateExercise(id, cleanName, category);
+      return await exerciseRepository.updateExercise(id, cleanName, cleanCategory);
     } else { // Muuten luodaan uusi
-      return await exerciseRepository.createExercise(cleanName, category);
+      return await exerciseRepository.createExercise(cleanName, cleanCategory);
     }
   },
 
