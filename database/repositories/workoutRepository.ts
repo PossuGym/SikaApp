@@ -17,7 +17,6 @@ export const workoutRepository = {
 
   /**
    * Hakee ohjelman id:n perusteella
-   * @param workoutId Ohjelman id
    * @returns Palauttaa ```Workout``` tai null
    */
   async getWorkoutById(workoutId: number): Promise<Workout | null> {
@@ -27,14 +26,25 @@ export const workoutRepository = {
     )
   },
 
+   /**
+   * Hakee ohjelman nimellä
+   * @returns {Promise<Workout | null>} Palauttaa joko löytyneen ohjelman tai null
+   */
+  async getWorkoutByName(name: string): Promise<Workout | null> {
+    return database.getFirstAsync<Workout>(
+      `SELECT * FROM workout WHERE name = ?`,
+      [name]
+    )
+  },
+
   /**
    * Luo uuden ohjelman
    * @param {string} name - Ohjelman nimi
-   * @param {number[]} exerciseIds - Liikkeiden id:t taulukkona
+   * @param {Exercises[]} exercises - Liikkeet taulukkona
    * @returns {Promise<number>} Luodun ohjelman id
    * @example workoutRepository.createWorkout("Rintapäivä", exercises)
    */
-  async createWorkout(name: string, exerciseIds: number[]): Promise<number> {
+  async createWorkout(name: string, exercises: Exercise[]): Promise<number> {
     // Transaktio, koska joutuu käsittelemään useampaa taulua
     await database.execAsync("BEGIN")
 
@@ -47,10 +57,10 @@ export const workoutRepository = {
       const workoutId = workout.lastInsertRowId;
 
       // Luodaan liitos workout_exercise
-      for (const exercise of exerciseIds) {
+      for (const exercise of exercises) {
         await database.runAsync(
           `INSERT INTO workout_exercise (workout_id, exercise_id) VALUES (?, ?)`,
-          [workoutId, exercise]
+          [workoutId, exercise.id]
         );
       }
 
@@ -137,5 +147,26 @@ export const workoutRepository = {
       `UPDATE workout SET favorite = ? WHERE id = ?`,
       [isFavorite ? 1 : 0, workoutId]
     );
-  }
+  },
+
+  /**
+   * Päivittää ohjelman nimen.
+   */
+  async updateWorkoutName(id: number, name: string): Promise<boolean> {
+    const result = await database.runAsync(
+      `UPDATE workout SET name = ? WHERE id = ?`,
+      [name, id]
+    );
+    return result.changes > 0;
+  },
+
+  /**
+   * Tyhjentää kaikki liikkeet tietystä ohjelmasta (liitostaulusta).
+   */
+  async removeAllExercisesFromWorkout(workoutId: number): Promise<void> {
+    await database.runAsync(
+      `DELETE FROM workout_exercise WHERE workout_id = ?`,
+      [workoutId]
+    );
+  },
 }
