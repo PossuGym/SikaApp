@@ -14,8 +14,9 @@ export type Exercise = {
  * Treeniohjelma, ei liikkeitä.
  */
 export type Workout = {
-  id?: number
+  id: number
   name: string
+  favorite: number            // 0 tai 1
 }
 
 /**
