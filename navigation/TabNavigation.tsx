@@ -4,14 +4,16 @@ import { LibraryScreen } from "../screens/LibraryScreen";
 import StatsScreen from "../screens/stats/StatsScreen";
 import NutritionScreen from "../screens/NutritionScreen";
 import { Homepage } from "../screens/HomePage";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from 'react-native-paper';
 
 
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   const insets = useSafeAreaInsets();
+  const theme = useTheme();
 
   return (
     <Tab.Navigator
@@ -22,24 +24,24 @@ function MyTabs() {
             case "Home":
               iconName = "home";
               break;
-            case "Workout":
-              iconName = "dumbbell";
+            case "Train":
+              iconName = "fitness-center";
               break;
             case "Library":
-              iconName = "format-list-bulleted";
+              iconName = "menu-book";
               break;
             case "Stats":
-              iconName = "chart-bar";
+              iconName = "bar-chart";
               break;
             case "Nutrition":
-              iconName = "food-apple";
+              iconName = "local-dining";
               break;
             default:
-              iconName = "circle";
+              iconName = "help-outline";
           }
 
           return (
-            <MaterialCommunityIcons
+            <MaterialIcons
               name={iconName as any}
               size={focused ? 28 : 22}
               color={color}
@@ -48,8 +50,8 @@ function MyTabs() {
         },
 
 
-        tabBarActiveTintColor: "#f73b3b",
-        tabBarInactiveTintColor: "#888",
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
 
         tabBarStyle: {
           position: 'absolute',
@@ -59,14 +61,14 @@ function MyTabs() {
           height: 60,           // korkeutta nostettu
           paddingBottom: 8,    // turvallinen marginaali pohjalle
           paddingTop: 0,
-          borderTopWidth: 0,
+          borderTopWidth: 1,
+          borderTopColor: theme.colors.outlineVariant,
           elevation: 6,
-          backgroundColor: "#fff",
+          backgroundColor: theme.colors.surface,
         },
 
         tabBarLabelStyle: {
           fontSize: 12,
-          color: "#000",
         },
 
       })}
@@ -76,7 +78,7 @@ function MyTabs() {
       <Tab.Screen name="Train" component={SessionScreen} />
       <Tab.Screen name="Stats" component={StatsScreen} />
       <Tab.Screen name="Library" component={LibraryScreen} />
-      <Tab.Screen name="Nutrion" component={NutritionScreen} />
+      <Tab.Screen name="Nutrition" component={NutritionScreen} />
     </Tab.Navigator>
   )
 }

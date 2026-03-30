@@ -12,11 +12,11 @@ export const calculateDailyMacrosTotal = (
     .reduce(
       (totals, item) => {
         totals.protein += item.protein ?? 0
-        totals.fat += item.fats ?? 0
-        totals.carb+= item.fats ?? 0
+        totals.fats += item.fats ?? 0
+        totals.carbs+= item.fats ?? 0
         return totals
       },
-      { protein: 0, carb: 0, fat: 0 }
+      { protein: 0, carbs: 0, fats: 0 }
     )
 };
 
