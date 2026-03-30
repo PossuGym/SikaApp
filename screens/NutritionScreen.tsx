@@ -53,7 +53,7 @@ export default function NutritionScreen() {
       <FAB
         icon="plus"
         customSize={64}
-        style={[styles.fab, { bottom: tabBarHeight + 20 }]} // Pidetään FAB tabbarin yläpuolella
+        style={styles.fab} // Pidetään FAB tabbarin yläpuolella
         onPress={openCreateDialog}
       />
 
@@ -84,6 +84,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     margin: 16,
     right: 10,
-    bottom: 20
+    bottom: 130
   },
 });

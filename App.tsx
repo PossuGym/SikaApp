@@ -14,6 +14,7 @@ import { PaperProvider } from "react-native-paper";
 type RootStackParamList = {
   Login: undefined;
   Home: undefined;
+  Profile: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

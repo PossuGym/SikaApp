@@ -3,10 +3,12 @@ import SessionScreen from "../screens/SessionScreen";
 import { LibraryScreen } from "../screens/LibraryScreen";
 import StatsScreen from "../screens/stats/StatsScreen";
 import NutritionScreen from "../screens/NutritionScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import { Homepage } from "../screens/HomePage";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme } from 'react-native-paper';
+import { useTheme, Appbar } from 'react-native-paper';
+import { TouchableOpacity } from "react-native";
 
 
 const Tab = createBottomTabNavigator();
@@ -18,6 +20,8 @@ function MyTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+
+        headerShown: true,
         tabBarIcon: ({ color, size, focused }) => {
           let iconName;
           switch (route.name) {
@@ -55,14 +59,13 @@ function MyTabs() {
 
         tabBarStyle: {
           position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: insets.bottom,  // Navigaatio Android-navigointipalkin ylle
+          left: 12,
+          right: 12,
+          bottom: insets.bottom + 8,  // Navigaatio Android-navigointipalkin ylle
           height: 60,           // korkeutta nostettu
           paddingBottom: 8,    // turvallinen marginaali pohjalle
+          borderRadius: 24,
           paddingTop: 0,
-          borderTopWidth: 1,
-          borderTopColor: theme.colors.outlineVariant,
           elevation: 6,
           backgroundColor: theme.colors.surface,
         },
@@ -71,15 +74,49 @@ function MyTabs() {
           fontSize: 12,
         },
 
+       
+
       })}
     >
-
       <Tab.Screen name="Home" component={Homepage} />
       <Tab.Screen name="Train" component={SessionScreen} />
       <Tab.Screen name="Stats" component={StatsScreen} />
       <Tab.Screen name="Library" component={LibraryScreen} />
       <Tab.Screen name="Nutrition" component={NutritionScreen} />
+      <Tab.Screen name="Profiili" component={ProfileScreen} />
+     
+     
+    
     </Tab.Navigator>
   )
 }
 export default MyTabs;
+
+/*
+    headerRight: () => (
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Profile")}
+        style={{ marginRight: 15 }}
+      >
+        <MaterialIcons
+          name="account-circle"
+          size={28}
+          color="#000"
+        />
+      </TouchableOpacity>
+           ),
+
+
+           /* header: () => (
+          <Appbar.Header elevated style={{ backgroundColor: theme.colors.surface }}>
+            <Appbar.Content title={route.name} />
+            <Appbar.Action
+              icon={({ size, color }) => (
+                <MaterialIcons name="account-circle" size={size} color={color} />
+              )}
+              iconColor={theme.colors.onSurface}
+              accessibilityLabel="More options"
+              onPress={() => navigation.navigate("Profile")}
+            />
+          </Appbar.Header>
+        ),*/
