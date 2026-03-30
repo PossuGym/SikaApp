@@ -58,7 +58,7 @@ export type Profile = {
  * Profiilin päivittäin asetettavat tiedot
  */
 export type Daily = {
-  weight?: number,
+  weight: number,
   daily_steps?: number,
   date: number
 }
