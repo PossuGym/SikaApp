@@ -1,4 +1,4 @@
-import { Card, IconButton } from 'react-native-paper';
+import { Card, IconButton, useTheme } from 'react-native-paper';
 import { Exercise } from '../../types/types';
 
 interface Props {
@@ -17,6 +17,8 @@ interface Props {
  * <ExerciseItem item={ex} onClick={handleSelect} />
  */
 export const ExerciseItem = ({ item, onClick, onDelete }: Props) => {
+  const theme = useTheme();
+
   return (
     <Card 
       mode="outlined"
@@ -24,12 +26,12 @@ export const ExerciseItem = ({ item, onClick, onDelete }: Props) => {
     >
       <Card.Title
         title={item.name}
-        subtitle={item.category}
         right={(props) => onDelete ? ( // Poistonappi näytetään vain, jos sen toiminta välitetään propsina
           <IconButton 
             {...props} 
             icon="delete-outline" 
-            iconColor="#B00020" 
+            iconColor={theme.colors.error}
+            size={20}
             onPress={() => onDelete(item.id)} 
           />
         ) : null }

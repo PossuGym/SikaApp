@@ -1,5 +1,5 @@
-import { FlatList, StyleSheet, View } from 'react-native';
-import { FAB, Surface } from 'react-native-paper';
+import { SectionList, StyleSheet, View } from 'react-native';
+import { FAB, Searchbar, Surface, Text } from 'react-native-paper';
 import { useExercise } from '../hooks/useExercise';
 import { ExerciseItem } from '../components/exercise/ExerciseItem';
 import { ExerciseDialog } from '../components/exercise/ExerciseDialog';
@@ -9,30 +9,48 @@ import { ExerciseDialog } from '../components/exercise/ExerciseDialog';
 */
 export default function ExercisesScreen() {
   const { 
-    exercises, 
-    isDialogVisible, 
-    selectedExercise, 
-    openCreateDialog, 
-    openEditDialog, 
-    closeDialog, 
+    isDialogVisible,
+    selectedExercise,
+    searchQuery,
+    exerciseCount,
+    openCreateDialog,
+    openEditDialog,
+    closeDialog,
     saveExercise,
-    deleteExercise
+    deleteExercise,
+    getSections,
+    setSearchQuery
   } = useExercise();
 
   return (
-    <Surface style={styles.container} elevation={0}>
+    <Surface style={styles.container}>
+      <Searchbar
+        style={styles.searchBar}
+        placeholder="Etsi liikkeitä"
+        onChangeText={setSearchQuery}
+        value={searchQuery}
+      />
 
-      {/* Lista liikkeistä, painamalla muokkausdialogi, ikonista poisto*/}
-      <FlatList
-        data={exercises}
+      {/* Liikelista kategorioittain */}
+      <SectionList
+        sections={getSections()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <ExerciseItem 
-            item={item} 
+          <ExerciseItem
+            item={item}
             onClick={() => openEditDialog(item)}
-            onDelete={() => deleteExercise(item.id)} 
+            onDelete={() => deleteExercise(item.id)}
           />
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />} // Rako itemien väliin
+        renderSectionHeader={({ section: { title } }) => (
+          <View style={styles.sectionHeader}>
+            <Text variant="titleMedium">{title}</Text>
+          </View>
+        )}
+        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+        SectionSeparatorComponent={() => <View style={{ height: 10 }} />}
+        contentContainerStyle={styles.listContent}
+        ListHeaderComponent={<Text style={styles.subheading}>Liikkeitä: {exerciseCount}</Text>}
       />
 
       {/* Floating Action Button, avaa uuden liikkeen luonnin dialogin */}
@@ -44,7 +62,7 @@ export default function ExercisesScreen() {
       />
 
       {/* Dialogi ExerciseDialog-komponentilla */}
-      <ExerciseDialog 
+      <ExerciseDialog
         visible={isDialogVisible}
         data={selectedExercise}
         onSave={saveExercise}
@@ -57,10 +75,21 @@ export default function ExercisesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16
+    paddingHorizontal: 16,
   },
-  item: {
-    marginBottom: 10
+  searchBar: {
+    marginBottom: 8,
+  },
+  sectionHeader: {
+    paddingVertical: 4,
+  },
+  subheading: {
+    alignSelf: 'flex-end',
+    marginTop: 16,
+    marginBottom: -24,
+  },
+  listContent: {
+    paddingBottom: 200,
   },
   fab: {
     position: 'absolute',

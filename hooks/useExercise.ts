@@ -3,6 +3,7 @@ import { exerciseService } from "../services/exerciseService";
 import { Exercise } from "../types/types";
 import { Alert } from "react-native";
 
+
 /**
  * useExercise-hook. Sisältää kaikki tilat ja toiminnallisuudet UI:lle.
  */
@@ -10,9 +11,9 @@ export const useExercise = () => {
   const [exercises, setExercises] = useState<Exercise[]>([]); // Kaikki liikkeet
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null); // Valittu liike
   const [isDialogVisible, setIsDialogVisible] = useState(false); // Dialogi
+  const [searchQuery, setSearchQuery] = useState(''); // Hakupalkki
 
-  // --- Ladataan tietokannasta kaikki liikkeet exercises tilamuuttujaan ---
-  // Servicestä kutsuttavat funktiot laitetaan try-catch lohkoon, jotta saadaan servicestä mahdollisesti heitetty virhe!
+  // Ladataan kaikki liikkeet
   const loadExercises = useCallback(async () => {
     try {
       const data = await exerciseService.getAll();
@@ -22,24 +23,17 @@ export const useExercise = () => {
     }
   }, [])
 
-  // --- Lataus tapahtuu heti näkymän auetessa ---
   useEffect(() => { loadExercises(); }, [loadExercises]);
+
+  // Suodatetut liikkeet hakutoiminnolle(useMemo ehkä hyödyllinen?)
+  const filteredExercises = exercises.filter(e => 
+    e.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  // Hakutulosten määrä 
+  const exerciseCount = filteredExercises.length;
 
 
   // --- TOIMINNOT ---
-  // Dialogi
-  const openCreateDialog = () => {
-    setSelectedExercise(null);
-    setIsDialogVisible(true);
-  };
-
-  const openEditDialog = (exercise: Exercise) => {
-    setSelectedExercise(exercise);
-    setIsDialogVisible(true);
-  };
-
-  const closeDialog = () => setIsDialogVisible(false);
-
   // Liikkeen tallennus, toimii luomiselle ja muokkaamiselle.
   const saveExercise = async (name: string, category: string, id?: number) => {
     try {
@@ -59,22 +53,59 @@ export const useExercise = () => {
       {
         text: "Poista",
         onPress: async () => {
-          await exerciseService.remove(id);
-          loadExercises();
+          try {
+            await exerciseService.remove(id);
+            loadExercises();
+          } catch (error: any) {
+            Alert.alert("Virhe", error.message);
+          }
         }
       }
     ]);
   };
 
+  // Muotoiltu liikelista SectionList komponentille, käyttää hakutoiminnon tulosta datan lähteenä(Ehkä useMemo?)
+  const getSections = () => { 
+    const groups = filteredExercises.reduce((acc, exercise) => {
+      const category = exercise.category || 'Muut';
+      if (!acc[category]) acc[category] = []; // Lisätään kategoriat taulukkoon
+      acc[category].push(exercise); // Lisätään liike-objekti kategoriaan
+      return acc;
+    }, {} as Record<string, Exercise[]>); // Record<Keys, Type>
+
+    // Muutetaan objekti muoton [{title, data[]}]
+    return Object.entries(groups)
+      .map(([title, data]) => ({ title, data }))
+      .sort((a, b) => a.title.localeCompare(b.title));
+  }
+
+  // Dialogi
+  const openCreateDialog = () => {
+    setSelectedExercise(null);
+    setIsDialogVisible(true);
+  };
+
+  const openEditDialog = (exercise: Exercise) => {
+    setSelectedExercise(exercise);
+    setIsDialogVisible(true);
+  };
+
+  const closeDialog = () => setIsDialogVisible(false);
+
   // Koukun käytettävät tilat ja toiminnot
   return {
     exercises,
+    filteredExercises,  // Hakutoiminnon tulokset
     selectedExercise,
     isDialogVisible,
+    searchQuery,
+    exerciseCount,      // Hakutoiminnon osumien määrä
+    setSearchQuery,
     openCreateDialog,
     openEditDialog,
     closeDialog,
     saveExercise,
-    deleteExercise
+    deleteExercise,
+    getSections
   };
 }

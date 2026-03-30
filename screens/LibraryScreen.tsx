@@ -13,26 +13,16 @@ export const LibraryScreen = () => {
 
   return (
     <Surface style={styles.container}>
-      <View style={styles.screenWrapper}>
-
         {/* Valitsin */}
         <SegmentedButtons
           value={value}
           onValueChange={setValue}
           buttons={[
-            {
-              value: 'exercises',
-              label: 'Liikkeet',
-            },
-            {
-              value: 'workouts',
-              label: 'Treeniohjelmat',
-            },
+            { value: 'exercises', label: 'Liikkeet' },
+            { value: 'workouts', label: 'Treeniohjelmat' },
           ]}
           style={styles.segmented}
         />
-      </View>
-
       {/* Sisältö vaihtuu valinnan mukaan */}
       <View style={styles.content}>
         {value === 'exercises' ? <ExercisesScreen /> : <WorkoutScreen />}
@@ -45,11 +35,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  screenWrapper: {
-    padding: 16,
-  },
   segmented: {
     maxWidth: '100%',
+    paddingHorizontal: 16,
+    paddingVertical: 16
   },
   content: {
     flex: 1,
