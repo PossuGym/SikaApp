@@ -9,14 +9,6 @@ import ProfileMacroGoal from "../components/profile/ProfileMacroGoal";
 import {ProfileStepGoal} from "../components/profile/ProfileStepGoal";
 
 export default function ProfileScreen() {
-  const [loading, setLoading] = React.useState(false);
-
-  const handleSignOut = async () => {
-    setLoading(true);
-    const { error } = await supabase.auth.signOut();
-    if (error) Alert.alert("Sign out failed", error.message);
-    setLoading(false);
-  };
 
   return (
       <SafeAreaView style={{ padding: 16, gap: 12, }}>
@@ -25,9 +17,6 @@ export default function ProfileScreen() {
         <ProfileAccountDetails />
         <ProfileMacroGoal />
         <ProfileStepGoal />
-        <Button mode="outlined" onPress={handleSignOut} loading={loading} disabled={loading}>
-          Sign out
-        </Button>
         </ScrollView>
       </SafeAreaView>
   );

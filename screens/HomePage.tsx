@@ -1,9 +1,13 @@
+import * as React from "react";
 import { View, useWindowDimensions } from "react-native";
-import { Text } from "react-native-paper";
+import { Button, Text, Card } from "react-native-paper";
 import Timer from "../components/homePage/Timer";
 import { SafeAreaView } from "react-native";
+import { useAuth } from "../hooks/useAuth";
 
 export function Homepage() {
+  const { handleSignOut, authLoading } = useAuth();
+
   const squareTexts = [
   "0,00sek\nStart",
   "Lisää ruoka\n\nProteiini: 0%\nHiilarit: 0%",
@@ -48,6 +52,10 @@ export function Homepage() {
           </View>
         ))}
       </View>
+
+      <Button mode="outlined" onPress={handleSignOut} loading={authLoading} disabled={authLoading}>
+        Sign out
+      </Button>
 
       <Timer>
 
