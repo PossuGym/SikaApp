@@ -1,5 +1,7 @@
 import { View, useWindowDimensions } from "react-native";
 import { Text } from "react-native-paper";
+import Timer from "../components/homePage/Timer";
+import { SafeAreaView } from "react-native";
 
 export function Homepage() {
   const squareTexts = [
@@ -19,7 +21,8 @@ export function Homepage() {
         Koti
       </Text>
 
-      {/* Lisää suosikkitreenit tähän */}
+
+      {/* Lisää suosikkitreenit tähän*/}
 
       <View style={{ gap: squareGap, alignItems: "center" }}>
         {[0, 1].map((row) => (
@@ -40,10 +43,18 @@ export function Homepage() {
                   {item}
                 </Text>
               </View>
+              
             ))}
           </View>
         ))}
       </View>
+
+      <Timer>
+
+      </Timer>
+    
+
+
     </View>
   );
 }
