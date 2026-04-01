@@ -29,6 +29,25 @@ export const ProfileStepGoal = ({ item, onClick, onSave, data }: Props) => {
         }
     }, [ data])
 
+    // If no `data` prop is given, fetch profile once on mount so saved value is shown
+    useEffect(() => {
+      let mounted = true;
+      const fetchProfile = async () => {
+        if (data) return;
+        try {
+          const profile = await profileService.getUserProfile();
+          if (!mounted) return;
+          if (profile && profile.steps_goal != null) {
+            setStepsGoal(String(profile.steps_goal));
+          }
+        } catch (err) {
+          // ignore
+        }
+      };
+      fetchProfile();
+      return () => { mounted = false; };
+    }, [data]);
+
 
   const handleSave = async () => {
     const stepsGoalValue = Number(stepsGoal);
@@ -47,6 +66,7 @@ export const ProfileStepGoal = ({ item, onClick, onSave, data }: Props) => {
       }
       if (success) {
         console.log("Tallennettu!");
+        setStepsGoal(String(stepsGoalValue));
         Keyboard.dismiss();
       } else {
         console.log("Tallennus epäonnistui");
@@ -57,12 +77,6 @@ export const ProfileStepGoal = ({ item, onClick, onSave, data }: Props) => {
   };
 
 
-
-
-
-
-
-  
   return (
     <Card mode="outlined" style={styles.card} onPress={() => (onClick && item) ? onClick(item) : undefined}>
       <Card.Title title="Askeltavoite" titleStyle={styles.title} />

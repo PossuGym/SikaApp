@@ -80,8 +80,8 @@ export const useNutrition = () => {
   
   const caloriesFromMacros = calculateCalories({
     protein: totals.protein ?? 0,
-    carb: totals.carb ?? 0,               
-    fat: totals.fat ?? totals.fat ?? 0    
+    carbs: totals.carbs ?? 0,
+    fats: totals.fats ?? 0,
   });
 
 

@@ -50,7 +50,7 @@ export const Timer = () => {
     }, []);
 
     return (
-            <Card mode="outlined" style={[styles.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.outline }]}>
+            <Card mode="elevated" style={[styles.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.outline }]}>
              <Card.Content>
             <View>
                 <Text style={[styles.timeText, { color: theme.colors.onSurface }]}>{time.toFixed(2).replace('.', ',')}s</Text>
@@ -93,10 +93,10 @@ export const Timer = () => {
 const styles = StyleSheet.create({
 
     card: {
-        width: '40%',
-        height: '10%',
-        
-       
+       width: 160,          
+       alignSelf: 'center',
+       paddingVertical: 8,
+       paddingHorizontal: 12, 
     },
 
     timeText: {
@@ -109,15 +109,19 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         flexDirection: 'row',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
         justifyContent: 'center',
+        alignItems: 'center',
     },
 
     button: {
         paddingVertical: 10,
-        paddingHorizontal: 10,
+        paddingHorizontal: 12,
         borderRadius: 10,
         margin: 5,
+        minWidth: 44,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
     startButton: {
