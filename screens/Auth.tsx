@@ -1,37 +1,11 @@
 import React, { useState } from 'react'
-import { Alert, StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
-import { supabase } from '../lib/supabase'
+import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { useAuth } from "../hooks/useAuth";
 
 export default function Auth() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  async function signInWithEmail() {
-    setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    })
-
-    if (error) Alert.alert(error.message)
-    setLoading(false)
-  }
-
-  async function signUpWithEmail() {
-    setLoading(true)
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    })
-
-    if (error) Alert.alert(error.message)
-    if (!session) Alert.alert('Please check your inbox for email verification!')
-    setLoading(false)
-  }
+  const { signInWithEmail, signUpWithEmail, authLoading } = useAuth();
 
   return (
     <View style={styles.container}>
@@ -58,18 +32,18 @@ export default function Auth() {
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
-          onPress={() => signInWithEmail()}
-          disabled={loading}
+          style={[styles.button, authLoading && styles.buttonDisabled]}
+          onPress={() => signInWithEmail(email, password)}
+          disabled={authLoading}
         >
           <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.verticallySpaced}>
         <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
-          onPress={() => signUpWithEmail()}
-          disabled={loading}
+          style={[styles.button, authLoading && styles.buttonDisabled]}
+          onPress={() => signUpWithEmail(email, password)}
+          disabled={authLoading}
         >
           <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
