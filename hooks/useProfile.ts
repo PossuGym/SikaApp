@@ -11,7 +11,7 @@ export const useProfile = () => {
         try {
         const data = await profileService.getUserProfile();
         } catch (error: any) {
-        Alert.alert("Virhe, tietojen haku epäonnistui.");
+        Alert.alert("Virhe, tavoitteen haku epäonnistui.");
         }
     }, []);
     
