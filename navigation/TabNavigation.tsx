@@ -8,20 +8,30 @@ import { Homepage } from "../screens/HomePage";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme, Appbar } from 'react-native-paper';
-import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { RootStackParamList } from "./types";
 
+/*
+  Navigaatioreitit, jotka ovat bottom tabseissa
+  Tänne lisätään 
+*/
 
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   const insets = useSafeAreaInsets();
   const theme = useTheme();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
 
         headerShown: true,
+        
+        // Tähän lisäätte oman versionne headerRight: () =>
+
         tabBarIcon: ({ color, size, focused }) => {
           let iconName;
           switch (route.name) {
