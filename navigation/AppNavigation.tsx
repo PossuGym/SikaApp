@@ -5,6 +5,7 @@ import TabNavigation from "./TabNavigation";
 import { useAuth } from "../hooks/useAuth";
 import ProfileScreen from "../screens/ProfileScreen";
 import Auth from '../screens/Auth';
+import SessionScreen from '../screens/session/SessionScreen';
 
 
 /*
@@ -34,6 +35,7 @@ export default function AppNavigation() {
         <>
           <Stack.Screen name="Tabs" component={TabNavigation} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="TrainingSession" component={SessionScreen} />
         </>
       ) : (
         <Stack.Screen name="Login" component={Auth} />

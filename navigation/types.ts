@@ -4,4 +4,5 @@ export type RootStackParamList = {
   Tabs: undefined;  // Kaikki alanavigaation tabit
   Login: undefined;
   Profile: undefined;
+  TrainingSession: undefined;
 };

@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import SessionScreen from "../screens/SessionScreen";
 import { LibraryScreen } from "../screens/LibraryScreen";
 import StatsScreen from "../screens/stats/StatsScreen";
 import NutritionScreen from "../screens/NutritionScreen";
@@ -11,6 +10,7 @@ import { useTheme, Appbar } from 'react-native-paper';
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "./types";
+import TrainingScreen from "../screens/session/TrainingScreen";
 
 /*
   Navigaatioreitit, jotka ovat bottom tabseissa
@@ -89,7 +89,7 @@ function MyTabs() {
       })}
     >
       <Tab.Screen name="Home" component={Homepage} />
-      <Tab.Screen name="Train" component={SessionScreen} />
+      <Tab.Screen name="Train" component={TrainingScreen} />
       <Tab.Screen name="Stats" component={StatsScreen} />
       <Tab.Screen name="Library" component={LibraryScreen} />
       <Tab.Screen name="Nutrition" component={NutritionScreen} />
