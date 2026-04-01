@@ -1,10 +1,7 @@
-import * as React from "react";
-import { View, Alert, useWindowDimensions } from "react-native";
-import { Button, Text, Card } from "react-native-paper";
-import { supabase } from "../lib/supabase";
+import { View, useWindowDimensions } from "react-native";
+import { Text } from "react-native-paper";
 
 export function Homepage() {
-  const [loading, setLoading] = React.useState(false);
   const squareTexts = [
   "0,00sek\nStart",
   "Lisää ruoka\n\nProteiini: 0%\nHiilarit: 0%",
@@ -15,13 +12,6 @@ export function Homepage() {
   const horizontalPadding = 32;
   const squareGap = 20;
   const squareSize = Math.min(110, (width - horizontalPadding - squareGap) / 2);
-
-  const handleSignOut = async () => {
-    setLoading(true);
-    const { error } = await supabase.auth.signOut();
-    if (error) Alert.alert("Sign out failed", error.message);
-    setLoading(false);
-  };
 
   return (
     <View style={{ padding: 16, gap: 12, }}>
@@ -54,10 +44,6 @@ export function Homepage() {
           </View>
         ))}
       </View>
-
-      <Button mode="outlined" onPress={handleSignOut} loading={loading} disabled={loading}>
-        Sign out
-      </Button>
     </View>
   );
 }
