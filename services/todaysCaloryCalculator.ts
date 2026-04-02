@@ -13,7 +13,7 @@ export const calculateDailyMacrosTotal = (
       (totals, item) => {
         totals.protein += item.protein ?? 0
         totals.fats += item.fats ?? 0
-        totals.carbs+= item.fats ?? 0
+        totals.carbs += item.carbs ?? 0
         return totals
       },
       { protein: 0, carbs: 0, fats: 0 }
@@ -22,8 +22,8 @@ export const calculateDailyMacrosTotal = (
 
 export const calculateCalories = (totals: {
   protein: number
-  carb: number
-  fat: number
+  carbs: number
+  fats: number
 }) => {
-  return Math.round(totals.protein * 4 + totals.carb * 4 + totals.fat * 9)
+  return Math.round(totals.protein * 4 + totals.carbs * 4 + totals.fats * 9)
 }
