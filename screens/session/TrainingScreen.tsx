@@ -1,12 +1,23 @@
-import { useWorkout } from "../../hooks/useWorkout";
 import { StyleSheet, FlatList, View } from "react-native";
 import { Surface, Text } from "react-native-paper";
 import { WorkoutItem } from "../../components/workout/WorkoutItem";
-import { useTrainingSessionStore } from "../../store/useTrainingSessionStore";
+import { useTrainingSession } from "../../store/useTrainingSessionStore";
+import { useWorkout } from "../../store/useWorkoutStore";
+import { Workout } from "../../types/types";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { TrainingStackParamList } from "../../navigation/types";
 
 export default function TrainingScreen() {
   const { workouts, toggleFavorite } = useWorkout();
-  const { handleOpen } = useTrainingSessionStore();
+  const { handleSelect } = useTrainingSession();
+  const navigation = useNavigation<NativeStackNavigationProp<TrainingStackParamList>>();
+
+  // Asettaa valitun treeniohjelman ja avaa kirjausnäkymän
+  const openSession = (workout: Workout) => {
+    handleSelect(workout);
+    navigation.navigate("TrainingSession")
+  }
 
   return (
     <Surface style={styles.container} elevation={0}>
@@ -15,7 +26,7 @@ export default function TrainingScreen() {
         renderItem={({ item }) => (
           <WorkoutItem
             item={item}
-            onClick={() => handleOpen(item)}
+            onClick={() => openSession(item)}
             onFavorite={() => toggleFavorite(item.id)}
           />
         )}
@@ -28,7 +39,7 @@ export default function TrainingScreen() {
         }
       />
     </Surface>
-    )
+  )
 }
 
 const styles = StyleSheet.create({
