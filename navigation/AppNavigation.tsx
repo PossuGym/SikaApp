@@ -4,6 +4,7 @@ import type { RootStackParamList } from "./types";
 import TabNavigation from "./TabNavigation";
 import { useAuth } from "../hooks/useAuth";
 import Auth from '../screens/Auth';
+import SessionScreen from '../screens/session/SessionScreen';
 
 /*
   Kirjautumisen ja rekisteröinnin navigaatiologiikka.
