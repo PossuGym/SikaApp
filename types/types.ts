@@ -23,13 +23,13 @@ export type Workout = {
  * Treenihistoria
  */
 export type ExerciseLog = {
-  id?: number
+  id: number
   exercise_id: number         // Viittaus liikkeeseen
   workout_id: number          // Viittaus ohjelmaan
   weight: number
   reps: number                // Toistot
   set_number: number          // Monesko sarja oli kyseessä
-  date: number                // Päivämäärä
+  date?: number                // Päivämäärä
 }
 
 /**
