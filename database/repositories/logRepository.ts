@@ -11,13 +11,13 @@ export const logRepository = {
    * Tallettaa yhden sarjan
    * @param {ExerciseLog} log - Yksi sarja ```ExerciseLog```-muodossa
    */
-  async saveSet(log: ExerciseLog): Promise<number> {
+  async saveSet(log: ExerciseLog): Promise<ExerciseLog> {
     const result = await database.runAsync(
       `INSERT INTO exercise_log (exercise_id, workout_id, weight, reps, set_number, date)
       VALUES (?, ?, ?, ?, ?, ?)`,
-      [log.exercise_id, log.workout_id, log.weight, log.reps, log.set_number, log.date]
+      [log.exercise_id, log.workout_id, log.weight, log.reps, log.set_number, log.date!]
     );
-    return result.lastInsertRowId;
+    return { ...log, id: result.lastInsertRowId };
   },
 
   /**

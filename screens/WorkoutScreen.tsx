@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { FAB, Surface, Text } from 'react-native-paper';
 import { FlatList } from "react-native";
-import { useWorkout } from "../hooks/useWorkout";
+import { useWorkout } from "../store/useWorkoutStore";
 import { WorkoutItem } from "../components/workout/WorkoutItem";
 import { WorkoutDialog } from "../components/workout/WorkoutDialog";
 import { useExercise } from "../hooks/useExercise";
