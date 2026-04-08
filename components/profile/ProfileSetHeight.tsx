@@ -7,24 +7,18 @@ import { useEffect, useState  } from 'react';
 interface Props {
   item?: Profile;
   onClick?: (profile: Profile) => void;
-  onSave?: (calories_goal: number) => Promise <boolean>;
+  onSave?: (height: number) => Promise<boolean>;
   data?: Profile | null;
 }
 
-/** 
- * @param item ```Profile``` tyypin objekti
- * @param onClick Välittää koko objektin painallustoiminnalle.
- * @example <ProfileItem item={ex} onClick={handleEdit} onSave={save} />}
-*/
-
-export const ProfileMacroGoal = ({ item, onClick, onSave, data }: Props) => {
-  const [caloriesGoal, setCaloriesGoal] = useState('');
+export const ProfileSetHeight = ({ item, onClick, onSave, data }: Props) => {
+  const [userHeight, setUserHeight] = useState('');
 
     useEffect(() => {
         if ( data){
-          setCaloriesGoal(data.calories_goal != null ? String(data.calories_goal): '' );
+          setUserHeight(data.height != null ? String(data.height): '' );
         } else {
-          setCaloriesGoal('');
+          setUserHeight('');
         }
     }, [ data])
 
@@ -36,8 +30,8 @@ export const ProfileMacroGoal = ({ item, onClick, onSave, data }: Props) => {
         try {
           const profile = await profileService.getUserProfile();
           if (!mounted) return;
-          if (profile && profile.calories_goal != null) {
-            setCaloriesGoal(String(profile.calories_goal));
+          if (profile && profile.height != null) {
+            setUserHeight(String(profile.height));
           }
         } catch (err) {
           // ignore
@@ -49,9 +43,9 @@ export const ProfileMacroGoal = ({ item, onClick, onSave, data }: Props) => {
 
 
   const handleSave = async () => {
-    const caloriesGoalValue = Number(caloriesGoal);
+    const userHeightValue = Number(userHeight);
 
-    if (isNaN(caloriesGoalValue)) {
+    if (isNaN(userHeightValue)) {
       console.log("Virheellinen numero");
       return;
     }
@@ -59,13 +53,13 @@ export const ProfileMacroGoal = ({ item, onClick, onSave, data }: Props) => {
     try {
       let success = false;
       if (onSave) {
-        success = await onSave(caloriesGoalValue);
+        success = await onSave(userHeightValue);
       } else {
-        success = await profileService.updateCaloriesGoal(caloriesGoalValue);
+        success = await profileService.updateHeight(userHeightValue);
       }
       if (success) {
         console.log("Tallennettu!");
-        setCaloriesGoal(String(caloriesGoalValue));
+        setUserHeight(String(userHeightValue));
         Keyboard.dismiss();
       } else {
         console.log("Tallennus epäonnistui");
@@ -81,15 +75,14 @@ export const ProfileMacroGoal = ({ item, onClick, onSave, data }: Props) => {
 
   return (
     <Card mode="outlined" style={styles.card} onPress={() => (onClick && item) ? onClick(item) : undefined}>
-      <Card.Title title="Kaloritavoite" titleStyle={styles.title} />
+      <Card.Title title="Pituus" titleStyle={styles.title} />
       <Card.Content>
         <View>
-
         <TextInput
-           value={caloriesGoal}
-           onChangeText={setCaloriesGoal}
+           value={userHeight}
+           onChangeText={setUserHeight}
            keyboardType="numeric"
-           placeholder="Anna kaloritavoite"
+           placeholder="Anna pituus (cm)"
         />
 
           <Button

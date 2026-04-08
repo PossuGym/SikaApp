@@ -1,5 +1,5 @@
 import { Card, Text, TextInput, Button } from 'react-native-paper';
-import { StyleSheet, View, Keyboard } from 'react-native';
+import { StyleSheet, ToastAndroid, View, Keyboard } from 'react-native';
 import { profileService } from '../../services/profileService';
 import { Profile } from '../../types/types';
 import { useEffect, useState  } from 'react';
@@ -76,14 +76,15 @@ export const ProfileStepGoal = ({ item, onClick, onSave, data }: Props) => {
     }
   };
 
+  const showToast = () => {
+    ToastAndroid.show('Tavoite tallennettu', ToastAndroid.SHORT);
+  };
 
   return (
     <Card mode="outlined" style={styles.card} onPress={() => (onClick && item) ? onClick(item) : undefined}>
       <Card.Title title="Askeltavoite" titleStyle={styles.title} />
       <Card.Content>
         <View>
-          <Text>Askeltavoite:</Text>
-
         <TextInput
            value={stepsGoal}
            onChangeText={setStepsGoal}
@@ -91,9 +92,16 @@ export const ProfileStepGoal = ({ item, onClick, onSave, data }: Props) => {
            placeholder="Anna askeltavoite"
         />
 
-          <Button mode="contained" onPress={handleSave}>
+          <Button
+            mode="contained"
+            onPress={async () => {
+              await handleSave();
+              showToast();
+            }}
+          >
             Tallenna
           </Button>
+
         </View>
       </Card.Content>
 
