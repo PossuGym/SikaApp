@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { useWeightStats } from '../../hooks/useWeightStats';
-import { Surface } from 'react-native-paper';
+import { Card, Surface, Text } from 'react-native-paper';
 import { WeightChartCard } from '../../components/stats/WeightChartCard';
+import CardContent from 'react-native-paper/lib/typescript/components/Card/CardContent';
  
 export default function StatsWeightScreen() {
-  const { getPeriodData } = useWeightStats();
+  const { getPeriodData, currentWeight } = useWeightStats();
 
   // useMemo, ettei getPediodData lasketa joka renderöinnillä kolmea kertaa uudelleen.
   const week = useMemo(() => getPeriodData(7), [getPeriodData]);
@@ -14,6 +15,11 @@ export default function StatsWeightScreen() {
  
   return (
     <Surface style={styles.container}>
+      <Card style={styles.weightCard}>
+        <Card.Content>
+          <Text variant="bodyLarge" style={styles.header}>Painosi nyt: {currentWeight} kg</Text>
+        </Card.Content>
+      </Card>
       <ScrollView>
         <WeightChartCard title="Viikko" {...week}/>
         <WeightChartCard title="Kuukausi" {...month}/>
@@ -30,9 +36,9 @@ const styles = StyleSheet.create({
     paddingBottom: 120
   },
   header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginVertical: 10,
-    marginLeft: 10
+    fontWeight: 'bold'
+  },
+  weightCard: {
+    marginBottom: 15
   }
 });

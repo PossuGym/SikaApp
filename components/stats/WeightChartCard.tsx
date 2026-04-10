@@ -107,6 +107,7 @@ export const WeightChartCard = ({
                 hideYAxisText
                 yAxisThickness={0}
                 xAxisThickness={0}
+                hideRules={true}
               />
             </View>
           </View>
