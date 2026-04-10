@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, View } from "react-native";
+import { StyleSheet, FlatList, View, SectionList } from "react-native";
 import { Surface, Text } from "react-native-paper";
 import { WorkoutItem } from "../../components/workout/WorkoutItem";
 import { useTrainingSession } from "../../store/useTrainingSessionStore";
@@ -9,7 +9,7 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { TrainingStackParamList } from "../../navigation/types";
 
 export default function TrainingScreen() {
-  const { workouts, toggleFavorite } = useWorkout();
+  const { getSections, toggleFavorite } = useWorkout();
   const { handleSelect } = useTrainingSession();
   const navigation = useNavigation<NativeStackNavigationProp<TrainingStackParamList>>();
 
@@ -21,14 +21,20 @@ export default function TrainingScreen() {
 
   return (
     <Surface style={styles.container} elevation={0}>
-      <FlatList
-        data={workouts}
+      <SectionList
+        sections={getSections()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <WorkoutItem
             item={item}
             onClick={() => openSession(item)}
             onFavorite={() => toggleFavorite(item.id)}
           />
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <View style={styles.sectionHeader}>
+            <Text variant="titleMedium">{title}</Text>
+          </View>
         )}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
         contentContainerStyle={styles.listContent}
@@ -50,6 +56,10 @@ const styles = StyleSheet.create({
   listContent: {
     paddingBottom: 200,
     paddingTop: 8
+  },
+  sectionHeader: {
+    paddingVertical: 11,
+    paddingTop: 12,
   },
   emptyText: {
     textAlign: 'center',
