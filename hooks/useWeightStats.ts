@@ -18,6 +18,9 @@ export const useWeightStats = () => {
   }, []);
  
   useEffect(() => { loadDaily(); }, [loadDaily]);
+
+  // Käyttäjän tuorein paino
+  const currentWeight = daily.length > 0 ? daily[daily.length - 1].weight : null;
  
   // Suodatetaan aikajaksojen data
   const getPeriodData = (days: number): PeriodResult => {
@@ -43,5 +46,5 @@ export const useWeightStats = () => {
     };
   };
  
-  return { getPeriodData, refresh: loadDaily };
+  return { getPeriodData, refresh: loadDaily, currentWeight };
 };
