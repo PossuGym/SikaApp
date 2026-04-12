@@ -29,7 +29,7 @@ export type ExerciseLog = {
   weight: number
   reps: number                // Toistot
   set_number: number          // Monesko sarja oli kyseessä
-  date?: number                // Päivämäärä
+  date: number                // Päivämäärä
 }
 
 /**
@@ -71,4 +71,3 @@ export type WorkoutWithExercises = {
   workout: Workout
   exercises: Exercise[]
 }
-
