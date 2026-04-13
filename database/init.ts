@@ -12,6 +12,7 @@ export const initDatabase = async () => {
     await database.execAsync(`PRAGMA foreign_keys = ON;`);
 
     // Jos seedaus ei toimi, reloadaa kerran tämän kanssa.
+
     /*
     await database.execAsync(`
       DROP TABLE IF EXISTS nutrition;

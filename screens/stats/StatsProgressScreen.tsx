@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { ExerciseStatsView } from '../../components/stats/ExerciseStatsView';
 
-export default function StatsWeightScreen() {
+export default function StatsProgressScreen() {
   return (
-    <View>
-      <Text>Kehityssivu</Text>
-    </View>
+    <ExerciseStatsView />
   );
 }

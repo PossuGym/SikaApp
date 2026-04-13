@@ -2,9 +2,7 @@ import { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { SegmentedButtons, Surface } from "react-native-paper";
 import StatsWeightScreen from './StatsWeightScreen';
-import StatsMaxRepScreen from './StatsMaxRepScreen';
 import StatsProgressScreen from './StatsProgressScreen';
-
 
 
 export default function StatsScreen () {
@@ -21,12 +19,8 @@ export default function StatsScreen () {
               label:'Paino',
             },
             {
-              value:'Maksimit',
-              label:'Maksimit',
-            },
-            {
-              value:'Kehitys',
-              label:'Kehitys',
+              value:'Liikkeet',
+              label:'Liikkeet',
             },
           ]}
           style={styles.segmented}
@@ -34,8 +28,7 @@ export default function StatsScreen () {
       </View>
       <View style={styles.content}>
         {value === 'Paino' && <StatsWeightScreen /> }
-        {value === 'Maksimit' && <StatsMaxRepScreen /> }
-        {value === 'Kehitys' && <StatsProgressScreen /> }
+        {value === 'Liikkeet' && <StatsProgressScreen /> }
       </View>
     </Surface>
   )
