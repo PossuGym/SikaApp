@@ -28,7 +28,7 @@ export default function NutritionScreen() {
   } = useNutrition();
 
   return (
-    <Surface style={styles.container} elevation={0}>
+    <Surface style={styles.container}>
       <NutritionSumCard
         item={caloriesFromMacros}
         protein={totals?.protein ?? 0}
