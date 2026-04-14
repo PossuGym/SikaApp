@@ -3,8 +3,12 @@ import { StyleSheet, View } from 'react-native';
 
 type Props = { item: number, protein: number, carbs: number, fats: number }
 
+type NutritionSumCardProps = Props & {
+  progress: number
+}
 
-export const NutritionSumCard = ({ item, protein, carbs, fats }: Props) => {
+
+export const NutritionSumCard = ({ item, protein, carbs, fats, progress }: NutritionSumCardProps) => {
   const theme = useTheme();
 
   return (
@@ -36,7 +40,7 @@ export const NutritionSumCard = ({ item, protein, carbs, fats }: Props) => {
             ]}
           >
             <Text variant="labelMedium" style={styles.progressLabel}>Edistyminen</Text>
-            <Text variant="displaySmall" style={styles.progressValue}>--%</Text>
+            <Text variant="displaySmall" style={styles.progressValue}>{progress}%</Text>
           </View>
         </View>
 

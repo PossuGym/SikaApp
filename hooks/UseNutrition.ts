@@ -1,8 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { nutritionService } from "../services/nutritionService";
 import { Nutrition } from "../types/types";
 import { Alert } from "react-native";
-import { calculateDailyMacrosTotal, calculateCalories } from '../services/todaysCaloryCalculator';
+import { profileService } from "../services/profileService";
+import {
+  calculateDailyMacrosTotal,
+  calculateCalories,
+  calculateDailyProgressPercentage,
+} from '../services/todaysCaloryCalculator';
 
 /**
  * useExercise-hook. Sisältää kaikki tilat ja toiminnallisuudet UI:lle.
@@ -11,6 +17,7 @@ export const useNutrition = () => {
   const [nutrition, setNutrition] = useState<Nutrition[]>([]); // Kaikki ruuat
   const [selectedNutrition, setSelectedNutrition] = useState<Nutrition | null>(null); // Valittu ruoka
   const [isDialogVisible, setIsDialogVisible] = useState(false); // Dialogi
+  const [caloriesGoal, setCaloriesGoal] = useState(0);
 
 
   // --- Ladataan tietokannasta kaikki ruuvat nutrions tilamuuttujaan ---
@@ -24,9 +31,26 @@ export const useNutrition = () => {
     }
   }, [])
 
+  const loadCaloriesGoal = useCallback(async () => {
+    try {
+      const profile = await profileService.getUserProfile();
+      setCaloriesGoal(profile?.calories_goal ?? 0);
+    } catch {
+      setCaloriesGoal(0);
+    }
+  }, []);
+
 
   // --- Lataus tapahtuu heti näkymän auetessa ---
   useEffect(() => { loadNutrition(); }, [loadNutrition]);
+  useEffect(() => { loadCaloriesGoal(); }, [loadCaloriesGoal]);
+
+  // Päivitä tavoite aina kun näkymään palataan (esim. profiilisivulta)
+  useFocusEffect(
+    useCallback(() => {
+      loadCaloriesGoal();
+    }, [loadCaloriesGoal])
+  );
 
 
 
@@ -84,6 +108,11 @@ export const useNutrition = () => {
     fats: totals.fats ?? 0,
   });
 
+  const dailyProgressPercentage = calculateDailyProgressPercentage(
+    caloriesFromMacros,
+    caloriesGoal
+  );
+
 
 
   // Koukun käytettävät tilat ja toiminnot
@@ -97,6 +126,7 @@ export const useNutrition = () => {
     saveNutrition,
     deleteMeal,
     totals,
-    caloriesFromMacros
+    caloriesFromMacros,
+    dailyProgressPercentage,
   };
 }

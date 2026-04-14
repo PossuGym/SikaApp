@@ -24,13 +24,15 @@ export default function NutritionScreen() {
     saveNutrition,
     deleteMeal,
     totals,
-    caloriesFromMacros
+    caloriesFromMacros,
+    dailyProgressPercentage,
   } = useNutrition();
 
   return (
     <Surface style={styles.container}>
       <NutritionSumCard
         item={caloriesFromMacros}
+        progress={dailyProgressPercentage}
         protein={totals?.protein ?? 0}
         fats={totals?.fats ?? 0}
         carbs={totals?.carbs ?? 0}
