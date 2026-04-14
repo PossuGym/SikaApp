@@ -40,9 +40,10 @@ export const exerciseLogService = {
   async saveSet(log: ExerciseLog): Promise<ExerciseLog> {
     if (log.weight < 1) throw new Error("Syötä paino");
     if (log.reps < 1) throw new Error("Syötä toistot");
-    
+
     // Aseta päivämäärä logille
-    log.date = new Date().getDate();
+    log.date = Date.now();
+    
     return await logRepository.saveSet(log);
   },
 

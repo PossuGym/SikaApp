@@ -67,7 +67,7 @@ export const logRepository = {
     return database.getAllAsync(
       `SELECT * FROM exercise_log 
        WHERE workout_id = ? 
-       AND date = (SELECT MAX(date) FROM exercise_log WHERE workout_id = ?)
+       AND date(date/1000, 'unixepoch') = date((SELECT MAX(date) FROM exercise_log WHERE workout_id = ?)/1000, 'unixepoch')
        ORDER BY exercise_id, set_number ASC`,
       [workoutId, workoutId]
     );
@@ -81,7 +81,7 @@ export const logRepository = {
   async getLastExerciseResults(exerciseId: number): Promise<ExerciseLog[]> {
     return database.getAllAsync(
       `SELECT * FROM exercise_log WHERE exercise_id = ?
-       AND date = (SELECT MAX(date) FROM exercise_log WHERE exercise_id = ?)
+       AND date(date/1000, 'unixepoch') = date((SELECT MAX(date) FROM exercise_log WHERE exercise_id = ?)/1000, 'unixepoch')
        ORDER BY set_number ASC`,
       [exerciseId, exerciseId]
     );

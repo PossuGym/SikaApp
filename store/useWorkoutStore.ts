@@ -17,6 +17,7 @@ type WorkoutState = {
   openCreateDialog: () => void;
   openEditDialog: (workout: Workout) => void;
   closeDialog: () => void;
+  getSections: () => { title: string; data: Workout[] }[];
 };
 
 export const useWorkout = create<WorkoutState>((set, get) => ({
@@ -99,6 +100,21 @@ export const useWorkout = create<WorkoutState>((set, get) => ({
     set({ selectedWorkout: workout, isDialogVisible: true }),
 
   closeDialog: () => set({ isDialogVisible: false }),
+
+  getSections: () => {
+    const workouts = get().workouts;
+    const favorites = workouts.filter(w => w.favorite === 1);
+    const rest = workouts.filter(w => w.favorite === 0);
+
+    const sections = [];
+    if (favorites.length > 0) {
+      sections.push({ title: 'Suosikit', data: favorites });
+    }
+    if (rest.length > 0) {
+      sections.push({ title: 'Muut', data: rest });
+    }
+    return sections;
+  },
 }));
 
 // Ladataan treeniohjelmat ja liikkeet storen luonnin yhteydessä
