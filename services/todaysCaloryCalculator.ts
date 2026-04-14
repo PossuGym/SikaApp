@@ -27,3 +27,14 @@ export const calculateCalories = (totals: {
 }) => {
   return Math.round(totals.protein * 4 + totals.carbs * 4 + totals.fats * 9)
 }
+
+export const calculateDailyProgressPercentage = (
+  dayCalories: number,
+  caloriesGoal: number
+) => {
+  if (caloriesGoal <= 0) return 0
+
+  const percentage = (dayCalories / caloriesGoal) * 100
+  return Math.round(Math.min(100, Math.max(0, percentage)))
+}
+
