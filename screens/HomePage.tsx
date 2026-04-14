@@ -4,20 +4,16 @@ import { Button, Text, Card } from "react-native-paper";
 import Timer from "../components/homePage/Timer";
 import { SafeAreaView } from "react-native";
 import { useAuth } from "../hooks/useAuth";
+import { FavoriteCard } from "../components/homePage/FavoriteCard";
+import { useWorkout } from "../store/useWorkoutStore";
+
+
 
 export function Homepage() {
   const { handleSignOut, authLoading } = useAuth();
+  const { workouts, exercises, toggleFavorite } = useWorkout();
+  const favorites = workouts.filter((w) => w.favorite === 1);
 
-  const squareTexts = [
-  "0,00sek\nStart",
-  "Lisää ruoka\n\nProteiini: 0%\nHiilarit: 0%",
-  "Lisää/Selaa\nTreenejä",
-  "Askeleet\n0%",
-];
-  const { width } = useWindowDimensions();
-  const horizontalPadding = 32;
-  const squareGap = 20;
-  const squareSize = Math.min(110, (width - horizontalPadding - squareGap) / 2);
 
   return (
     <View style={{ padding: 16, gap: 12, }}>
@@ -25,33 +21,25 @@ export function Homepage() {
         Koti
       </Text>
 
+      {favorites.length === 0 ? (
+        <Card mode="outlined">
+          <Card.Title title="Lisää suosikki" subtitle="Ei suosikkitreeniä" />
+        </Card>
+      ) : (
+        <View style={{ flexDirection: 'column', gap: 8 }}>
+          {favorites.map((favorite) => (
+            <FavoriteCard
+              key={favorite.id}
+              item={favorite}
+              exercises={exercises[favorite.id]}
+              onClick={() => {}}
+              onFavorite={() => toggleFavorite(favorite.id)}
+            />
+          ))}
+        </View>
+      )}
 
-      {/* Lisää suosikkitreenit tähän*/}
-
-      <View style={{ gap: squareGap, alignItems: "center" }}>
-        {[0, 1].map((row) => (
-          <View key={row} style={{ flexDirection: "row", gap: squareGap }}>
-            {squareTexts.slice(row * 2, row * 2 + 2).map((item, index) => (
-              <View
-                key={`${row}-${index}`}
-                style={{
-                  width: squareSize,
-                  height: squareSize,
-                  backgroundColor: "#EDDEDE",
-                  borderRadius: 20,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ color: "#1F1F1F", fontSize: 18, fontWeight: "600", textAlign: "center" }}>
-                  {item}
-                </Text>
-              </View>
-              
-            ))}
-          </View>
-        ))}
-      </View>
+      
 
       <Button mode="outlined" onPress={handleSignOut} loading={authLoading} disabled={authLoading}>
         Sign out
