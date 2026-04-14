@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { Text, Card } from "react-native-paper";
+import { Text, Card, Surface } from "react-native-paper";
 import Timer from "../components/homePage/Timer";
 import { FavoriteCard } from "../components/homePage/FavoriteCard";
 import { useWorkout } from "../store/useWorkoutStore";
@@ -9,7 +9,7 @@ export function Homepage() {
   const favorites = workouts.filter((w) => w.favorite === 1);
 
   return (
-    <View style={{ padding: 16, gap: 12, }}>
+    <Surface style={{ flex: 1, padding: 16, gap: 12 }}>
       <Text variant="headlineSmall" style={{ textAlign: "center", alignSelf: "center" }}>
         Koti
       </Text>
@@ -35,6 +35,6 @@ export function Homepage() {
       <Timer>
       </Timer>
     
-    </View>
+    </Surface>
   );
 }

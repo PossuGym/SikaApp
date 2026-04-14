@@ -20,7 +20,7 @@ export default function TrainingScreen() {
   }
 
   return (
-    <Surface style={styles.container} elevation={0}>
+    <Surface style={styles.container}>
       <SectionList
         sections={getSections()}
         keyExtractor={(item) => item.id.toString()}

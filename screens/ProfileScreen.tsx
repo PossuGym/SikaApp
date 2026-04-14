@@ -7,8 +7,9 @@ import { ProfileMacroGoal } from "../components/profile/ProfileMacroGoal";
 import { ProfileStepGoal } from "../components/profile/ProfileStepGoal";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Button, Card, useTheme } from 'react-native-paper';
+import { Button, Card, Surface, useTheme } from 'react-native-paper';
 import { useAuth } from "../hooks/useAuth";
+import ProfileSwitchTheme from "../components/profile/ProfileSwitchTheme";
 
 export default function ProfileScreen() {
   const { handleSignOut, authLoading } = useAuth();
@@ -18,6 +19,7 @@ export default function ProfileScreen() {
 
 
   return (
+    <Surface style={styles.container}>
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{
@@ -28,6 +30,7 @@ export default function ProfileScreen() {
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
       >
+        <ProfileSwitchTheme />
         <ProfileGetEmail />
         <ProfileSetHeight />
         <ProfileSetWeight />
@@ -46,10 +49,14 @@ export default function ProfileScreen() {
           </Card.Content>
         </Card>
       </ScrollView>
+    </Surface>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   signOutCard: {
     marginBottom: 15,
     marginTop: 10,

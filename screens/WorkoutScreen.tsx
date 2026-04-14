@@ -24,7 +24,7 @@ export default function WorkoutScreen() {
   const { exercises: allExercises } = useExercise();
 
   return (
-    <Surface style={styles.container} elevation={0}>
+    <Surface style={styles.container}>
       {/* Treeniohjelmien lista, suosikit ensin */}
       <FlatList
         data={workouts}

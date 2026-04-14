@@ -14,7 +14,7 @@ export default function SessionScreen() {
   };
 
   return (
-    <Surface style={styles.container} elevation={0}>
+    <Surface style={styles.container}>
       <View style={styles.header}>
         <Text variant="headlineSmall">
           {selectedWorkout?.name ?? "Ei valittua ohjelmaa"}

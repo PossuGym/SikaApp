@@ -1,13 +1,34 @@
 import "react-native-url-polyfill/auto";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+  NavigationContainer,
+} from "@react-navigation/native";
 import AppNavigation from "./navigation/AppNavigation";
 import { initDatabase } from './database/init'; // Paikallinen tietokanta
 import { PaperProvider } from "react-native-paper";
+import { customDarkTheme, customLightTheme } from "./services/themeService";
+import { useThemeStore } from "./store/useThemeStore";
 
 export default function App() {
   const [dbReady, setDbReady] = useState(false);
+  const isDark = useThemeStore((state) => state.isDark);
+  const paperTheme = isDark ? customDarkTheme : customLightTheme;
+  const baseNavigationTheme = isDark ? NavigationDarkTheme : NavigationDefaultTheme;
+  const navigationTheme = {
+    ...baseNavigationTheme,
+    colors: {
+      ...baseNavigationTheme.colors,
+      background: paperTheme.colors.elevation.level1,
+      card: paperTheme.colors.elevation.level1,
+      text: paperTheme.colors.onSurface,
+      border: paperTheme.colors.outlineVariant,
+      primary: paperTheme.colors.primary,
+      notification: paperTheme.colors.error,
+    },
+  };
 
   // Paikallisen tietokannan alustus
   useEffect(() => {
@@ -34,8 +55,8 @@ export default function App() {
   }
 
   return (
-    <PaperProvider>
-      <NavigationContainer>
+    <PaperProvider theme={paperTheme}>
+      <NavigationContainer theme={navigationTheme}>
         <AppNavigation />
       </NavigationContainer>
     </PaperProvider>
