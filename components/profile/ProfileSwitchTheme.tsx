@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import { Card, Switch, Text } from "react-native-paper";
+import { Card, Switch, Text, useTheme } from "react-native-paper";
 import { useThemeStore } from "../../store/useThemeStore";
 
 export default function ProfileSwitchTheme() {
@@ -7,7 +7,7 @@ export default function ProfileSwitchTheme() {
 	const toggleTheme = useThemeStore((state) => state.toggleTheme);
 
 	return (
-		<Card style={styles.card}>
+		<Card mode="elevated" elevation={2}>
 			<Card.Content style={styles.contentRow}>
 				<View>
 					<Text variant="titleMedium">Tumma teema</Text>
@@ -20,10 +20,6 @@ export default function ProfileSwitchTheme() {
 }
 
 const styles = StyleSheet.create({
-	card: {
-		marginBottom: 15,
-		paddingVertical: 4,
-	},
 	contentRow: {
 		flexDirection: "row",
 		justifyContent: "space-between",
