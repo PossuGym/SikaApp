@@ -1,9 +1,10 @@
-import { Card, Text, TextInput, Button } from 'react-native-paper';
+import { Card, TextInput, Button, useTheme } from 'react-native-paper';
 import { StyleSheet, ToastAndroid, View, Keyboard } from 'react-native';
 import { profileService } from '../../services/profileService';
-import { useEffect, useState  } from 'react';
+import { useState  } from 'react';
 
 export const ProfileAccountDetails = ({ }) => {
+  const theme = useTheme();
   const [password, setPassword] = useState('');
   const [redoPassword, setRedoPassword] = useState('');
 
@@ -33,11 +34,13 @@ export const ProfileAccountDetails = ({ }) => {
   };
 
   return (
-    <Card mode="outlined" style={styles.card}>
-      <Card.Title title="Salasana" titleStyle={styles.title} />
+    <Card mode="elevated" elevation={2}>
+      <Card.Title title="Salasana" titleVariant='titleMedium'/>
       <Card.Content>
         <View>
           <TextInput
+            mode='outlined'
+            style={styles.input}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -45,6 +48,8 @@ export const ProfileAccountDetails = ({ }) => {
           />
 
           <TextInput
+            mode='outlined'
+            style={styles.input}
             value={redoPassword}
             onChangeText={setRedoPassword}
             secureTextEntry
@@ -52,6 +57,7 @@ export const ProfileAccountDetails = ({ }) => {
           />
 
           <Button
+            style={styles.button}
             mode="contained"
             onPress={handleSave}
           >
@@ -65,10 +71,12 @@ export const ProfileAccountDetails = ({ }) => {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    marginTop: 10,
+  input: {
+    marginHorizontal: 8,
+    marginVertical: 4,
   },
-  title: {
-    fontSize: 24,
-  },
+  button: {
+    marginVertical: 8,
+    marginHorizontal: 64,
+  }
 });

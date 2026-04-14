@@ -1,5 +1,5 @@
-import { Card, IconButton, Text, useTheme } from 'react-native-paper';
-import { View } from 'react-native';
+import { Card, IconButton, useTheme } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
 import { Exercise, Workout } from '../../types/types';
 
 interface Props {
@@ -15,12 +15,15 @@ export const WorkoutItem = ({ item, exercises, onClick, onDelete, onFavorite }: 
 
   return (
     <Card
-      mode="outlined"
+      mode="elevated"
+      elevation={2}
+      style={[styles.container, { borderColor: item.favorite === 1 ? theme.colors.primary : theme.colors.outline }]}
       onPress={() => onClick(item)}
     >
       <Card.Title
         title={item.name}
-        subtitle={<Text>Liikkeitä: {exercises?.length}</Text>}
+        subtitle={`Liikkeitä: ${exercises?.length ?? 0}`}
+        subtitleStyle={styles.subtitle}
         right={(props) => (
           <View style={{ flexDirection: 'row' }}>
             {onFavorite && (
@@ -47,3 +50,20 @@ export const WorkoutItem = ({ item, exercises, onClick, onDelete, onFavorite }: 
     </Card>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 12,
+    borderWidth: 1
+  },
+  subtitle: {
+    fontSize: 12,
+    opacity: 0.8,
+    marginTop: -2,
+  },
+  actions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 4,
+  },
+});

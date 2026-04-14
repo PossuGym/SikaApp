@@ -1,5 +1,4 @@
 import { FlatList, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { FAB, Surface } from 'react-native-paper';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useNutrition } from '../hooks/UseNutrition';
@@ -30,15 +29,17 @@ export default function NutritionScreen() {
 
   return (
     <Surface style={styles.container}>
-      <NutritionSumCard
-        item={caloriesFromMacros}
-        progress={dailyProgressPercentage}
-        protein={totals?.protein ?? 0}
-        fats={totals?.fats ?? 0}
-        carbs={totals?.carbs ?? 0}
+      <View style={styles.cardContainer}>
+        <NutritionSumCard
+          item={caloriesFromMacros}
+          progress={dailyProgressPercentage}
+          protein={totals?.protein ?? 0}
+          fats={totals?.fats ?? 0}
+          carbs={totals?.carbs ?? 0}
       />
-      <SafeAreaView style={styles.listContainer} edges={['left', 'right']}>
+      </View>
       <FlatList
+        style={styles.listContainer}
         data={nutrition}
         renderItem={({ item }) => (
           <NutritionItem 
@@ -50,7 +51,6 @@ export default function NutritionScreen() {
         contentContainerStyle={{ paddingBottom: tabBarHeight + 110 }}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />} // Rako itemien väliin
       />
-      </SafeAreaView>
       {/* Floating Action Button, avaa uuden liikkeen luonnin dialogin */}
       <FAB
         icon="plus"
@@ -73,11 +73,15 @@ export default function NutritionScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+  },
+  cardContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
   },
   listContainer: {
     flex: 1,
     marginTop: 12,
+    paddingHorizontal: 16,
   },
   item: {
     marginBottom: 10

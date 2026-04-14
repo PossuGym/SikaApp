@@ -12,8 +12,12 @@ export const NutritionSumCard = ({ item, protein, carbs, fats, progress }: Nutri
   const theme = useTheme();
 
   return (
-    <Card mode="outlined" style={styles.card}>
-      <Card.Title title="Päivän saanti" titleStyle={styles.title} />
+    <Card 
+      mode="elevated" 
+      style={styles.card}
+      elevation={2}
+    >
+      <Card.Title title="Päivän saanti" titleVariant='titleLarge' />
       <Card.Content>
         <View style={styles.summaryRow}>
           <View
@@ -68,9 +72,6 @@ export const NutritionSumCard = ({ item, protein, carbs, fats, progress }: Nutri
 const styles = StyleSheet.create({
   card: {
     marginTop: 10,
-  },
-  title: {
-    fontSize: 24,
   },
   summaryRow: {
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 import { SectionList, StyleSheet, View } from 'react-native';
-import { FAB, Searchbar, Surface, Text } from 'react-native-paper';
+import { FAB, Searchbar, Surface, Text, useTheme } from 'react-native-paper';
 import { useExercise } from '../hooks/useExercise';
 import { ExerciseItem } from '../components/exercise/ExerciseItem';
 import { ExerciseDialog } from '../components/exercise/ExerciseDialog';
@@ -21,15 +21,18 @@ export default function ExercisesScreen() {
     getSections,
     setSearchQuery
   } = useExercise();
+  const theme = useTheme();
 
   return (
     <Surface style={styles.container}>
       <Searchbar
-        style={styles.searchBar}
+        style={[styles.searchBar, { backgroundColor: theme.colors.elevation.level2 }]}
         placeholder="Etsi liikkeitä"
         onChangeText={setSearchQuery}
         value={searchQuery}
       />
+
+      <Text style={styles.subheading}>Liikkeitä: {exerciseCount}</Text>
 
       {/* Liikelista kategorioittain */}
       <SectionList
@@ -44,13 +47,13 @@ export default function ExercisesScreen() {
         )}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeader}>
-            <Text variant="titleMedium">{title}</Text>
+            <View style={[styles.sectionAccent, { backgroundColor: theme.colors.primary }]} />
+            <Text variant="labelLarge">{title.toUpperCase()}</Text>
           </View>
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
-        SectionSeparatorComponent={() => <View style={{ height: 10 }} />}
+        ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         contentContainerStyle={styles.listContent}
-        ListHeaderComponent={<Text style={styles.subheading}>Liikkeitä: {exerciseCount}</Text>}
+        style={styles.sectionList}
       />
 
       {/* Floating Action Button, avaa uuden liikkeen luonnin dialogin */}
@@ -75,18 +78,34 @@ export default function ExercisesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
   },
   searchBar: {
-    marginBottom: 8,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 14,
+  },
+  sectionList: {
+    paddingHorizontal: 16
   },
   sectionHeader: {
-    paddingVertical: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+    paddingVertical: 4
+  },
+  sectionAccent: {
+    width: 6,
+    height: 24,
+    borderRadius: 2,
+    marginRight: 10,
   },
   subheading: {
     alignSelf: 'flex-end',
-    marginTop: 16,
-    marginBottom: -24,
+    marginHorizontal: 16,
+    marginBottom: 4,
+    opacity: 0.6,
+    fontSize: 12,
   },
   listContent: {
     paddingBottom: 200,
@@ -95,6 +114,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     margin: 16,
     right: 10,
-    bottom: 130
+    bottom: 130,
   },
 });

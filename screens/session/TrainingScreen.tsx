@@ -51,11 +51,11 @@ export default function TrainingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16
   },
   listContent: {
     paddingBottom: 200,
-    paddingTop: 8
+    paddingTop: 8,
+    marginHorizontal: 16,
   },
   sectionHeader: {
     paddingVertical: 11,

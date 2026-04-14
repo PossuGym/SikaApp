@@ -20,7 +20,11 @@ export const SetRow = ({ exerciseId, setNumber }: Props) => {
   const theme = useTheme();
 
   return (
-    <Card mode='elevated' style={styles.card}>
+    <Card 
+      mode='elevated' 
+      style={[styles.card, { borderColor: theme.colors.outline }]}
+      elevation={2}
+    >
     <Card.Content style={styles.row}>
       <View style={styles.numberContainer}>
         <Text variant="titleMedium">{setNumber}</Text>
@@ -55,7 +59,8 @@ export const SetRow = ({ exerciseId, setNumber }: Props) => {
             workout_id: selectedWorkout!.id,
             weight: Number(weight),
             reps: Number(reps),
-            set_number: setNumber
+            set_number: setNumber,
+            date: 0,
           })}
         />
       </View>
@@ -67,6 +72,8 @@ export const SetRow = ({ exerciseId, setNumber }: Props) => {
 const styles = StyleSheet.create({
   card: {
     marginVertical: 2,
+    borderRadius: 12,
+    borderWidth: 1
   },
   row: {
     flexDirection: 'row',

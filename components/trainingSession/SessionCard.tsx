@@ -1,4 +1,4 @@
-import { Card, Text } from 'react-native-paper';
+import { Card, Text, useTheme } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 import { Exercise } from '../../types/types';
 import { SetRow } from './SetRow';
@@ -15,12 +15,13 @@ interface Props {
  * @returns 
  */
 export const SessionCard = ({ item }: Props) => {
+  const theme = useTheme();
   const { currentSession, lastSessionResults } = useTrainingSession();
   const exerciseLogs = currentSession.filter((log) => log.exercise_id === item.id);
   const previousSets = lastSessionResults[item.id] ?? [];
 
   return (
-    <Card mode="outlined" style={styles.card}>
+    <Card mode="elevated" elevation={2}>
       <Card.Title title={item.name} />
       <Card.Content>
         {/* Edellinen treeni */}
@@ -60,9 +61,6 @@ export const SessionCard = ({ item }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  card: {
-    borderColor: 'rgba(0, 0, 0, 0.4)'
-  },
   previousRow: {
     flexDirection: 'column',
     marginBottom: 10,

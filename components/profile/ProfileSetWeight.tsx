@@ -1,4 +1,4 @@
-import { Card, Text, TextInput, Button } from 'react-native-paper';
+import { Card, Text, TextInput, Button, useTheme } from 'react-native-paper';
 import { StyleSheet, ToastAndroid, View, Keyboard, Alert } from 'react-native';
 import { profileService } from '../../services/profileService';
 import { Daily, Profile } from '../../types/types';
@@ -12,6 +12,7 @@ interface Props {
 }
 
 export const ProfileSetWeight = ({ item, onClick, onSave, data }: Props) => {
+  const theme = useTheme();
   const [userWeight, setUserWeight] = useState('');
   const [currentWeight, setCurrentWeight] = useState<number | null>(null);
 
@@ -101,18 +102,24 @@ export const ProfileSetWeight = ({ item, onClick, onSave, data }: Props) => {
   };
 
   return (
-    <Card mode="outlined" style={styles.card} onPress={() => (onClick && item) ? onClick(item) : undefined}>
-      <Card.Title title="Paino" titleStyle={styles.title} />
+    <Card 
+      mode="elevated"
+      elevation={2}
+      onPress={() => (onClick && item) ? onClick(item) : undefined}>
+      <Card.Title title="Paino" titleVariant='titleMedium'/>
       <Card.Content>
         <View>
         <TextInput
-           value={userWeight}
-           onChangeText={setUserWeight}
-           keyboardType="numeric"
-           placeholder="Anna paino (kg)"
+          mode='outlined'
+          style={styles.input}
+          value={userWeight}
+          onChangeText={setUserWeight}
+          keyboardType="numeric"
+          placeholder="Anna paino (kg)"
         />
 
           <Button
+            style={styles.button}
             mode="contained"
             onPress={handleSave}
           >
@@ -127,10 +134,12 @@ export const ProfileSetWeight = ({ item, onClick, onSave, data }: Props) => {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    marginTop: 10,
+  input: {
+    marginHorizontal: 8,
+    marginVertical: 4,
   },
-  title: {
-    fontSize: 24,
-  },
+  button: {
+    marginVertical: 8,
+    marginHorizontal: 64,
+  }
 });

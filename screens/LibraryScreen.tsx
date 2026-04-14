@@ -36,11 +36,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   segmented: {
-    maxWidth: '100%',
-    paddingHorizontal: 16,
-    paddingVertical: 16
+    marginHorizontal: 16,
+    marginVertical: 12,
+    borderRadius: 12,
   },
   content: {
     flex: 1,
   },
+
 });

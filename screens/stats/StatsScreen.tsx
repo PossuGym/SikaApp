@@ -39,10 +39,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   screenWrapper: {
-    padding: 16,
+    paddingHorizontal: 16,
   },
   segmented: {
     maxWidth: '100%',
+    marginVertical: 12,
   },
   content: {
     flex: 1,

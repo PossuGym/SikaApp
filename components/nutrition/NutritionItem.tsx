@@ -1,4 +1,5 @@
-import { Card, IconButton } from 'react-native-paper';
+import { Card, IconButton, useTheme } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
 import { Nutrition } from '../../types/types';
 
 interface Props {
@@ -17,28 +18,38 @@ interface Props {
  * <NutritionItem item={ex} onClick={handleSelect} />
  */
 export const NutritionItem = ({ item, onClick, onDelete }: Props) => {
+  const theme = useTheme();
   return (
-    
-
-
-    <Card 
-      mode="outlined"
+    <Card
+      mode="elevated"
+      elevation={2}
+      style={[styles.container, { borderColor: theme.colors.outline }]}
       onPress={() => onClick(item)}
     >
       <Card.Title
         title={item.name}
         subtitle={new Date(item.date).toLocaleDateString()}
         right={(props) => onDelete ? ( // Poistonappi näytetään vain, jos sen toiminta välitetään propsina
-          <IconButton 
-            {...props} 
-            icon="delete-outline" 
-            iconColor="#B00020" 
+          <IconButton
+            {...props}
+            icon="delete-outline"
+            iconColor={theme.colors.error}
             onPress={() => {
-                if (item.id != null) onDelete?.(item.id);
+              if (item.id != null) onDelete?.(item.id);
             }}
           />
-        ) : null }
+        ) : null}
       />
     </Card>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 12,
+    borderWidth: 1
+  },
+  deleteButton: {
+    marginRight: 4,
+  },
+});

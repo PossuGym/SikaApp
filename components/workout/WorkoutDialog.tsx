@@ -66,7 +66,7 @@ export const WorkoutDialog = ({ visible, onDismiss, onSave, workout, workoutExer
         <View style={styles.overlay} />
       </TouchableWithoutFeedback>
 
-      <View style={[styles.dialogContainer, { backgroundColor: theme.colors.elevation.level3 }]}>
+      <View style={[styles.dialogContainer, { backgroundColor: theme.colors.surface }]}>
         {/* Otsikko */}
         <Text variant="titleLarge" style={styles.title}>
           {workout ? "Muokkaa ohjelmaa" : "Uusi ohjelma"}
@@ -95,7 +95,7 @@ export const WorkoutDialog = ({ visible, onDismiss, onSave, workout, workoutExer
           {/* Leijuva dropdown kategorialista */}
           {categoryListVisible && (
             <View style={[styles.categoryList, { 
-              backgroundColor: theme.colors.elevation.level4,
+              backgroundColor: theme.colors.elevation.level3,
               borderColor: theme.colors.outline 
             }]}>
               {categories.map((cat, index) => (
@@ -151,7 +151,9 @@ export const WorkoutDialog = ({ visible, onDismiss, onSave, workout, workoutExer
           {!selectedCategory && (
             <View style={{ flex: 1 }}>
               <View style={styles.listHeader}>
-                <Text variant="titleSmall" style={{ opacity: 0.8 }}>Valitut liikkeet: {selected.length}</Text>
+                <Text variant="labelLarge">
+                  {selectedCategory ? 'Valitse liike' : `Valitut liikkeet: ${selected.length}`}
+                </Text>
               </View>
           
             <FlatList
@@ -197,14 +199,17 @@ const styles = StyleSheet.create({
     left: '4%',
     right: '4%',
     height: SCREEN_HEIGHT * 0.8,
-    borderRadius: 12,
+    borderRadius: 24,
     paddingHorizontal: 24,
-    paddingTop: 24,
+    paddingTop: 8,
     paddingBottom: 8,
     flexDirection: 'column',
   },
   title: {
-    marginBottom: 16,
+    marginBottom: 20,
+    marginTop: 20,
+    fontSize: 24,
+    fontWeight: '500',
   },
   content: {
     flex: 1,
@@ -214,6 +219,7 @@ const styles = StyleSheet.create({
   },
   dropdownButton: {
     marginBottom: 8,
+    borderRadius: 10,
   },
   categoryList: {
     position: 'absolute',
@@ -221,9 +227,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 1000,
-    borderRadius: 8,
+    borderRadius: 12,
     borderWidth: 1,
-    elevation: 10,
     padding: 4,
   },
   exercisesList: {

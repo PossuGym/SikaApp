@@ -37,7 +37,7 @@ export default function WorkoutScreen() {
             onFavorite={() => toggleFavorite(item.id)}
           />
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+        ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={
           <Text variant="bodyMedium" style={styles.emptyText}>
@@ -70,11 +70,11 @@ export default function WorkoutScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
   },
   listContent: {
     paddingBottom: 200,
-    paddingTop: 8,
+    paddingTop: 16,
+    paddingHorizontal: 16,
   },
   emptyText: {
     textAlign: 'center',

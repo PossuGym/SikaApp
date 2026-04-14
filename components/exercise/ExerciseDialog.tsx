@@ -40,7 +40,7 @@ export const ExerciseDialog = ({ visible, onDismiss, onSave, data }: Props) => {
 
   return (
     <Portal>
-      <Dialog visible={visible} onDismiss={onDismiss}>
+      <Dialog visible={visible} onDismiss={onDismiss} style={styles.dialog}>
         <Dialog.Title>{data ? "Muokkaa liikettä" : "Lisää uusi liike"}</Dialog.Title>
         <Dialog.Content>
           <TextInput label="Liikkeen nimi" value={name} onChangeText={setName} mode="outlined"/>
@@ -59,6 +59,9 @@ export const ExerciseDialog = ({ visible, onDismiss, onSave, data }: Props) => {
 
 const styles = StyleSheet.create({
   categoryInput: {
-    marginTop: 10,
+    marginTop: 12,
   },
+  dialog: {
+    borderRadius: 16,
+},
 });

@@ -24,7 +24,7 @@ export const WeightChartCard = ({
 
   // Värit teemasta
   const lineColor = colors.primary; // Normaalin käyräviivan väri
-  const trendColor = colors.tertiary; // Trendiviivan väri
+  const trendColor = colors.error; // Trendiviivan väri
   const fillColor = colors.backdrop;  // Viivan alapuolen täytteen väri
   const axisColor = colors.outlineVariant;
   const labelColor = colors.onSurface;
@@ -45,7 +45,7 @@ export const WeightChartCard = ({
   };
  
   return (
-    <Card style={styles.card}>
+    <Card style={styles.card} elevation={2}>
       <Card.Title
         title={title}
         titleStyle={{ color: colors.onSurface }}

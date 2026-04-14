@@ -21,11 +21,12 @@ export default function ProfileScreen() {
   return (
     <Surface style={styles.container}>
       <ScrollView
-        style={{ flex: 1 }}
+        style={styles.scrollView}
         contentContainerStyle={{
           paddingTop: 16,
           paddingHorizontal: 16,
           paddingBottom: tabBarHeight + insets.bottom + 16,
+          gap: 16,
         }}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
@@ -37,14 +38,15 @@ export default function ProfileScreen() {
         <ProfileAccountDetails />
         <ProfileMacroGoal />
         <ProfileStepGoal />
-        <Card style={styles.signOutCard}>
+        <Card elevation={2}>
           <Card.Content>
-              <Button 
+              <Button
+                style={styles.button}
                 mode="contained" 
                 buttonColor={theme.colors.error}
                 onPress={handleSignOut} 
                 loading={authLoading} 
-                disabled={authLoading}> Sign out
+                disabled={authLoading}> Kirjaudu ulos
             </Button>
           </Card.Content>
         </Card>
@@ -57,9 +59,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  signOutCard: {
-    marginBottom: 15,
-    marginTop: 10,
-    padding: 5
+  scrollView: {
+    flex: 1,
   },
+  button: {
+    marginVertical: 8,
+    marginHorizontal: 64,
+  }
 });

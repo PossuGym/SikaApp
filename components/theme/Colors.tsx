@@ -1,84 +1,84 @@
 export const Colors = {
-"light": {
-"primary": "rgb(0, 103, 131)",
-"onPrimary": "rgb(255, 255, 255)",
-"primaryContainer": "rgb(188, 233, 255)",
-"onPrimaryContainer": "rgb(0, 31, 42)",
-"secondary": "rgb(77, 97, 107)",
-"onSecondary": "rgb(255, 255, 255)",
-"secondaryContainer": "rgb(208, 230, 242)",
-"onSecondaryContainer": "rgb(8, 30, 39)",
-"tertiary": "rgb(92, 91, 125)",
-"onTertiary": "rgb(255, 255, 255)",
-"tertiaryContainer": "rgb(226, 223, 255)",
-"onTertiaryContainer": "rgb(25, 24, 54)",
-"error": "rgb(186, 26, 26)",
-"onError": "rgb(255, 255, 255)",
-"errorContainer": "rgb(255, 218, 214)",
-"onErrorContainer": "rgb(65, 0, 2)",
-"background": "rgb(251, 252, 254)",
-"onBackground": "rgb(25, 28, 30)",
-"surface": "rgb(251, 252, 254)",
-"onSurface": "rgb(25, 28, 30)",
-"surfaceVariant": "rgb(220, 228, 233)",
-"onSurfaceVariant": "rgb(64, 72, 76)",
-"outline": "rgb(112, 120, 125)",
-"outlineVariant": "rgb(192, 200, 205)",
-"shadow": "rgb(0, 0, 0)",
-"scrim": "rgb(0, 0, 0)",
-"inverseSurface": "rgb(46, 49, 50)",
-"inverseOnSurface": "rgb(239, 241, 243)",
-"inversePrimary": "rgb(99, 211, 255)",
-"elevation": {
-"level0": "transparent",
-"level1": "rgb(238, 245, 248)",
-"level2": "rgb(231, 240, 244)",
-"level3": "rgb(223, 236, 241)",
-"level4": "rgb(221, 234, 239)",
-"level5": "rgb(216, 231, 237)"
-},
-"surfaceDisabled": "rgba(25, 28, 30, 0.12)",
-"onSurfaceDisabled": "rgba(25, 28, 30, 0.38)",
-"backdrop": "rgba(42, 50, 53, 0.4)"
-},
-"dark": {"primary": "rgb(99, 211, 255)",
-"onPrimary": "rgb(0, 53, 69)",
-"primaryContainer": "rgb(0, 77, 99)",
-"onPrimaryContainer": "rgb(188, 233, 255)",
-"secondary": "rgb(180, 202, 213)",
-"onSecondary": "rgb(30, 51, 60)",
-"secondaryContainer": "rgb(53, 74, 83)",
-"onSecondaryContainer": "rgb(208, 230, 242)",
-"tertiary": "rgb(197, 194, 234)",
-"onTertiary": "rgb(46, 45, 77)",
-"tertiaryContainer": "rgb(69, 67, 100)",
-"onTertiaryContainer": "rgb(226, 223, 255)",
-"error": "rgb(255, 180, 171)",
-"onError": "rgb(105, 0, 5)",
-"errorContainer": "rgb(147, 0, 10)",
-"onErrorContainer": "rgb(255, 180, 171)",
-"background": "rgb(25, 28, 30)",
-"onBackground": "rgb(225, 226, 228)",
-"surface": "rgb(25, 28, 30)",
-"onSurface": "rgb(225, 226, 228)",
-"surfaceVariant": "rgb(64, 72, 76)",
-"onSurfaceVariant": "rgb(192, 200, 205)",
-"outline": "rgb(138, 146, 151)",
-"outlineVariant": "rgb(64, 72, 76)",
-"shadow": "rgb(0, 0, 0)",
-"scrim": "rgb(0, 0, 0)",
-"inverseSurface": "rgb(225, 226, 228)",
-"inverseOnSurface": "rgb(46, 49, 50)",
-"inversePrimary": "rgb(0, 103, 131)",
-"elevation": {
-"level0": "transparent",
-"level1": "rgb(29, 37, 41)","level2": "rgb(31, 43, 48)",
-"level3": "rgb(33, 48, 55)",
-"level4": "rgb(34, 50, 57)",
-"level5": "rgb(35, 54, 62)"
-},
-"surfaceDisabled": "rgba(225, 226, 228, 0.12)",
-"onSurfaceDisabled": "rgba(225, 226, 228, 0.38)",
-"backdrop": "rgba(42, 50, 53, 0.4)"
-}
-}
+  light: {
+    primary: "#374151",
+    onPrimary: "#FFFFFF",
+    primaryContainer: "#D1D5DB",
+    onPrimaryContainer: "#111827",
+
+    secondary: "#4B5563",
+    onSecondary: "#FFFFFF",
+    secondaryContainer: "#E5E7EB",
+    onSecondaryContainer: "#111827",
+
+    background: "#FFFFFF",
+    onBackground: "#0F172A",
+
+    surface: "#F1F5F9",
+    surfaceTint: "rgba(255,255,255,0.09)",
+    onSurface: "#0F172A",
+
+    surfaceVariant: "#CBD5E1",
+    onSurfaceVariant: "#1F2937",
+
+    outline: "#475569",
+    outlineVariant: "#E2E8F0",
+
+    elevation: {
+      level0: "#FFFFFF", // TÄMÄ ON TAUSTA
+      level1: "#F1F5F9",
+      level2: "#E2E8F0", // KORTIT MÄÄRITELTY TÄHÄN
+      level3: "#CBD5E1",
+      level4: "#94A3B8",
+      level5: "#64748B",
+    },
+
+    error: "#DC2626",
+    onError: "#FFFFFF",
+
+    surfaceDisabled: "rgba(15,23,42,0.12)",
+    onSurfaceDisabled: "rgba(15,23,42,0.38)",
+
+    backdrop: "rgba(15,23,42,0.55)",
+  },
+
+  dark: {
+    primary: "#F3F4F6",
+    onPrimary: "#111827",
+    primaryContainer: "#374151",
+    onPrimaryContainer: "#F9FAFB",
+
+    secondary: "#9CA3AF",
+    onSecondary: "#111827",
+    secondaryContainer: "#4B5563",
+    onSecondaryContainer: "#F3F4F6",
+
+    background: "#0A0A0F",
+
+    surface: "#12121A",
+    surfaceTint: "rgba(255,255,255,0.09)",
+    onSurface: "#F3F4F6",
+
+    surfaceVariant: "#16161A",
+    onSurfaceVariant: "#D1D5DB",
+
+    outline: "#6B7280",
+    outlineVariant: "#1F2937",
+
+    elevation: {
+      level0: "#0A0A0F",  // TAUSTA
+      level1: "#141420",
+      level2: "#1E1E2A",  // KORTIT MÄÄRITELTY TÄHÄN
+      level3: "#2A2A3A",
+      level4: "#36364A",  // ESIM DIALOGIT
+      level5: "#4A4A60",
+    },
+
+    error: "#e42424",
+    onError: "#111827",
+
+    surfaceDisabled: "rgba(243,244,246,0.10)",
+    onSurfaceDisabled: "rgba(243,244,246,0.35)",
+
+    backdrop: "rgba(0,0,0,0.85)",
+  },
+} as const;
