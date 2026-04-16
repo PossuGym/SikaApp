@@ -1,5 +1,7 @@
 import { StyleSheet, FlatList, View } from "react-native";
 import { Surface, Card, Text, FAB, useTheme } from "react-native-paper";
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { Theme } from "../../components/theme/Colors";
 import { useTrainingSession } from "../../store/useTrainingSessionStore";
 import { SessionCard } from "../../components/trainingSession/SessionCard";
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +10,7 @@ export default function SessionScreen() {
   const { selectedWorkout, exercises, endSession } = useTrainingSession();
   const navigation = useNavigation();
   const theme = useTheme();
+  const tabBarHeight = useBottomTabBarHeight();
 
   const handleEndSession = () => {
     endSession();
@@ -15,7 +18,7 @@ export default function SessionScreen() {
   };
 
   return (
-    <Surface style={styles.container}>
+    <Surface style={[styles.container, { backgroundColor: theme.colors.background }]}>
       
       <FlatList
         data={exercises}
@@ -23,16 +26,17 @@ export default function SessionScreen() {
         renderItem={({ item }) => (
           <SessionCard item={item} />
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
-        contentContainerStyle={styles.listContent}
+        ItemSeparatorComponent={() => <View style={{ height: Theme.spacing.lg }} />}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[styles.listContent, { paddingBottom: tabBarHeight + Theme.spacing.xxxl }]}
         ListEmptyComponent={
           <Text variant="bodyMedium" style={styles.emptyText}>
             Ei valittua ohjelmaa
           </Text>
         }
         ListHeaderComponent={
-          <Card style={styles.headerCard}>
-            <Text variant="bodyLarge" style={styles.header}>
+          <Card mode="elevated" elevation={1} style={[styles.headerCard, { borderColor: theme.colors.outline, backgroundColor: theme.colors.primaryContainer }]}>
+            <Text variant="titleMedium" style={styles.header}>
               {selectedWorkout?.name ?? "Ei valittua ohjelmaa"} 
             </Text>
           </Card>
@@ -57,26 +61,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerCard: {
-    marginVertical: 16,
+    borderRadius: Theme.radius.md,
+    borderWidth: Theme.borderWidth.thin,
+    marginVertical: Theme.spacing.lg,
   },
   header: {
-    margin: 16,
+    margin: Theme.spacing.lg,
     textAlign: "center",
   },
   listContent: {
-    paddingBottom: 240,
-    paddingTop: 8,
-    marginHorizontal: 16,
+    paddingBottom: 0,
+    paddingTop: Theme.spacing.xs,
+    marginHorizontal: Theme.spacing.lg,
   },
   emptyText: {
     textAlign: "center",
-    marginTop: 32,
+    marginTop: Theme.spacing.xxl,
     opacity: 0.5,
   },
   fab: {
     position: 'absolute',
-    margin: 16,
-    left: 10,
-    bottom: 130,
+    margin: Theme.spacing.lg,
+    bottom: Theme.fab.bottom,
   },
 });

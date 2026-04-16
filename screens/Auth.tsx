@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { useAuth } from "../hooks/useAuth";
 import { useTheme } from 'react-native-paper';
+import { Theme } from '../components/theme/Colors';
 
 export default function Auth() {
   const theme = useTheme();
@@ -56,31 +57,31 @@ export default function Auth() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
+    marginTop: Theme.spacing.xl * 1.5,
+    padding: Theme.spacing.md,
   },
   verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingTop: Theme.spacing.xs,
+    paddingBottom: Theme.spacing.xs,
     alignSelf: 'stretch',
   },
   mt20: {
-    marginTop: 20,
+    marginTop: Theme.spacing.xl,
   },
   label: {
     fontSize: 16,
     fontWeight: '600',
-    marginBottom: 6,
+    marginBottom: Theme.spacing.sm,
   },
   input: {
     borderWidth: 1,
-    borderRadius: 4,
-    padding: 12,
+    borderRadius: Theme.radius.sm,
+    padding: Theme.spacing.md,
     fontSize: 16,
   },
   button: {
-    borderRadius: 4,
-    padding: 12,
+    borderRadius: Theme.radius.sm,
+    padding: Theme.spacing.md,
     alignItems: 'center',
   },
   buttonDisabled: {

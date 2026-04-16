@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { SegmentedButtons, Surface } from 'react-native-paper';
+import { SegmentedButtons, Surface, useTheme } from 'react-native-paper';
 import ExercisesScreen from './ExercisesScreen';
 import WorkoutScreen from './WorkoutScreen';
+import { Theme } from '../components/theme/Colors';
 
 /** Kirjasto.
  * Tämä näkymä sisältää ExercisesScreenin ja WorkoutScreenin.
@@ -11,8 +12,10 @@ import WorkoutScreen from './WorkoutScreen';
 export const LibraryScreen = () => {
   const [value, setValue] = useState('exercises');
 
+  const theme = useTheme();
+
   return (
-    <Surface style={styles.container}>
+    <Surface style={[styles.container, { backgroundColor: theme.colors.background}]}>
         {/* Valitsin */}
         <SegmentedButtons
           value={value}
@@ -36,9 +39,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   segmented: {
-    marginHorizontal: 16,
-    marginVertical: 12,
-    borderRadius: 12,
+    marginHorizontal: Theme.spacing.lg,
+    marginVertical: Theme.spacing.md,
+    borderRadius: Theme.radius.md,
   },
   content: {
     flex: 1,

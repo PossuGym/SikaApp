@@ -1,5 +1,6 @@
 import { SectionList, StyleSheet, View } from 'react-native';
 import { FAB, Searchbar, Surface, Text, useTheme } from 'react-native-paper';
+import { Theme } from '../components/theme/Colors';
 import { useExercise } from '../hooks/useExercise';
 import { ExerciseItem } from '../components/exercise/ExerciseItem';
 import { ExerciseDialog } from '../components/exercise/ExerciseDialog';
@@ -24,7 +25,7 @@ export default function ExercisesScreen() {
   const theme = useTheme();
 
   return (
-    <Surface style={styles.container}>
+    <Surface style={[styles.container, { backgroundColor: theme.colors.background }]} elevation={0}>
       <Searchbar
         style={[styles.searchBar, { backgroundColor: theme.colors.elevation.level2 }]}
         placeholder="Etsi liikkeitä"
@@ -53,6 +54,7 @@ export default function ExercisesScreen() {
         )}
         ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
         style={styles.sectionList}
       />
 
@@ -60,7 +62,7 @@ export default function ExercisesScreen() {
       <FAB
         icon="plus"
         customSize={64}
-        style={styles.fab} // FABIN SIJAINTI, JÄÄ DEFAULTTINA NAVIGAATION ALLE
+        style={styles.fab}
         onPress={openCreateDialog}
       />
 
@@ -80,40 +82,40 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchBar: {
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderRadius: 14,
+    marginVertical: Theme.spacing.sm,
+    marginHorizontal: Theme.spacing.lg,
+    borderRadius: Theme.radius.md,
   },
   sectionList: {
-    paddingHorizontal: 16
+    paddingHorizontal: Theme.spacing.lg
   },
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: Theme.spacing.md,
+    marginBottom: Theme.spacing.md,
     paddingVertical: 4
   },
   sectionAccent: {
     width: 6,
     height: 24,
     borderRadius: 2,
-    marginRight: 10,
+    marginRight: Theme.spacing.sm,
   },
   subheading: {
     alignSelf: 'flex-end',
-    marginHorizontal: 16,
-    marginBottom: 4,
+    marginHorizontal: Theme.spacing.lg,
+    marginBottom: Theme.spacing.xs,
     opacity: 0.6,
     fontSize: 12,
   },
   listContent: {
-    paddingBottom: 200,
+    paddingBottom: Theme.spacing.xxxl + Theme.fab.size,
   },
   fab: {
     position: 'absolute',
-    margin: 16,
-    right: 10,
-    bottom: 130,
+    margin: Theme.spacing.lg,
+    right: Theme.spacing.sm,
+    bottom: Theme.fab.bottom
   },
 });

@@ -8,6 +8,7 @@ import { ProfileStepGoal } from "../components/profile/ProfileStepGoal";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button, Card, Surface, useTheme } from 'react-native-paper';
+import { Theme } from '../components/theme/Colors';
 import { useAuth } from "../hooks/useAuth";
 import ProfileSwitchTheme from "../components/profile/ProfileSwitchTheme";
 
@@ -19,17 +20,18 @@ export default function ProfileScreen() {
 
 
   return (
-    <Surface style={styles.container}>
+    <Surface style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={{
-          paddingTop: 16,
-          paddingHorizontal: 16,
-          paddingBottom: tabBarHeight + insets.bottom + 16,
-          gap: 16,
+          paddingTop: Theme.spacing.lg,
+          paddingHorizontal: Theme.spacing.lg,
+          paddingBottom: tabBarHeight + insets.bottom + Theme.spacing.lg,
+          gap: Theme.spacing.lg,
         }}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
+        showsVerticalScrollIndicator={false}
       >
         <ProfileSwitchTheme />
         <ProfileGetEmail />
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    marginVertical: 8,
-    marginHorizontal: 64,
+    marginVertical: Theme.spacing.sm,
+    marginHorizontal: Theme.spacing.xxl * 2,
   }
 });

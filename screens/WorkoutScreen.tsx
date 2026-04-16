@@ -1,12 +1,15 @@
-import { StyleSheet, View } from "react-native";
-import { FAB, Surface, Text } from 'react-native-paper';
-import { FlatList } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
+import { FAB, Surface, Text, useTheme } from 'react-native-paper';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { Theme } from '../components/theme/Colors';
 import { useWorkout } from "../store/useWorkoutStore";
 import { WorkoutItem } from "../components/workout/WorkoutItem";
 import { WorkoutDialog } from "../components/workout/WorkoutDialog";
 import { useExercise } from "../hooks/useExercise";
 
 export default function WorkoutScreen() {
+  const theme = useTheme();
+  const tabBarHeight = useBottomTabBarHeight();
   const { 
     exercises,
     workouts,
@@ -24,7 +27,7 @@ export default function WorkoutScreen() {
   const { exercises: allExercises } = useExercise();
 
   return (
-    <Surface style={styles.container}>
+    <Surface style={[styles.container, { backgroundColor: theme.colors.background }]} elevation={0}> 
       {/* Treeniohjelmien lista, suosikit ensin */}
       <FlatList
         data={workouts}
@@ -37,8 +40,9 @@ export default function WorkoutScreen() {
             onFavorite={() => toggleFavorite(item.id)}
           />
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+        ItemSeparatorComponent={() => <View style={{ height: Theme.spacing.lg }} />}
         contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <Text variant="bodyMedium" style={styles.emptyText}>
             Ei treeniohjelmia
@@ -72,19 +76,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listContent: {
-    paddingBottom: 200,
-    paddingTop: 16,
-    paddingHorizontal: 16,
+    paddingBottom: Theme.spacing.xxxl + Theme.fab.size,
+    paddingTop: Theme.spacing.sm,
+    paddingHorizontal: Theme.spacing.lg,
   },
   emptyText: {
     textAlign: 'center',
-    marginTop: 32,
+    marginTop: Theme.spacing.xxl,
     opacity: 0.5,
   },
   fab: {
     position: 'absolute',
-    margin: 16,
-    right: 10,
-    bottom: 130
+    margin: Theme.spacing.lg,
+    right: Theme.spacing.sm,
+    bottom: Theme.fab.bottom
   },
 });
