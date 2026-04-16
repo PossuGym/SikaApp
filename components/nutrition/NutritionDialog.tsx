@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Dialog, Portal, TextInput, Button } from 'react-native-paper';
+import { Theme } from '../theme/Colors';
 import { Nutrition } from '../../types/types';
 import { View } from 'react-native';
 import { calculateCaloriesFromMacros, formatDateToString, isValidDateString,
@@ -120,16 +121,16 @@ interface Props {
               }
             }}
             mode="outlined" 
-            style={{marginTop: 10}}
+            style={{marginTop: Theme.spacing.md}}
             placeholder="yyyy-MM-dd"
           />
-          <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+          <View style={{flexDirection: 'row', alignItems: 'center', marginTop: Theme.spacing.md}}>
       
-          <TextInput label="Protein" value={protein} onChangeText={setProtein} mode="outlined" style={{marginTop: 10, flex: 1}}/>
-          <TextInput label="Carbs" value={carbs} onChangeText={setCarbs} mode="outlined" style={{marginTop: 10, flex: 1}}/>
-          <TextInput label="Fats" value={fats} onChangeText={setFats} mode="outlined" style={{marginTop: 10, flex: 1}}/>
+          <TextInput label="Protein" value={protein} onChangeText={setProtein} mode="outlined" style={{marginTop: Theme.spacing.md, flex: 1}}/>
+          <TextInput label="Carbs" value={carbs} onChangeText={setCarbs} mode="outlined" style={{marginTop: Theme.spacing.md, flex: 1}}/>
+          <TextInput label="Fats" value={fats} onChangeText={setFats} mode="outlined" style={{marginTop: Theme.spacing.md, flex: 1}}/>
           </View>
-          <TextInput label="Kalorit" value={calories} onChangeText={handleCaloriesChange} mode="outlined" style={{marginTop: 10}}/>
+          <TextInput label="Kalorit" value={calories} onChangeText={handleCaloriesChange} mode="outlined" style={{marginTop: Theme.spacing.md}}/>
         </Dialog.Content>
         <Dialog.Actions>
           <Button onPress={onDismiss}>Peruuta</Button>

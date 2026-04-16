@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Dimensions, StyleSheet, FlatList, View, Modal, TouchableWithoutFeedback} from 'react-native';
 import { TextInput, Text, Button, useTheme, Divider } from 'react-native-paper';
+import { Theme } from '../theme/Colors';
 import { Exercise, Workout } from '../../types/types';
 import { ExerciseItem } from '../exercise/ExerciseItem';
 
@@ -102,7 +103,7 @@ export const WorkoutDialog = ({ visible, onDismiss, onSave, workout, workoutExer
                 <View key={cat}>
                   <Button
                     mode="text"
-                    contentStyle={{ padding: 5 }}
+                    contentStyle={{ padding: Theme.spacing.xs }}
                     onPress={() => {
                       setSelectedCategory(cat);
                       setCategoryListVisible(false);
@@ -139,7 +140,7 @@ export const WorkoutDialog = ({ visible, onDismiss, onSave, workout, workoutExer
                     onClick={() => addExercise(item)}
                   />
                 )}
-                ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
+                ItemSeparatorComponent={() => <View style={{ height: Theme.spacing.xs }} />}
                 ListEmptyComponent={
                   <Text style={styles.emptyText}>Ei liikkeitä</Text>
                 }
@@ -166,7 +167,7 @@ export const WorkoutDialog = ({ visible, onDismiss, onSave, workout, workoutExer
                   onDelete={() => removeExercise(item)}
                 />
               )}
-              ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+                ItemSeparatorComponent={() => <View style={{ height: Theme.spacing.sm }} />}
               ListEmptyComponent={
                 <Text variant="bodySmall" style={styles.emptyText}>Ei lisättäviä liikkeitä</Text>
               }
@@ -199,27 +200,27 @@ const styles = StyleSheet.create({
     left: '4%',
     right: '4%',
     height: SCREEN_HEIGHT * 0.8,
-    borderRadius: 24,
-    paddingHorizontal: 24,
-    paddingTop: 8,
-    paddingBottom: 8,
+    borderRadius: Theme.radius.lg * 2,
+    paddingHorizontal: Theme.spacing.xl,
+    paddingTop: Theme.spacing.sm,
+    paddingBottom: Theme.spacing.sm,
     flexDirection: 'column',
   },
   title: {
-    marginBottom: 20,
-    marginTop: 20,
-    fontSize: 24,
+    marginBottom: Theme.spacing.lg,
+    marginTop: Theme.spacing.lg,
+    fontSize: Theme.typography.sizes.xl,
     fontWeight: '500',
   },
   content: {
     flex: 1,
   },
   input: {
-    marginBottom: 12,
+    marginBottom: Theme.spacing.md,
   },
   dropdownButton: {
-    marginBottom: 8,
-    borderRadius: 10,
+    marginBottom: Theme.spacing.sm,
+    borderRadius: Theme.radius.md,
   },
   categoryList: {
     position: 'absolute',
@@ -227,9 +228,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 1000,
-    borderRadius: 12,
+    borderRadius: Theme.radius.md,
     borderWidth: 1,
-    padding: 4,
+    padding: Theme.spacing.xs,
   },
   exercisesList: {
     flex: 1,
@@ -238,21 +239,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
-    paddingLeft: 8,
-    marginTop: 4,
+    marginBottom: Theme.spacing.sm,
+    paddingLeft: Theme.spacing.sm,
+    marginTop: Theme.spacing.xs,
     height: 40,
   },
   emptyText: {
     textAlign: 'center',
     opacity: 0.5,
-    marginTop: 8,
+    marginTop: Theme.spacing.sm,
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingTop: 8,
-    paddingBottom: 8,
-    gap: 8,
+    paddingTop: Theme.spacing.sm,
+    paddingBottom: Theme.spacing.sm,
+    gap: Theme.spacing.sm,
   },
 });

@@ -1,84 +1,151 @@
+/**
+ * VÄRITEEMAT
+ */
+
+// Asiallinen
 export const Colors = {
   light: {
-    primary: "#374151",
+    primary: "#005AC1", 
     onPrimary: "#FFFFFF",
-    primaryContainer: "#D1D5DB",
-    onPrimaryContainer: "#111827",
+    primaryContainer: "#D8E2FF",
+    onPrimaryContainer: "#001A41",
 
-    secondary: "#4B5563",
+    secondary: "#575E71",
     onSecondary: "#FFFFFF",
-    secondaryContainer: "#E5E7EB",
-    onSecondaryContainer: "#111827",
+    secondaryContainer: "#DBE2F9",
+    onSecondaryContainer: "#141B2C",
 
-    background: "#FFFFFF",
-    onBackground: "#0F172A",
+    // Taustaväri
+    background: "#FEFBFF", 
+    onBackground: "#1B1B1F",
 
-    surface: "#F1F5F9",
-    surfaceTint: "rgba(255,255,255,0.09)",
-    onSurface: "#0F172A",
+    // Pinnat (Kortit ja modalit)
+    surface: "#FAF9FD",
+    surfaceTint: "#005AC1",
+    onSurface: "#1B1B1F",
 
-    surfaceVariant: "#CBD5E1",
-    onSurfaceVariant: "#1F2937",
+    // Variantteja käytetään esim. valitsemattomissa syötteissä
+    surfaceVariant: "#E1E2EC",
+    onSurfaceVariant: "#44474F",
 
-    outline: "#475569",
-    outlineVariant: "#E2E8F0",
+    // Reunat
+    outline: "#74777F",
+    outlineVariant: "#C4C6D0",
 
+    // Elevation-tasot
     elevation: {
-      level0: "#FFFFFF", // TÄMÄ ON TAUSTA
-      level1: "#F1F5F9",
-      level2: "#E2E8F0", // KORTIT MÄÄRITELTY TÄHÄN
-      level3: "#CBD5E1",
-      level4: "#94A3B8",
-      level5: "#64748B",
+      level0: "transparent",
+      level1: "#F3F4F9",
+      level2: "#EDEFF7",
+      level3: "#E7EAF4",
+      level4: "#E5E9F3",
+      level5: "#E1E5F1",
     },
 
-    error: "#DC2626",
+    error: "#BA1A1A",
     onError: "#FFFFFF",
 
-    surfaceDisabled: "rgba(15,23,42,0.12)",
-    onSurfaceDisabled: "rgba(15,23,42,0.38)",
+    surfaceDisabled: "rgba(27, 27, 31, 0.12)",
+    onSurfaceDisabled: "rgba(27, 27, 31, 0.38)",
 
-    backdrop: "rgba(15,23,42,0.55)",
+    backdrop: "rgba(46, 48, 54, 0.4)",
   },
 
   dark: {
-    primary: "#F3F4F6",
-    onPrimary: "#111827",
-    primaryContainer: "#374151",
-    onPrimaryContainer: "#F9FAFB",
+    primary: "#ADC6FF",
+    onPrimary: "#002E69",
+    primaryContainer: "#004494",
+    onPrimaryContainer: "#D8E2FF",
 
-    secondary: "#9CA3AF",
-    onSecondary: "#111827",
-    secondaryContainer: "#4B5563",
-    onSecondaryContainer: "#F3F4F6",
+    secondary: "#BFC6DC",
+    onSecondary: "#293041",
+    secondaryContainer: "#3F4759",
+    onSecondaryContainer: "#DBE2F9",
 
-    background: "#0A0A0F",
+    background: "#1B1B1F", 
+    onBackground: "#E3E2E6",
 
-    surface: "#12121A",
-    surfaceTint: "rgba(255,255,255,0.09)",
-    onSurface: "#F3F4F6",
+    surface: "#1B1B1F",
+    surfaceTint: "#ADC6FF",
+    onSurface: "#E3E2E6",
 
-    surfaceVariant: "#16161A",
-    onSurfaceVariant: "#D1D5DB",
+    surfaceVariant: "#44474F",
+    onSurfaceVariant: "#C4C6D0",
 
-    outline: "#6B7280",
-    outlineVariant: "#1F2937",
+    outline: "#8E9099",
+    outlineVariant: "#44474F",
 
     elevation: {
-      level0: "#0A0A0F",  // TAUSTA
-      level1: "#141420",
-      level2: "#1E1E2A",  // KORTIT MÄÄRITELTY TÄHÄN
-      level3: "#2A2A3A",
-      level4: "#36364A",  // ESIM DIALOGIT
-      level5: "#4A4A60",
+      level0: "transparent",
+      level1: "#232429",
+      level2: "#282A30",
+      level3: "#2D2F37",
+      level4: "#2F3139",
+      level5: "#33353E",
     },
 
-    error: "#e42424",
-    onError: "#111827",
+    error: "#FFB4AB",
+    onError: "#690005",
 
-    surfaceDisabled: "rgba(243,244,246,0.10)",
-    onSurfaceDisabled: "rgba(243,244,246,0.35)",
+    surfaceDisabled: "rgba(227, 226, 230, 0.12)",
+    onSurfaceDisabled: "rgba(227, 226, 230, 0.38)",
 
-    backdrop: "rgba(0,0,0,0.85)",
+    backdrop: "rgba(0, 0, 0, 0.7)",
+  },
+} as const;
+
+/**
+ * TEEMAN KOOT, SPACINGIT, YMS
+ */
+export const Theme = {
+  colors: Colors,
+  typography: {
+    fontFamily: {
+      regular: 'System',
+      medium: 'System',
+      bold: 'System',
+    },
+    sizes: {
+      xs: 12,
+      sm: 14,
+      md: 16,
+      lg: 18,
+      xl: 22,
+      xxl: 28,
+      xxxl: 52,
+    },
+    weights: {
+      regular: '400',
+      medium: '500',
+      bold: '700',
+    },
+  },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 24,
+    xxl: 32,
+    xxxl: 164,
+  },
+  fab: {
+    size: 64,
+    bottom: 128 // sijainti alareunasta
+  },
+  radius: {
+    sm: 6,
+    md: 10,
+    lg: 14,
+    round: 999,
+  },
+  borderWidth: {
+    thin: 0.5,
+    medium: 1,
+    thick: 2,
+  },
+  shadows: {
+    card: '0px 1px 3px rgba(12,15,20,0.06)',
+    dialog: '0px 8px 20px rgba(12,15,20,0.16)',
   },
 } as const;

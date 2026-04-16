@@ -1,5 +1,6 @@
 import { Card, IconButton, useTheme } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
+import { Theme } from '../theme/Colors';
 import { Nutrition } from '../../types/types';
 
 interface Props {
@@ -22,7 +23,7 @@ export const NutritionItem = ({ item, onClick, onDelete }: Props) => {
   return (
     <Card
       mode="elevated"
-      elevation={2}
+      elevation={1}
       style={[styles.container, { borderColor: theme.colors.outline }]}
       onPress={() => onClick(item)}
     >
@@ -46,10 +47,10 @@ export const NutritionItem = ({ item, onClick, onDelete }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 12,
-    borderWidth: 1
+    borderRadius: Theme.radius.md,
+    borderWidth: Theme.borderWidth.thick,
   },
   deleteButton: {
-    marginRight: 4,
+    marginRight: Theme.spacing.xs,
   },
 });

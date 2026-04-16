@@ -1,5 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
+import { Theme } from '../theme/Colors';
 
 interface Props {
     label: string;
@@ -18,10 +19,10 @@ export const StatDisplay = ({ label, value }: Props) => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 16,
-        borderRadius: 12,
+        padding: Theme.spacing.lg,
+        borderRadius: Theme.radius.md,
         alignItems: 'center',
         width: '90%',
-        marginVertical: 8,
+        marginVertical: Theme.spacing.sm,
     }
 });

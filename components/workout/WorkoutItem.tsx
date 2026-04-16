@@ -1,5 +1,6 @@
 import { Card, IconButton, useTheme } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
+import { Theme } from '../theme/Colors';
 import { Exercise, Workout } from '../../types/types';
 
 interface Props {
@@ -16,8 +17,8 @@ export const WorkoutItem = ({ item, exercises, onClick, onDelete, onFavorite }: 
   return (
     <Card
       mode="elevated"
-      elevation={2}
-      style={[styles.container, { borderColor: item.favorite === 1 ? theme.colors.primary : theme.colors.outline }]}
+      elevation={1}
+      style={[styles.container, { borderColor: theme.colors.outline }]}
       onPress={() => onClick(item)}
     >
       <Card.Title
@@ -53,17 +54,17 @@ export const WorkoutItem = ({ item, exercises, onClick, onDelete, onFavorite }: 
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 12,
-    borderWidth: 1
+    borderRadius: Theme.radius.md,
+    borderWidth: Theme.borderWidth.thick,
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: Theme.typography.sizes.xs,
     opacity: 0.8,
-    marginTop: -2,
+    marginTop: -Theme.spacing.xs / 2,
   },
   actions: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 4,
+    marginRight: Theme.spacing.xs,
   },
 });

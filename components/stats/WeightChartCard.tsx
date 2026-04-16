@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
 import { Card, Text, useTheme } from 'react-native-paper';
+import { Theme } from '../theme/Colors';
 import { ChartPoint, applyLabels, CHART_WIDTH } from '../../utils/chartUtils';
  
 
@@ -25,8 +26,8 @@ export const WeightChartCard = ({
   // Värit teemasta
   const lineColor = colors.primary; // Normaalin käyräviivan väri
   const trendColor = colors.error; // Trendiviivan väri
-  const fillColor = colors.backdrop;  // Viivan alapuolen täytteen väri
-  const axisColor = colors.outlineVariant;
+  const fillColor = colors.primary;  // Viivan alapuolen täytteen väri
+  const axisColor = colors.primary;
   const labelColor = colors.onSurface;
 
   // Asetetaan labelit dataan
@@ -125,24 +126,24 @@ export const WeightChartCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 15,
-    borderRadius: 16,
+    marginBottom: Theme.spacing.md,
+    borderRadius: Theme.radius.lg,
   },
   chartContent: {
-    paddingBottom: 10,
-    paddingHorizontal: 16,
+    paddingBottom: Theme.spacing.sm,
+    paddingHorizontal: Theme.spacing.lg,
   },
   trendOverlay: { // Tästä saa säädettyä trendiviivan sijaintia
     position: 'absolute',
     right: 45,
-    bottom: 10,
+    bottom: Theme.spacing.sm,
   },
   changeText: { // Painon muutoksen fontti
-    fontSize: 13,
+    fontSize: Theme.typography.sizes.sm,
     fontWeight: '700',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    marginRight: 16,
+    paddingHorizontal: Theme.spacing.md,
+    paddingVertical: Theme.spacing.xs,
+    marginRight: Theme.spacing.lg,
   },
   yAxisText: { // Y-akselin fontti
     fontSize: 10,

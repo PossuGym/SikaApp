@@ -1,5 +1,6 @@
 import { Card, IconButton, Text, useTheme } from 'react-native-paper';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Theme } from '../theme/Colors';
 import { Exercise, Workout } from '../../types/types';
 
 
@@ -22,16 +23,18 @@ export const FavoriteCard = ({ item, exercises, onClick, onFavorite }: Props) =>
     );
   }
 
-  return (
+    return (
     <Card
-      mode="outlined"
       onPress={() => onClick && onClick(item)}
+      mode="elevated"
+      elevation={1}
+      style={[styles.container, { borderColor: theme.colors.outline }]}
     >
       <Card.Title
         title={item.name}
         subtitle={<Text>Liikkeitä: {exercises?.length}</Text>}
         right={(props) => (
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', gap: Theme.spacing.sm }}>
             {onFavorite && (
               <IconButton
                 {...props}
@@ -47,4 +50,11 @@ export const FavoriteCard = ({ item, exercises, onClick, onFavorite }: Props) =>
     </Card>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: Theme.radius.md,
+    borderWidth: Theme.borderWidth.thick,
+  },
+});
 

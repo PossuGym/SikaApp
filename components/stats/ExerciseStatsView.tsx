@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SegmentedButtons, Text, Button, Menu, useTheme } from 'react-native-paper';
+import { Theme } from '../theme/Colors';
 import { useExerciseStats } from '../../hooks/useExerciseStats';
 import { WeightChartCard } from './WeightChartCard';
 
@@ -117,11 +118,34 @@ export const ExerciseStatsView = () => {
 };
 
 const styles = StyleSheet.create({
-  segmented: { marginHorizontal: 16, marginTop: 16 },
-  periodSegmented: { marginHorizontal: 16, marginBottom: 24 },
-  dropdownContainer: { paddingHorizontal: 16, paddingVertical: 16, alignItems: 'stretch' },
-  dropdownButton: { flexDirection: 'row-reverse', width: '100%' },
-  chartSection: { alignItems: 'stretch', paddingHorizontal: 16 },
-  chartContainer: { marginBottom: 24 },
-  noDataContainer: { height: 250, alignItems: 'center', justifyContent: 'center', padding: 16 },
+  segmented: {
+    marginHorizontal: Theme.spacing.lg,
+    marginTop: Theme.spacing.lg
+  },
+  periodSegmented: {
+    marginHorizontal: Theme.spacing.lg,
+    marginBottom: Theme.spacing.xl
+  },
+  dropdownContainer: {
+    paddingHorizontal: Theme.spacing.lg,
+    paddingVertical: Theme.spacing.lg,
+    alignItems: 'stretch'
+  },
+  dropdownButton: {
+    flexDirection: 'row-reverse',
+    width: '100%'
+  },
+  chartSection: {
+    alignItems: 'stretch',
+    paddingHorizontal: Theme.spacing.lg
+  },
+  chartContainer: {
+    marginBottom: Theme.spacing.xl
+  },
+  noDataContainer: {
+    height: 250,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: Theme.spacing.lg
+  },
 });

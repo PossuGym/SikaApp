@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
+import { Theme } from '../theme/Colors';
 import { Dialog, Portal, TextInput, Button } from 'react-native-paper';
 import { Exercise } from '../../types/types';
 
@@ -59,9 +60,9 @@ export const ExerciseDialog = ({ visible, onDismiss, onSave, data }: Props) => {
 
 const styles = StyleSheet.create({
   categoryInput: {
-    marginTop: 12,
+    marginTop: Theme.spacing.md,
   },
   dialog: {
-    borderRadius: 16,
+    borderRadius: Theme.radius.lg,
 },
 });

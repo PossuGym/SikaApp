@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card, useTheme } from 'react-native-paper';
+import { Theme } from '../theme/Colors';
 import { MaterialIcons } from "@expo/vector-icons";
 
 export const Timer = () => {
@@ -91,14 +92,14 @@ const styles = StyleSheet.create({
   card: {
     width: 160,
     alignSelf: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    paddingVertical: Theme.spacing.sm,
+    paddingHorizontal: Theme.spacing.md,
   },
   timeText: {
     fontSize: 25,
     alignSelf: 'center',
     fontWeight: 'bold',
-    marginVertical: 20,
+    marginVertical: Theme.spacing.lg,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -107,10 +108,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 10,
-    margin: 5,
+    paddingVertical: Theme.spacing.sm,
+    paddingHorizontal: Theme.spacing.md,
+    borderRadius: Theme.radius.md,
+    margin: Theme.spacing.sm,
     minWidth: 44,
     alignItems: 'center',
     justifyContent: 'center',
