@@ -45,7 +45,7 @@ function MyTabs() {
             <Appbar.Action
               icon="account-circle-outline"
               size={36}
-              iconColor={theme.colors.secondary}
+              iconColor={theme.colors.outline}
               onPress={() => navigation.navigate("Profiili")}
             />
           </Appbar.Header>
