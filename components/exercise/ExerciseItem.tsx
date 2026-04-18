@@ -1,4 +1,6 @@
 import { Card, IconButton, useTheme } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { Theme } from '../theme/Colors';
 import { Exercise } from '../../types/types';
 
 interface Props {
@@ -21,7 +23,9 @@ export const ExerciseItem = ({ item, onClick, onDelete }: Props) => {
 
   return (
     <Card 
-      mode="outlined"
+      mode="elevated"
+      elevation={1}
+      style={[styles.container, { borderColor: theme.colors.outline }]}
       onPress={() => onClick(item)}
     >
       <Card.Title
@@ -32,6 +36,7 @@ export const ExerciseItem = ({ item, onClick, onDelete }: Props) => {
             icon="delete-outline" 
             iconColor={theme.colors.error}
             size={20}
+            style={styles.deleteButton}
             onPress={() => onDelete(item.id)} 
           />
         ) : null }
@@ -39,3 +44,13 @@ export const ExerciseItem = ({ item, onClick, onDelete }: Props) => {
     </Card>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: Theme.radius.md,
+    borderWidth: Theme.borderWidth.thick,
+  },
+  deleteButton: {
+    marginRight: Theme.spacing.xs,
+  },
+});

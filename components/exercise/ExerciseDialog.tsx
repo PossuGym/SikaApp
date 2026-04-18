@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
+import { Theme } from '../theme/Colors';
 import { Dialog, Portal, TextInput, Button } from 'react-native-paper';
 import { Exercise } from '../../types/types';
 
@@ -40,7 +41,7 @@ export const ExerciseDialog = ({ visible, onDismiss, onSave, data }: Props) => {
 
   return (
     <Portal>
-      <Dialog visible={visible} onDismiss={onDismiss}>
+      <Dialog visible={visible} onDismiss={onDismiss} style={styles.dialog}>
         <Dialog.Title>{data ? "Muokkaa liikettä" : "Lisää uusi liike"}</Dialog.Title>
         <Dialog.Content>
           <TextInput label="Liikkeen nimi" value={name} onChangeText={setName} mode="outlined"/>
@@ -59,6 +60,9 @@ export const ExerciseDialog = ({ visible, onDismiss, onSave, data }: Props) => {
 
 const styles = StyleSheet.create({
   categoryInput: {
-    marginTop: 10,
+    marginTop: Theme.spacing.md,
   },
+  dialog: {
+    borderRadius: Theme.radius.lg,
+},
 });

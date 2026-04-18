@@ -1,6 +1,7 @@
 import { Card, useTheme, Text, TextInput, IconButton } from 'react-native-paper';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { Theme } from '../theme/Colors';
 import { useTrainingSession } from '../../store/useTrainingSessionStore';
 
 type Props = {
@@ -20,8 +21,11 @@ export const SetRow = ({ exerciseId, setNumber }: Props) => {
   const theme = useTheme();
 
   return (
-    <Card mode='elevated' style={styles.card}>
-    <Card.Content style={styles.row}>
+    <Card 
+      mode='contained' 
+      style={[styles.card, { borderColor: theme.colors.outline, }]}
+    >
+    <Card.Content style={[styles.row, { borderColor: theme.colors.outline, borderRadius: Theme.radius.md, backgroundColor: theme.colors.elevation.level1 }]}>
       <View style={styles.numberContainer}>
         <Text variant="titleMedium">{setNumber}</Text>
       </View>
@@ -33,7 +37,7 @@ export const SetRow = ({ exerciseId, setNumber }: Props) => {
         mode="outlined"
         keyboardType="numeric"
         dense={true}
-        style={styles.input}
+        style={[styles.input, { backgroundColor: theme.colors.surface }]}
       />
       <TextInput
         value={reps.toString()}
@@ -41,7 +45,7 @@ export const SetRow = ({ exerciseId, setNumber }: Props) => {
         mode="outlined"
         keyboardType="numeric"
         dense={true}
-        style={styles.input}
+        style={[styles.input, { backgroundColor: theme.colors.surface }]}
       />
 
       {/* Tallennuspainike */}
@@ -55,7 +59,8 @@ export const SetRow = ({ exerciseId, setNumber }: Props) => {
             workout_id: selectedWorkout!.id,
             weight: Number(weight),
             reps: Number(reps),
-            set_number: setNumber
+            set_number: setNumber,
+            date: 0,
           })}
         />
       </View>
@@ -66,22 +71,24 @@ export const SetRow = ({ exerciseId, setNumber }: Props) => {
 
 const styles = StyleSheet.create({
   card: {
-    marginVertical: 2,
+    marginVertical: Theme.spacing.xs / 2,
+    borderWidth: Theme.borderWidth.thick,
+    borderRadius: Theme.radius.md,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 4,
+    paddingVertical: Theme.spacing.xs,
   },
   numberContainer: {
     width: 24,
     alignItems: 'center',
-    marginRight: 8,
+    marginRight: Theme.spacing.sm,
   },
   input: {
     flex: 1,
-    marginHorizontal: 4,
-    marginVertical: 5,
+    marginHorizontal: Theme.spacing.xs,
+    marginVertical: Theme.spacing.sm,
     textAlign: 'center'
   },
   actions: {

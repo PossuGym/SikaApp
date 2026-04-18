@@ -1,84 +1,151 @@
+/**
+ * VÄRITEEMAT
+ */
+
+// Asiallinen
 export const Colors = {
-"light": {
-"primary": "rgb(0, 103, 131)",
-"onPrimary": "rgb(255, 255, 255)",
-"primaryContainer": "rgb(188, 233, 255)",
-"onPrimaryContainer": "rgb(0, 31, 42)",
-"secondary": "rgb(77, 97, 107)",
-"onSecondary": "rgb(255, 255, 255)",
-"secondaryContainer": "rgb(208, 230, 242)",
-"onSecondaryContainer": "rgb(8, 30, 39)",
-"tertiary": "rgb(92, 91, 125)",
-"onTertiary": "rgb(255, 255, 255)",
-"tertiaryContainer": "rgb(226, 223, 255)",
-"onTertiaryContainer": "rgb(25, 24, 54)",
-"error": "rgb(186, 26, 26)",
-"onError": "rgb(255, 255, 255)",
-"errorContainer": "rgb(255, 218, 214)",
-"onErrorContainer": "rgb(65, 0, 2)",
-"background": "rgb(251, 252, 254)",
-"onBackground": "rgb(25, 28, 30)",
-"surface": "rgb(251, 252, 254)",
-"onSurface": "rgb(25, 28, 30)",
-"surfaceVariant": "rgb(220, 228, 233)",
-"onSurfaceVariant": "rgb(64, 72, 76)",
-"outline": "rgb(112, 120, 125)",
-"outlineVariant": "rgb(192, 200, 205)",
-"shadow": "rgb(0, 0, 0)",
-"scrim": "rgb(0, 0, 0)",
-"inverseSurface": "rgb(46, 49, 50)",
-"inverseOnSurface": "rgb(239, 241, 243)",
-"inversePrimary": "rgb(99, 211, 255)",
-"elevation": {
-"level0": "transparent",
-"level1": "rgb(238, 245, 248)",
-"level2": "rgb(231, 240, 244)",
-"level3": "rgb(223, 236, 241)",
-"level4": "rgb(221, 234, 239)",
-"level5": "rgb(216, 231, 237)"
-},
-"surfaceDisabled": "rgba(25, 28, 30, 0.12)",
-"onSurfaceDisabled": "rgba(25, 28, 30, 0.38)",
-"backdrop": "rgba(42, 50, 53, 0.4)"
-},
-"dark": {"primary": "rgb(99, 211, 255)",
-"onPrimary": "rgb(0, 53, 69)",
-"primaryContainer": "rgb(0, 77, 99)",
-"onPrimaryContainer": "rgb(188, 233, 255)",
-"secondary": "rgb(180, 202, 213)",
-"onSecondary": "rgb(30, 51, 60)",
-"secondaryContainer": "rgb(53, 74, 83)",
-"onSecondaryContainer": "rgb(208, 230, 242)",
-"tertiary": "rgb(197, 194, 234)",
-"onTertiary": "rgb(46, 45, 77)",
-"tertiaryContainer": "rgb(69, 67, 100)",
-"onTertiaryContainer": "rgb(226, 223, 255)",
-"error": "rgb(255, 180, 171)",
-"onError": "rgb(105, 0, 5)",
-"errorContainer": "rgb(147, 0, 10)",
-"onErrorContainer": "rgb(255, 180, 171)",
-"background": "rgb(25, 28, 30)",
-"onBackground": "rgb(225, 226, 228)",
-"surface": "rgb(25, 28, 30)",
-"onSurface": "rgb(225, 226, 228)",
-"surfaceVariant": "rgb(64, 72, 76)",
-"onSurfaceVariant": "rgb(192, 200, 205)",
-"outline": "rgb(138, 146, 151)",
-"outlineVariant": "rgb(64, 72, 76)",
-"shadow": "rgb(0, 0, 0)",
-"scrim": "rgb(0, 0, 0)",
-"inverseSurface": "rgb(225, 226, 228)",
-"inverseOnSurface": "rgb(46, 49, 50)",
-"inversePrimary": "rgb(0, 103, 131)",
-"elevation": {
-"level0": "transparent",
-"level1": "rgb(29, 37, 41)","level2": "rgb(31, 43, 48)",
-"level3": "rgb(33, 48, 55)",
-"level4": "rgb(34, 50, 57)",
-"level5": "rgb(35, 54, 62)"
-},
-"surfaceDisabled": "rgba(225, 226, 228, 0.12)",
-"onSurfaceDisabled": "rgba(225, 226, 228, 0.38)",
-"backdrop": "rgba(42, 50, 53, 0.4)"
-}
-}
+  light: {
+    primary: "#005AC1", 
+    onPrimary: "#FFFFFF",
+    primaryContainer: "#D8E2FF",
+    onPrimaryContainer: "#001A41",
+
+    secondary: "#575E71",
+    onSecondary: "#FFFFFF",
+    secondaryContainer: "#DBE2F9",
+    onSecondaryContainer: "#141B2C",
+
+    // Taustaväri
+    background: "#FEFBFF", 
+    onBackground: "#1B1B1F",
+
+    // Pinnat (Kortit ja modalit)
+    surface: "#FAF9FD",
+    surfaceTint: "#005AC1",
+    onSurface: "#1B1B1F",
+
+    // Variantteja käytetään esim. valitsemattomissa syötteissä
+    surfaceVariant: "#E1E2EC",
+    onSurfaceVariant: "#44474F",
+
+    // Reunat
+    outline: "#74777F",
+    outlineVariant: "#C4C6D0",
+
+    // Elevation-tasot
+    elevation: {
+      level0: "transparent",
+      level1: "#F3F4F9",
+      level2: "#EDEFF7",
+      level3: "#E7EAF4",
+      level4: "#E5E9F3",
+      level5: "#E1E5F1",
+    },
+
+    error: "#BA1A1A",
+    onError: "#FFFFFF",
+
+    surfaceDisabled: "rgba(27, 27, 31, 0.12)",
+    onSurfaceDisabled: "rgba(27, 27, 31, 0.38)",
+
+    backdrop: "rgba(46, 48, 54, 0.4)",
+  },
+
+  dark: {
+    primary: "#ADC6FF",
+    onPrimary: "#002E69",
+    primaryContainer: "#004494",
+    onPrimaryContainer: "#D8E2FF",
+
+    secondary: "#BFC6DC",
+    onSecondary: "#293041",
+    secondaryContainer: "#3F4759",
+    onSecondaryContainer: "#DBE2F9",
+
+    background: "#1B1B1F", 
+    onBackground: "#E3E2E6",
+
+    surface: "#1B1B1F",
+    surfaceTint: "#ADC6FF",
+    onSurface: "#E3E2E6",
+
+    surfaceVariant: "#44474F",
+    onSurfaceVariant: "#C4C6D0",
+
+    outline: "#8E9099",
+    outlineVariant: "#44474F",
+
+    elevation: {
+      level0: "transparent",
+      level1: "#232429",
+      level2: "#282A30",
+      level3: "#2D2F37",
+      level4: "#2F3139",
+      level5: "#33353E",
+    },
+
+    error: "#FFB4AB",
+    onError: "#690005",
+
+    surfaceDisabled: "rgba(227, 226, 230, 0.12)",
+    onSurfaceDisabled: "rgba(227, 226, 230, 0.38)",
+
+    backdrop: "rgba(0, 0, 0, 0.7)",
+  },
+} as const;
+
+/**
+ * TEEMAN KOOT, SPACINGIT, YMS
+ */
+export const Theme = {
+  colors: Colors,
+  typography: {
+    fontFamily: {
+      regular: 'System',
+      medium: 'System',
+      bold: 'System',
+    },
+    sizes: {
+      xs: 12,
+      sm: 14,
+      md: 16,
+      lg: 18,
+      xl: 22,
+      xxl: 28,
+      xxxl: 52,
+    },
+    weights: {
+      regular: '400',
+      medium: '500',
+      bold: '700',
+    },
+  },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 24,
+    xxl: 32,
+    xxxl: 164,
+  },
+  fab: {
+    size: 64,
+    bottom: 128 // sijainti alareunasta
+  },
+  radius: {
+    sm: 6,
+    md: 10,
+    lg: 14,
+    round: 999,
+  },
+  borderWidth: {
+    thin: 0.5,
+    medium: 1,
+    thick: 2,
+  },
+  shadows: {
+    card: '0px 1px 3px rgba(12,15,20,0.06)',
+    dialog: '0px 8px 20px rgba(12,15,20,0.16)',
+  },
+} as const;

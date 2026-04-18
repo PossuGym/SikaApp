@@ -1,11 +1,12 @@
 import { FlatList, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { FAB, Surface } from 'react-native-paper';
+import { FAB, Surface, useTheme } from 'react-native-paper';
+import { Theme } from '../components/theme/Colors';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useNutrition } from '../hooks/UseNutrition';
 import { NutritionItem } from '../components/nutrition/NutritionItem';
 import { NutritionDialog } from '../components/nutrition/NutritionDialog';
 import { NutritionSumCard } from '../components/nutrition/NutritionSumCards';
+import { HeaderCard } from '../components/theme/HeaderCard';
 
 
 /*
@@ -13,6 +14,7 @@ import { NutritionSumCard } from '../components/nutrition/NutritionSumCards';
 */
 export default function NutritionScreen() {
   const tabBarHeight = useBottomTabBarHeight();
+  const theme = useTheme();
 
   const {
     nutrition,
@@ -29,16 +31,20 @@ export default function NutritionScreen() {
   } = useNutrition();
 
   return (
-    <Surface style={styles.container}>
-      <NutritionSumCard
-        item={caloriesFromMacros}
-        progress={dailyProgressPercentage}
-        protein={totals?.protein ?? 0}
-        fats={totals?.fats ?? 0}
-        carbs={totals?.carbs ?? 0}
+    <Surface style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <View style={styles.cardContainer}>
+        <NutritionSumCard
+          item={caloriesFromMacros}
+          progress={dailyProgressPercentage}
+          protein={totals?.protein ?? 0}
+          fats={totals?.fats ?? 0}
+          carbs={totals?.carbs ?? 0}
       />
-      <SafeAreaView style={styles.listContainer} edges={['left', 'right']}>
+      </View>
+
+      <HeaderCard title="Päivän ateriat" style={styles.headerCard} />
       <FlatList
+        style={styles.listContainer}
         data={nutrition}
         renderItem={({ item }) => (
           <NutritionItem 
@@ -47,15 +53,13 @@ export default function NutritionScreen() {
             onDelete={(id) => deleteMeal(id)}
           />
         )}
-        contentContainerStyle={{ paddingBottom: tabBarHeight + 110 }}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />} // Rako itemien väliin
+        ItemSeparatorComponent={() => <View style={{ height: Theme.spacing.md }} />} // Rako itemien väliin
       />
-      </SafeAreaView>
       {/* Floating Action Button, avaa uuden liikkeen luonnin dialogin */}
       <FAB
         icon="plus"
         customSize={64}
-        style={styles.fab} // Pidetään FAB tabbarin yläpuolella
+        style={styles.fab}
         onPress={openCreateDialog}
       />
 
@@ -73,19 +77,28 @@ export default function NutritionScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+  },
+  headerCard: {
+    marginVertical: Theme.spacing.lg,
+    marginHorizontal: Theme.spacing.lg,
+  },
+  cardContainer: {
+    paddingHorizontal: Theme.spacing.lg,
+    paddingTop: Theme.spacing.lg,
   },
   listContainer: {
     flex: 1,
-    marginTop: 12,
+    marginTop: Theme.spacing.sm,
+    paddingHorizontal: Theme.spacing.lg,
+    paddingBottom: Theme.spacing.xxxl + Theme.fab.size,
   },
   item: {
     marginBottom: 10
   },
   fab: {
     position: 'absolute',
-    margin: 16,
-    right: 10,
-    bottom: 130
+    margin: Theme.spacing.lg,
+    right: Theme.spacing.sm,
+    bottom: Theme.fab.bottom
   },
 });

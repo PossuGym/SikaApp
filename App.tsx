@@ -2,32 +2,32 @@ import "react-native-url-polyfill/auto";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import {
-  DarkTheme as NavigationDarkTheme,
-  DefaultTheme as NavigationDefaultTheme,
   NavigationContainer,
+  DefaultTheme as NavigationDefaultTheme
 } from "@react-navigation/native";
 import AppNavigation from "./navigation/AppNavigation";
 import { initDatabase } from './database/init'; // Paikallinen tietokanta
 import { PaperProvider } from "react-native-paper";
 import { customDarkTheme, customLightTheme } from "./services/themeService";
 import { useThemeStore } from "./store/useThemeStore";
+import { StatusBar } from "react-native";
 
 export default function App() {
   const [dbReady, setDbReady] = useState(false);
   const isDark = useThemeStore((state) => state.isDark);
-  const paperTheme = isDark ? customDarkTheme : customLightTheme;
-  const baseNavigationTheme = isDark ? NavigationDarkTheme : NavigationDefaultTheme;
+  const theme = isDark ? customDarkTheme : customLightTheme;
+
   const navigationTheme = {
-    ...baseNavigationTheme,
+    dark: isDark,
     colors: {
-      ...baseNavigationTheme.colors,
-      background: paperTheme.colors.elevation.level1,
-      card: paperTheme.colors.elevation.level1,
-      text: paperTheme.colors.onSurface,
-      border: paperTheme.colors.outlineVariant,
-      primary: paperTheme.colors.primary,
-      notification: paperTheme.colors.error,
+      primary: theme.colors.primary,
+      background: theme.colors.background,
+      card: theme.colors.surface,
+      text: theme.colors.onSurface,
+      border: theme.colors.outline,
+      notification: theme.colors.error,
     },
+    fonts: NavigationDefaultTheme.fonts,
   };
 
   // Paikallisen tietokannan alustus
@@ -55,22 +55,11 @@ export default function App() {
   }
 
   return (
-    <PaperProvider theme={paperTheme}>
+    <PaperProvider theme={theme}>
+      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} translucent />
       <NavigationContainer theme={navigationTheme}>
         <AppNavigation />
       </NavigationContainer>
     </PaperProvider>
   );
 }
-
-
-/*
-<Stack.Navigator screenOptions={{ headerShown: false }}>
-  {claims ? (
-    <Stack.Screen name="Home" component={Homepage} />
-  ) : (
-    <Stack.Screen name="Login" component={Auth} />
-  )}
-</Stack.Navigator>
-
-*/

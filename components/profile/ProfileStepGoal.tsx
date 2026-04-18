@@ -1,4 +1,4 @@
-import { Card, Text, TextInput, Button } from 'react-native-paper';
+import { Card, Text, TextInput, Button, useTheme } from 'react-native-paper';
 import { StyleSheet, ToastAndroid, View, Keyboard } from 'react-native';
 import { profileService } from '../../services/profileService';
 import { Profile } from '../../types/types';
@@ -19,6 +19,7 @@ interface Props {
 */
 
 export const ProfileStepGoal = ({ item, onClick, onSave, data }: Props) => {
+  const theme = useTheme();
   const [stepsGoal, setStepsGoal] = useState('');
 
     useEffect(() => {
@@ -81,18 +82,24 @@ export const ProfileStepGoal = ({ item, onClick, onSave, data }: Props) => {
   };
 
   return (
-    <Card mode="outlined" style={styles.card} onPress={() => (onClick && item) ? onClick(item) : undefined}>
-      <Card.Title title="Askeltavoite" titleStyle={styles.title} />
+    <Card 
+      mode="elevated"
+      elevation={2} 
+      onPress={() => (onClick && item) ? onClick(item) : undefined}>
+      <Card.Title title="Askeltavoite" titleVariant='titleMedium'/>
       <Card.Content>
         <View>
         <TextInput
-           value={stepsGoal}
-           onChangeText={setStepsGoal}
-           keyboardType="numeric"
-           placeholder="Anna askeltavoite"
+          mode='outlined'
+          style={styles.input}
+          value={stepsGoal}
+          onChangeText={setStepsGoal}
+          keyboardType="numeric"
+          placeholder="Anna askeltavoite"
         />
 
           <Button
+            style={styles.button}
             mode="contained"
             onPress={async () => {
               await handleSave();
@@ -110,10 +117,12 @@ export const ProfileStepGoal = ({ item, onClick, onSave, data }: Props) => {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    marginTop: 10,
+  input: {
+    marginHorizontal: 8,
+    marginVertical: 4,
   },
-  title: {
-    fontSize: 24,
-  },
+  button: {
+    marginVertical: 8,
+    marginHorizontal: 64,
+  }
 });

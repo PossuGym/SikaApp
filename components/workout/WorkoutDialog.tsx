@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Dimensions, StyleSheet, FlatList, View, Modal, TouchableWithoutFeedback} from 'react-native';
 import { TextInput, Text, Button, useTheme, Divider } from 'react-native-paper';
+import { Theme } from '../theme/Colors';
 import { Exercise, Workout } from '../../types/types';
 import { ExerciseItem } from '../exercise/ExerciseItem';
 
@@ -66,7 +67,7 @@ export const WorkoutDialog = ({ visible, onDismiss, onSave, workout, workoutExer
         <View style={styles.overlay} />
       </TouchableWithoutFeedback>
 
-      <View style={[styles.dialogContainer, { backgroundColor: theme.colors.elevation.level3 }]}>
+      <View style={[styles.dialogContainer, { backgroundColor: theme.colors.surface }]}>
         {/* Otsikko */}
         <Text variant="titleLarge" style={styles.title}>
           {workout ? "Muokkaa ohjelmaa" : "Uusi ohjelma"}
@@ -95,14 +96,14 @@ export const WorkoutDialog = ({ visible, onDismiss, onSave, workout, workoutExer
           {/* Leijuva dropdown kategorialista */}
           {categoryListVisible && (
             <View style={[styles.categoryList, { 
-              backgroundColor: theme.colors.elevation.level4,
+              backgroundColor: theme.colors.elevation.level3,
               borderColor: theme.colors.outline 
             }]}>
               {categories.map((cat, index) => (
                 <View key={cat}>
                   <Button
                     mode="text"
-                    contentStyle={{ padding: 5 }}
+                    contentStyle={{ padding: Theme.spacing.xs }}
                     onPress={() => {
                       setSelectedCategory(cat);
                       setCategoryListVisible(false);
@@ -139,7 +140,7 @@ export const WorkoutDialog = ({ visible, onDismiss, onSave, workout, workoutExer
                     onClick={() => addExercise(item)}
                   />
                 )}
-                ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
+                ItemSeparatorComponent={() => <View style={{ height: Theme.spacing.xs }} />}
                 ListEmptyComponent={
                   <Text style={styles.emptyText}>Ei liikkeitä</Text>
                 }
@@ -151,7 +152,9 @@ export const WorkoutDialog = ({ visible, onDismiss, onSave, workout, workoutExer
           {!selectedCategory && (
             <View style={{ flex: 1 }}>
               <View style={styles.listHeader}>
-                <Text variant="titleSmall" style={{ opacity: 0.8 }}>Valitut liikkeet: {selected.length}</Text>
+                <Text variant="labelLarge">
+                  {selectedCategory ? 'Valitse liike' : `Valitut liikkeet: ${selected.length}`}
+                </Text>
               </View>
           
             <FlatList
@@ -164,7 +167,7 @@ export const WorkoutDialog = ({ visible, onDismiss, onSave, workout, workoutExer
                   onDelete={() => removeExercise(item)}
                 />
               )}
-              ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+                ItemSeparatorComponent={() => <View style={{ height: Theme.spacing.sm }} />}
               ListEmptyComponent={
                 <Text variant="bodySmall" style={styles.emptyText}>Ei lisättäviä liikkeitä</Text>
               }
@@ -197,23 +200,27 @@ const styles = StyleSheet.create({
     left: '4%',
     right: '4%',
     height: SCREEN_HEIGHT * 0.8,
-    borderRadius: 12,
-    paddingHorizontal: 24,
-    paddingTop: 24,
-    paddingBottom: 8,
+    borderRadius: Theme.radius.lg * 2,
+    paddingHorizontal: Theme.spacing.xl,
+    paddingTop: Theme.spacing.sm,
+    paddingBottom: Theme.spacing.sm,
     flexDirection: 'column',
   },
   title: {
-    marginBottom: 16,
+    marginBottom: Theme.spacing.lg,
+    marginTop: Theme.spacing.lg,
+    fontSize: Theme.typography.sizes.xl,
+    fontWeight: '500',
   },
   content: {
     flex: 1,
   },
   input: {
-    marginBottom: 12,
+    marginBottom: Theme.spacing.md,
   },
   dropdownButton: {
-    marginBottom: 8,
+    marginBottom: Theme.spacing.sm,
+    borderRadius: Theme.radius.md,
   },
   categoryList: {
     position: 'absolute',
@@ -221,10 +228,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 1000,
-    borderRadius: 8,
+    borderRadius: Theme.radius.md,
     borderWidth: 1,
-    elevation: 10,
-    padding: 4,
+    padding: Theme.spacing.xs,
   },
   exercisesList: {
     flex: 1,
@@ -233,21 +239,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
-    paddingLeft: 8,
-    marginTop: 4,
+    marginBottom: Theme.spacing.sm,
+    paddingLeft: Theme.spacing.sm,
+    marginTop: Theme.spacing.xs,
     height: 40,
   },
   emptyText: {
     textAlign: 'center',
     opacity: 0.5,
-    marginTop: 8,
+    marginTop: Theme.spacing.sm,
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingTop: 8,
-    paddingBottom: 8,
-    gap: 8,
+    paddingTop: Theme.spacing.sm,
+    paddingBottom: Theme.spacing.sm,
+    gap: Theme.spacing.sm,
   },
 });

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Card, TextInput } from 'react-native-paper';
+import { Card, TextInput, useTheme } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 import { profileService } from '../../services/profileService';
 
 export const ProfileGetEmail = ({ }) => {
+	const theme = useTheme();
 	const [email, setEmail] = useState('');
 
 	useEffect(() => {
@@ -28,13 +29,15 @@ export const ProfileGetEmail = ({ }) => {
 	}, []);
 
 	return (
-		<Card mode="outlined" style={styles.card}>
-			<Card.Title title="Sähköposti" titleStyle={styles.title} />
+		<Card mode="elevated" elevation={2}>
+			<Card.Title title="Sähköposti" titleVariant='titleMedium'/>
 			<Card.Content>
 				<View>
 					<TextInput
+            mode='outlined'
+            style={styles.input}
 						value={email}
-						editable={false}
+            disabled={true}
 						placeholder="Sähköposti"
 					/>
 				</View>
@@ -44,10 +47,8 @@ export const ProfileGetEmail = ({ }) => {
 }
 
 const styles = StyleSheet.create({
-	card: {
-		marginTop: 10,
-	},
-	title: {
-		fontSize: 24,
-	},
+  input: {
+    marginHorizontal: 8,
+    marginVertical: 4,
+  },
 });

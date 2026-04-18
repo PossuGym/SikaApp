@@ -1,22 +1,25 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { useAuth } from "../hooks/useAuth";
+import { useTheme } from 'react-native-paper';
+import { Theme } from '../components/theme/Colors';
 
 export default function Auth() {
+  const theme = useTheme();
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { signInWithEmail, signUpWithEmail, authLoading } = useAuth();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Text style={styles.label}>Email</Text>
+        <Text style={[styles.label, { color: theme.colors.onSurfaceVariant }]}>Email</Text>
         <TextInput
           onChangeText={(text) => setEmail(text)}
           value={email}
           placeholder="email@address.com"
           autoCapitalize="none"
-          style={styles.input}
+          style={[styles.input, { borderColor: theme.colors.outline, color: theme.colors.onSurface }]}
         />
       </View>
       <View style={styles.verticallySpaced}>
@@ -32,20 +35,20 @@ export default function Auth() {
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <TouchableOpacity
-          style={[styles.button, authLoading && styles.buttonDisabled]}
+          style={[styles.button, authLoading && styles.buttonDisabled, { backgroundColor: theme.colors.primary }]}
           onPress={() => signInWithEmail(email, password)}
           disabled={authLoading}
         >
-          <Text style={styles.buttonText}>Sign in</Text>
+          <Text style={[styles.buttonText, { color: theme.colors.onPrimary }]}>Sign in</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.verticallySpaced}>
         <TouchableOpacity
-          style={[styles.button, authLoading && styles.buttonDisabled]}
+          style={[styles.button, authLoading && styles.buttonDisabled, { backgroundColor: theme.colors.secondary }]}
           onPress={() => signUpWithEmail(email, password)}
           disabled={authLoading}
         >
-          <Text style={styles.buttonText}>Sign up</Text>
+          <Text style={[styles.buttonText, { color: theme.colors.onSecondary }]}>Sign up</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -54,41 +57,37 @@ export default function Auth() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
+    marginTop: Theme.spacing.xl * 1.5,
+    padding: Theme.spacing.md,
   },
   verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingTop: Theme.spacing.xs,
+    paddingBottom: Theme.spacing.xs,
     alignSelf: 'stretch',
   },
   mt20: {
-    marginTop: 20,
+    marginTop: Theme.spacing.xl,
   },
   label: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#86939e',
-    marginBottom: 6,
+    marginBottom: Theme.spacing.sm,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#86939e',
-    borderRadius: 4,
-    padding: 12,
+    borderRadius: Theme.radius.sm,
+    padding: Theme.spacing.md,
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#2089dc',
-    borderRadius: 4,
-    padding: 12,
+    borderRadius: Theme.radius.sm,
+    padding: Theme.spacing.md,
     alignItems: 'center',
   },
   buttonDisabled: {
     opacity: 0.5,
   },
   buttonText: {
-    color: '#fff',
     fontSize: 16,
     fontWeight: '600',
   },

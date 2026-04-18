@@ -1,5 +1,7 @@
 import { StyleSheet, FlatList, View, SectionList } from "react-native";
-import { Surface, Text } from "react-native-paper";
+import { Card, Surface, Text, useTheme } from "react-native-paper";
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { Theme } from '../../components/theme/Colors';
 import { WorkoutItem } from "../../components/workout/WorkoutItem";
 import { useTrainingSession } from "../../store/useTrainingSessionStore";
 import { useWorkout } from "../../store/useWorkoutStore";
@@ -7,9 +9,12 @@ import { Workout } from "../../types/types";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { TrainingStackParamList } from "../../navigation/types";
+import { HeaderCard } from "../../components/theme/HeaderCard";
 
 export default function TrainingScreen() {
   const { getSections, toggleFavorite } = useWorkout();
+  const theme = useTheme();
+  const tabBarHeight = useBottomTabBarHeight();
   const { handleSelect } = useTrainingSession();
   const navigation = useNavigation<NativeStackNavigationProp<TrainingStackParamList>>();
 
@@ -20,7 +25,7 @@ export default function TrainingScreen() {
   }
 
   return (
-    <Surface style={styles.container}>
+    <Surface style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <SectionList
         sections={getSections()}
         keyExtractor={(item) => item.id.toString()}
@@ -32,12 +37,10 @@ export default function TrainingScreen() {
           />
         )}
         renderSectionHeader={({ section: { title } }) => (
-          <View style={styles.sectionHeader}>
-            <Text variant="titleMedium">{title}</Text>
-          </View>
+          <HeaderCard title={title} style={styles.headerCard}/>
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-        contentContainerStyle={styles.listContent}
+        ItemSeparatorComponent={() => <View style={{ height: Theme.spacing.md }} />}
+        contentContainerStyle={[styles.listContent, { paddingBottom: tabBarHeight + Theme.spacing.xxl }]}
         ListEmptyComponent={
           <Text variant="bodyMedium" style={styles.emptyText}>
             Ei treeniohjelmia
@@ -51,19 +54,22 @@ export default function TrainingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16
+  },
+  headerCard: {
+    marginVertical: Theme.spacing.lg,
   },
   listContent: {
-    paddingBottom: 200,
-    paddingTop: 8
+    paddingBottom: 0,
+    paddingTop: Theme.spacing.xs,
+    marginHorizontal: Theme.spacing.lg,
   },
   sectionHeader: {
-    paddingVertical: 11,
-    paddingTop: 12,
+    paddingVertical: Theme.spacing.md,
+    paddingTop: Theme.spacing.md,
   },
   emptyText: {
     textAlign: 'center',
-    marginTop: 32,
+    marginTop: Theme.spacing.xxl,
     opacity: 0.5
   }
 })

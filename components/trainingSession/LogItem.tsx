@@ -1,5 +1,6 @@
 import { useTheme, Text, IconButton, Card } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
+import { Theme } from '../theme/Colors';
 import { useTrainingSession } from '../../store/useTrainingSessionStore';
 import { ExerciseLog } from '../../types/types';
 
@@ -16,7 +17,7 @@ export const LogItem = ({ item }: Props) => {
   const theme = useTheme();
 
   return (
-    <Card mode='contained' style={styles.card}>
+    <Card mode='contained' style={[styles.card, { borderColor: theme.colors.outline, backgroundColor: theme.colors.elevation.level1 }]}>
       <Card.Content style={styles.row}>
 
         {/* Log-itemin tiedot */}
@@ -41,23 +42,22 @@ export const LogItem = ({ item }: Props) => {
 
 const styles = StyleSheet.create({
   card: {
-    marginVertical: 2,
-    borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.2)'
+    marginVertical: Theme.spacing.xs / 2,
+    borderWidth: Theme.borderWidth.thick,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 2,
+    paddingVertical: Theme.spacing.xs / 2,
   },
   numberContainer: {
     width: 24,
     alignItems: 'center',
-    marginRight: 8,
+    marginRight: Theme.spacing.sm,
   },
   value: {
     flex: 1,
-    marginHorizontal: 4,
+    marginHorizontal: Theme.spacing.xs,
     height: 40,
     textAlignVertical: 'center',
     textAlign: 'center',

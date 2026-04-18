@@ -1,5 +1,6 @@
-import { Card, IconButton, Text, useTheme } from 'react-native-paper';
-import { View } from 'react-native';
+import { Card, IconButton, useTheme } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { Theme } from '../theme/Colors';
 import { Exercise, Workout } from '../../types/types';
 
 interface Props {
@@ -15,12 +16,15 @@ export const WorkoutItem = ({ item, exercises, onClick, onDelete, onFavorite }: 
 
   return (
     <Card
-      mode="outlined"
+      mode="elevated"
+      elevation={1}
+      style={[styles.container, { borderColor: theme.colors.outline }]}
       onPress={() => onClick(item)}
     >
       <Card.Title
         title={item.name}
-        subtitle={<Text>Liikkeitä: {exercises?.length}</Text>}
+        subtitle={`Liikkeitä: ${exercises?.length ?? 0}`}
+        subtitleStyle={styles.subtitle}
         right={(props) => (
           <View style={{ flexDirection: 'row' }}>
             {onFavorite && (
@@ -47,3 +51,20 @@ export const WorkoutItem = ({ item, exercises, onClick, onDelete, onFavorite }: 
     </Card>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: Theme.radius.md,
+    borderWidth: Theme.borderWidth.thick,
+  },
+  subtitle: {
+    fontSize: Theme.typography.sizes.xs,
+    opacity: 0.8,
+    marginTop: -Theme.spacing.xs / 2,
+  },
+  actions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: Theme.spacing.xs,
+  },
+});

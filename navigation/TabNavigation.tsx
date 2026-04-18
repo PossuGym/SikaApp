@@ -40,12 +40,12 @@ function MyTabs() {
     <Tab.Navigator
       screenOptions={({ route, navigation }) => ({
         header: () => (
-          <Appbar.Header elevated style={{ backgroundColor: theme.colors.surface }}>
-            <Appbar.Content title={route.name} />
+          <Appbar.Header elevated mode="center-aligned" style={{ backgroundColor: theme.colors.primaryContainer }}>
+            <Appbar.Content title={route.name}/>
             <Appbar.Action
-              icon="account-circle"
+              icon="account-circle-outline"
               size={36}
-              iconColor={theme.colors.secondary}
+              iconColor={theme.colors.outline}
               onPress={() => navigation.navigate("Profiili")}
             />
           </Appbar.Header>
@@ -85,17 +85,15 @@ function MyTabs() {
         tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
         tabBarStyle: {
           position: 'absolute',
-          left: 12,
-          right: 12,
-          bottom: insets.bottom + 8,  // Navigaatio Android-navigointipalkin ylle
+          marginHorizontal: 16,
+          bottom: insets.bottom + 4,
           height: 60,
           paddingBottom: 8,
-          marginLeft: 8,
-          marginRight: 8,
-          borderRadius: 24,
+          borderRadius: 32,
           paddingTop: 0,
-          elevation: 6,
-          backgroundColor: theme.colors.surface,
+          elevation: 3,
+          borderTopWidth: 0,
+          backgroundColor: theme.colors.primaryContainer // Alanavigaation taustaväri
         },
         tabBarLabelStyle: {
           fontSize: 12,

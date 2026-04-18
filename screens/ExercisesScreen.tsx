@@ -1,5 +1,6 @@
 import { SectionList, StyleSheet, View } from 'react-native';
-import { FAB, Searchbar, Surface, Text } from 'react-native-paper';
+import { FAB, Searchbar, Surface, Text, useTheme } from 'react-native-paper';
+import { Theme } from '../components/theme/Colors';
 import { useExercise } from '../hooks/useExercise';
 import { ExerciseItem } from '../components/exercise/ExerciseItem';
 import { ExerciseDialog } from '../components/exercise/ExerciseDialog';
@@ -21,15 +22,18 @@ export default function ExercisesScreen() {
     getSections,
     setSearchQuery
   } = useExercise();
+  const theme = useTheme();
 
   return (
-    <Surface style={styles.container}>
+    <Surface style={[styles.container, { backgroundColor: theme.colors.background }]} elevation={0}>
       <Searchbar
-        style={styles.searchBar}
+        style={[styles.searchBar, { backgroundColor: theme.colors.elevation.level2 }]}
         placeholder="Etsi liikkeitä"
         onChangeText={setSearchQuery}
         value={searchQuery}
       />
+
+      <Text style={styles.subheading}>Liikkeitä: {exerciseCount}</Text>
 
       {/* Liikelista kategorioittain */}
       <SectionList
@@ -44,20 +48,21 @@ export default function ExercisesScreen() {
         )}
         renderSectionHeader={({ section: { title } }) => (
           <View style={styles.sectionHeader}>
-            <Text variant="titleMedium">{title}</Text>
+            <View style={[styles.sectionAccent, { backgroundColor: theme.colors.primary }]} />
+            <Text variant="labelLarge">{title.toUpperCase()}</Text>
           </View>
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
-        SectionSeparatorComponent={() => <View style={{ height: 10 }} />}
+        ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         contentContainerStyle={styles.listContent}
-        ListHeaderComponent={<Text style={styles.subheading}>Liikkeitä: {exerciseCount}</Text>}
+        showsVerticalScrollIndicator={false}
+        style={styles.sectionList}
       />
 
       {/* Floating Action Button, avaa uuden liikkeen luonnin dialogin */}
       <FAB
         icon="plus"
         customSize={64}
-        style={styles.fab} // FABIN SIJAINTI, JÄÄ DEFAULTTINA NAVIGAATION ALLE
+        style={styles.fab}
         onPress={openCreateDialog}
       />
 
@@ -75,26 +80,42 @@ export default function ExercisesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
   },
   searchBar: {
-    marginBottom: 8,
+    marginVertical: Theme.spacing.sm,
+    marginHorizontal: Theme.spacing.lg,
+    borderRadius: Theme.radius.md,
+  },
+  sectionList: {
+    paddingHorizontal: Theme.spacing.lg
   },
   sectionHeader: {
-    paddingVertical: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: Theme.spacing.md,
+    marginBottom: Theme.spacing.md,
+    paddingVertical: 4
+  },
+  sectionAccent: {
+    width: 6,
+    height: 24,
+    borderRadius: 2,
+    marginRight: Theme.spacing.sm,
   },
   subheading: {
     alignSelf: 'flex-end',
-    marginTop: 16,
-    marginBottom: -24,
+    marginHorizontal: Theme.spacing.lg,
+    marginBottom: Theme.spacing.xs,
+    opacity: 0.6,
+    fontSize: 12,
   },
   listContent: {
-    paddingBottom: 200,
+    paddingBottom: Theme.spacing.xxxl + Theme.fab.size,
   },
   fab: {
     position: 'absolute',
-    margin: 16,
-    right: 10,
-    bottom: 130
+    margin: Theme.spacing.lg,
+    right: Theme.spacing.sm,
+    bottom: Theme.fab.bottom
   },
 });
