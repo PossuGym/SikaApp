@@ -6,6 +6,10 @@ import { ExerciseLog } from "../types/types";
  */
 export const exerciseLogService = {
   
+  async getAll(): Promise<ExerciseLog[]> {
+    return await logRepository.getAll();
+  },
+
   /**
    * Hakee liikkeen koko treenihistorian
    * @param exerciseId 

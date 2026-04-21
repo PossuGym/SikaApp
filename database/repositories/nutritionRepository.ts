@@ -89,6 +89,11 @@ export const nutritionRepository = {
     )
 
     return result.changes > 0
-  }
+  },
 
+  async getAll(): Promise<Nutrition[]> {
+    return database.getAllAsync(
+      `SELECT * FROM nutrition`
+    )
+  }
 }

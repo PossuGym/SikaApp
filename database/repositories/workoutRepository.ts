@@ -1,5 +1,5 @@
-import { database} from '../database'
-import { Exercise, Workout } from '../../types/types'
+import { database } from '../database'
+import { Exercise, Workout, WorkoutExercise } from '../../types/types'
 /** 
  * CRUD-operaatiot treeniohjelmalle.
  */
@@ -169,4 +169,10 @@ export const workoutRepository = {
       [workoutId]
     );
   },
+
+  async getAll(): Promise<WorkoutExercise[]> {
+    return database.getAllAsync(
+      `SELECT * FROM workout_exercise`
+    );
+  }
 }
