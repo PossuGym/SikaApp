@@ -1,5 +1,6 @@
 import { supabase } from "../lib/supabase";
 import { database } from "../database/database";
+import { seedDatabase } from '../database/seedDatabase';
 import { BackupData } from "../types/types";
 import { exerciseLogService } from "./exerciseLogService";
 import { exerciseService } from "./exerciseService";
@@ -13,7 +14,7 @@ export const backupService = {
   /**
    * Varmuuskopion luominen
    */
-  async backup() : Promise<void> {
+  async backup(): Promise<void> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
@@ -37,8 +38,6 @@ export const backupService = {
       steps_goal: profile?.steps_goal,
       calories_goal: profile?.calories_goal
     }
-
-    console.log("Profile koko objekti: ", JSON.stringify(cleanProfile));
 
     // Upsertataan supabasen tietokantaan rinnakkain
     try {
@@ -65,7 +64,7 @@ export const backupService = {
 
     const [profile, daily, exercises, workouts, logs, workoutExercises, nutrition] =
       await Promise.all([
-        supabase.from('user_profile').select('*').eq('user_id', user.id).single(),
+        supabase.from('user_profile').select('*').eq('user_id', user.id).maybeSingle(),
         supabase.from('user_daily').select('*').eq('user_id', user.id),
         supabase.from('exercise').select('*').eq('user_id', user.id),
         supabase.from('workout').select('*').eq('user_id', user.id),
@@ -73,6 +72,14 @@ export const backupService = {
         supabase.from('workout_exercise').select('*').eq('user_id', user.id),
         supabase.from('nutrition').select('*').eq('user_id', user.id),
       ]);
+    
+    // Onko pilvessä käyttäjän luomaa dataa
+    const hasExercises = (exercises.data?.length ?? 0) > 0;
+    const hasDaily = (daily.data?.length ?? 0) > 0;
+
+    if (!hasExercises && !hasDaily) {
+      throw new Error('Varmuuskopiota ei löytynyt pilvestä. Palautusta ei tehty.');
+    }
 
     const backup: BackupData = {
       profile: profile.data,
@@ -95,57 +102,66 @@ export const backupService = {
       await database.withTransactionAsync(async () => {
 
         // Poistetaan olemassaoleva data oikeassa järjestyksessä
-        await database.runAsync('DELETE FROM nutrition');
-        await database.runAsync('DELETE FROM exercise_log');
-        await database.runAsync('DELETE FROM workout_exercise');
-        await database.runAsync('DELETE FROM workout');
-        await database.runAsync('DELETE FROM exercise');
-        await database.runAsync('DELETE FROM user_daily');
-        await database.runAsync('DELETE FROM user_profile');
+        await database.execAsync(`
+          PRAGMA foreign_keys = ON;
+          DELETE FROM nutrition;
+          DELETE FROM exercise_log;
+          DELETE FROM workout_exercise;
+          DELETE FROM workout;
+          DELETE FROM exercise;
+          DELETE FROM user_daily;
+          DELETE FROM user_profile;
+        `);
 
         // Insertoidaan oikeassa järjestyksessä
         for (const row of data.exercises) {
           await database.runAsync(
-            'INSERT INTO exercise (id, name, category) VALUES (?, ?, ?)',
+            'INSERT OR REPLACE INTO exercise (id, name, category) VALUES (?, ?, ?)',
             [row.id, row.name, row.category]
           );
         }
         for (const row of data.workouts) {
           await database.runAsync(
-            'INSERT INTO workout (id, name, favorite) VALUES (?, ?, ?)',
+            'INSERT OR REPLACE INTO workout (id, name, favorite) VALUES (?, ?, ?)',
             [row.id, row.name, row.favorite]
           );
         }
         for (const row of data.workoutExercises) {
           await database.runAsync(
-            'INSERT INTO workout_exercise (exercise_id, workout_id) VALUES (?, ?)',
+            'INSERT OR REPLACE INTO workout_exercise (exercise_id, workout_id) VALUES (?, ?)',
             [row.exercise_id, row.workout_id]
           );
         }
         for (const row of data.exerciseLogs) {
           await database.runAsync(
-            'INSERT INTO exercise_log (id, workout_id, exercise_id, date, weight, reps, set_number) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            'INSERT OR REPLACE INTO exercise_log (id, workout_id, exercise_id, date, weight, reps, set_number) VALUES (?, ?, ?, ?, ?, ?, ?)',
             [row.id, row.workout_id, row.exercise_id, row.date, row.weight, row.reps, row.set_number]
           );
         }
         for (const row of data.daily) {
           await database.runAsync(
-            `INSERT INTO user_daily (weight, daily_steps, date) VALUES (?, ?, ?)`,
+            `INSERT OR REPLACE INTO user_daily (weight, daily_steps, date) VALUES (?, ?, ?)`,
             [row.weight, row.daily_steps!, row.date]
           )
         }
         if (data.profile) {
           await database.runAsync(
-            `INSERT INTO user_profile (height, steps_goal, calories_goal) VALUES (?, ?, ?)`,
+            `INSERT OR REPLACE INTO user_profile (height, steps_goal, calories_goal) VALUES (?, ?, ?)`,
             [data.profile.height, data.profile.steps_goal, data.profile.calories_goal]
           );
         }
         for (const row of data.nutrition) {
           await database.runAsync(
-            'INSERT INTO nutrition (id, name, date, calories, protein, carbs, fats) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            'INSERT OR REPLACE INTO nutrition (id, name, date, calories, protein, carbs, fats) VALUES (?, ?, ?, ?, ?, ?, ?)',
             [row.id ?? null, row.name ?? null, row.date, row.calories ?? null,
             row.protein ?? null, row.carbs ?? null, row.fats ?? null]
           );
+        }
+
+        // Jos palautuksessa poistui seedattu data, seedataan uudelleen.
+        if (data.exercises.length === 0 || data.daily.length === 0) {
+          console.log("Varmuuskopiossa ei ollut liikkeitä, seedataan uudelleen.");
+          await seedDatabase();
         }
       });
     } catch (error) {
