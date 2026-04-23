@@ -100,5 +100,11 @@ export const logRepository = {
        LIMIT 1`,
       [exerciseId]
     )
+  },
+
+  async getAll() : Promise<ExerciseLog[]> {
+    return database.getAllAsync(
+      `SELECT * FROM exercise_log`
+    )
   }
 }

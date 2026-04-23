@@ -7,13 +7,15 @@ import { ProfileMacroGoal } from "../components/profile/ProfileMacroGoal";
 import { ProfileStepGoal } from "../components/profile/ProfileStepGoal";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Button, Card, Surface, useTheme } from 'react-native-paper';
+import { ActivityIndicator, Button, Card, Surface, useTheme } from 'react-native-paper';
 import { Theme } from '../components/theme/Colors';
 import { useAuth } from "../hooks/useAuth";
 import ProfileSwitchTheme from "../components/profile/ProfileSwitchTheme";
+import { useBackup } from "../hooks/useBackup";
 
 export default function ProfileScreen() {
   const { handleSignOut, authLoading } = useAuth();
+  const { handleBackup, handleRestore, isLoading, error} = useBackup();
   const tabBarHeight = useBottomTabBarHeight();
   const insets = useSafeAreaInsets();
   const theme = useTheme();
@@ -21,6 +23,7 @@ export default function ProfileScreen() {
 
   return (
     <Surface style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      {isLoading && <ActivityIndicator size="small" color={theme.colors.primary} />}
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={{
@@ -49,6 +52,26 @@ export default function ProfileScreen() {
                 onPress={handleSignOut} 
                 loading={authLoading} 
                 disabled={authLoading}> Kirjaudu ulos
+            </Button>
+          </Card.Content>
+        </Card>
+        <Card elevation={2}>
+          <Card.Content>
+            <Button
+              style={styles.button}
+              mode="contained"
+              buttonColor={theme.colors.primary}
+              onPress={handleBackup}
+              disabled={isLoading}>
+                Varmuuskopioi pilveen
+            </Button>
+            <Button
+              style={styles.button}
+              mode="contained"
+              buttonColor={theme.colors.primary}
+              onPress={handleRestore}
+              disabled={isLoading}>
+                Palauta pilvestä
             </Button>
           </Card.Content>
         </Card>

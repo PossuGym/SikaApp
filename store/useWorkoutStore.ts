@@ -116,6 +116,3 @@ export const useWorkout = create<WorkoutState>((set, get) => ({
     return sections;
   },
 }));
-
-// Ladataan treeniohjelmat ja liikkeet storen luonnin yhteydessä
-useWorkout.getState().loadWorkouts();

@@ -6,14 +6,17 @@ import {
   DefaultTheme as NavigationDefaultTheme
 } from "@react-navigation/native";
 import AppNavigation from "./navigation/AppNavigation";
-import { initDatabase } from './database/init'; // Paikallinen tietokanta
+import { initDatabase } from './database/init';
 import { PaperProvider } from "react-native-paper";
 import { customDarkTheme, customLightTheme } from "./services/themeService";
 import { useThemeStore } from "./store/useThemeStore";
+import { useAuth } from "./hooks/useAuth";
 import { StatusBar } from "react-native";
+import { useWorkout } from "./store/useWorkoutStore";
 
 export default function App() {
   const [dbReady, setDbReady] = useState(false);
+  const { claims } = useAuth();
   const isDark = useThemeStore((state) => state.isDark);
   const theme = isDark ? customDarkTheme : customLightTheme;
 
@@ -44,8 +47,15 @@ export default function App() {
     setupDB();
   }, []);
 
+  // Zustandin store ladataan kirjautumisen yhteydessä
+  useEffect(() => {
+    if (!dbReady) return;
+    if (claims) {
+      useWorkout.getState().loadWorkouts();
+    }
+  }, [claims, dbReady])
+
   // Näytetään latausindikaattori, kunnes tietokanta on ladattu
-  // Muuten muu koodi saattaa yrittää hakea dataa liian aikaisin.
   if (!dbReady) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

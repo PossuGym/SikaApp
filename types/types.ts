@@ -71,3 +71,21 @@ export type WorkoutWithExercises = {
   workout: Workout
   exercises: Exercise[]
 }
+
+export type WorkoutExercise = {
+  exercise_id: number;
+  workout_id: number;
+}
+
+/**
+ * Varmuuskopion tarvima data
+ */
+export type BackupData = {
+  exercises: Exercise[];
+  workouts: Workout[];
+  exerciseLogs: ExerciseLog[];
+  workoutExercises: WorkoutExercise[];
+  daily: Daily[];
+  profile: Profile | null;
+  nutrition: Nutrition[];
+}

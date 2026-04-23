@@ -1,5 +1,5 @@
 import { workoutRepository } from "../database/repositories/workoutRepository";
-import { Exercise, Workout } from "../types/types";
+import { Exercise, Workout, WorkoutExercise } from "../types/types";
 
 export const workoutService = {
 
@@ -71,4 +71,8 @@ export const workoutService = {
   async getExercises(workoutId: number): Promise<Exercise[]> {
     return await workoutRepository.getWorkoutExercises(workoutId);
   },
+
+  async getWorkoutExercise(): Promise<WorkoutExercise[]> {
+    return await workoutRepository.getAll();
+  }
 }
