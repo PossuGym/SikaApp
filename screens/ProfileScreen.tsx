@@ -37,24 +37,12 @@ export default function ProfileScreen() {
         showsVerticalScrollIndicator={false}
       >
         <ProfileSwitchTheme />
-        <ProfileGetEmail />
         <ProfileSetHeight />
         <ProfileSetWeight />
-        <ProfileAccountDetails />
         <ProfileMacroGoal />
         <ProfileStepGoal />
-        <Card elevation={2}>
-          <Card.Content>
-              <Button
-                style={styles.button}
-                mode="contained" 
-                buttonColor={theme.colors.error}
-                onPress={handleSignOut} 
-                loading={authLoading} 
-                disabled={authLoading}> Kirjaudu ulos
-            </Button>
-          </Card.Content>
-        </Card>
+        <ProfileGetEmail />
+        <ProfileAccountDetails />
         <Card elevation={2}>
           <Card.Content>
             <Button
@@ -72,6 +60,18 @@ export default function ProfileScreen() {
               onPress={handleRestore}
               disabled={isLoading}>
                 Palauta pilvestä
+            </Button>
+          </Card.Content>
+        </Card>
+        <Card elevation={2}>
+          <Card.Content>
+              <Button
+                style={styles.button}
+                mode="contained" 
+                buttonColor={theme.colors.error}
+                onPress={handleSignOut} 
+                loading={authLoading} 
+                disabled={authLoading}> Kirjaudu ulos
             </Button>
           </Card.Content>
         </Card>

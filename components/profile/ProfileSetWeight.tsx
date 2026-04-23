@@ -1,4 +1,4 @@
-import { Card, Text, TextInput, Button, useTheme } from 'react-native-paper';
+import { Card, TextInput, IconButton } from 'react-native-paper';
 import { StyleSheet, ToastAndroid, View, Keyboard, Alert } from 'react-native';
 import { profileService } from '../../services/profileService';
 import { Daily, Profile } from '../../types/types';
@@ -12,7 +12,6 @@ interface Props {
 }
 
 export const ProfileSetWeight = ({ item, onClick, onSave, data }: Props) => {
-  const theme = useTheme();
   const [userWeight, setUserWeight] = useState('');
   const [currentWeight, setCurrentWeight] = useState<number | null>(null);
 
@@ -109,22 +108,22 @@ export const ProfileSetWeight = ({ item, onClick, onSave, data }: Props) => {
       <Card.Title title="Paino" titleVariant='titleMedium'/>
       <Card.Content>
         <View>
-        <TextInput
-          mode='outlined'
-          style={styles.input}
-          value={userWeight}
-          onChangeText={setUserWeight}
-          keyboardType="numeric"
-          placeholder="Anna paino (kg)"
-        />
-
-          <Button
-            style={styles.button}
-            mode="contained"
-            onPress={handleSave}
-          >
-            Tallenna
-          </Button>
+          <View style={styles.inputRow}>
+            <TextInput
+              mode='outlined'
+              style={styles.input}
+              value={userWeight}
+              onChangeText={setUserWeight}
+              keyboardType="numeric"
+              placeholder="Anna paino (kg)"
+            />
+            <IconButton
+              icon="pencil"
+              mode="contained"
+              style={styles.saveIconButton}
+              onPress={handleSave}
+            />
+          </View>
 
         </View>
       </Card.Content>
@@ -134,12 +133,16 @@ export const ProfileSetWeight = ({ item, onClick, onSave, data }: Props) => {
 }
 
 const styles = StyleSheet.create({
-  input: {
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginHorizontal: 8,
     marginVertical: 4,
   },
-  button: {
-    marginVertical: 8,
-    marginHorizontal: 64,
+  input: {
+    flex: 1,
+  },
+  saveIconButton: {
+    marginLeft: 8,
   }
 });

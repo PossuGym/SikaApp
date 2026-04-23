@@ -1,4 +1,4 @@
-import { Card, TextInput, Button, useTheme } from 'react-native-paper';
+import { Card, TextInput, IconButton } from 'react-native-paper';
 import { StyleSheet, ToastAndroid, View, Keyboard } from 'react-native';
 import { profileService } from '../../services/profileService';
 import { Profile } from '../../types/types';
@@ -18,7 +18,6 @@ interface Props {
 */
 
 export const ProfileMacroGoal = ({ item, onClick, onSave, data }: Props) => {
-  const theme = useTheme();
   const [caloriesGoal, setCaloriesGoal] = useState('');
 
     useEffect(() => {
@@ -88,26 +87,25 @@ export const ProfileMacroGoal = ({ item, onClick, onSave, data }: Props) => {
       <Card.Title title="Kaloritavoite" titleVariant='titleMedium'/>
       <Card.Content>
         <View>
-
-        <TextInput 
-          mode='outlined'
-          style={styles.input}
-          value={caloriesGoal}
-          onChangeText={setCaloriesGoal}
-          keyboardType="numeric"
-          placeholder="Anna kaloritavoite"
-        />
-
-          <Button
-            style={styles.button}
-            mode="contained"
-            onPress={async () => {
-              await handleSave();
-              showToast();
-            }}
-          >
-            Tallenna
-          </Button>
+          <View style={styles.inputRow}>
+            <TextInput 
+              mode='outlined'
+              style={styles.input}
+              value={caloriesGoal}
+              onChangeText={setCaloriesGoal}
+              keyboardType="numeric"
+              placeholder="Anna kaloritavoite"
+            />
+            <IconButton
+              icon="pencil"
+              mode="contained"
+              style={styles.saveIconButton}
+              onPress={async () => {
+                await handleSave();
+                showToast();
+              }}
+            />
+          </View>
 
         </View>
       </Card.Content>
@@ -117,12 +115,16 @@ export const ProfileMacroGoal = ({ item, onClick, onSave, data }: Props) => {
 }
 
 const styles = StyleSheet.create({
-  input: {
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginHorizontal: 8,
     marginVertical: 4,
   },
-  button: {
-    marginVertical: 8,
-    marginHorizontal: 64,
+  input: {
+    flex: 1,
+  },
+  saveIconButton: {
+    marginLeft: 8,
   }
 });
