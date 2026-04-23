@@ -38,3 +38,13 @@ export const calculateDailyProgressPercentage = (
   return Math.round(Math.min(100, Math.max(0, percentage)))
 }
 
+export const calculateStepsProgressPercentage = (
+  daySteps: number,
+  stepsGoal: number
+) => {
+  if (stepsGoal <= 0) return 0
+
+  const percentage = (daySteps / stepsGoal) * 100
+  return Math.round(Math.min(100, Math.max(0, percentage)))
+}
+

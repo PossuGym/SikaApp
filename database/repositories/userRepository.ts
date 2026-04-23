@@ -40,6 +40,13 @@ export const userRepository = {
     );
   },
 
+  async getDailyInRange(start: number, end: number): Promise<Daily | null> {
+    return await database.getFirstAsync<Daily | null>(
+      `SELECT * FROM user_daily WHERE date BETWEEN ? AND ? ORDER BY date ASC LIMIT 1`,
+      [start, end]
+    );
+  },
+
   /**
    * hae käyttäjän päivittäisten tietojen koko historia
    */
@@ -79,6 +86,16 @@ export const userRepository = {
         weight = excluded.weight,
         daily_steps = excluded.daily_steps`,
         [weight ?? null, daily_steps ?? null, date]
+    );
+    return result.changes > 0
+  },
+
+  async saveDailySteps(date: number, daily_steps: number): Promise<boolean> {
+    const result = await database.runAsync(
+      `INSERT INTO user_daily (weight, daily_steps, date)
+      VALUES (NULL, ?, ?) ON CONFLICT(date) DO UPDATE SET
+        daily_steps = excluded.daily_steps`,
+      [daily_steps ?? null, date]
     );
     return result.changes > 0
   }
