@@ -13,9 +13,10 @@ export const useBackup = () => {
     try {
       await backupService.backup();
       ToastAndroid.show("Varmuuskopio luotu", ToastAndroid.SHORT);
-    } catch (error) {
-      setError(error instanceof Error ? error.message : 'Varmuuskopiointi epäonnistui');
-      throw error;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Varmuuskopiointi epäonnistui';
+      setError(msg);
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
     } finally {
       setIsLoading(false);
     }
@@ -29,9 +30,10 @@ export const useBackup = () => {
       // Päivitetään storen tilat palautuksen yhteydessä
       await useWorkout.getState().loadWorkouts();
       ToastAndroid.show("Palautus suoritettu", ToastAndroid.SHORT);
-    } catch (error) {
-      setError(error instanceof Error ? error.message : 'Palautus epäonnistui');
-      throw error;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Palautus epäonnistui';
+      setError(msg);
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
     } finally {
       setIsLoading(false);
     }

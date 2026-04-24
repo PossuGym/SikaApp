@@ -10,20 +10,6 @@ export const initDatabase = async () => {
   try {
     // Tätä tarvii, jotta ON DELETE CASCADE toimii
     await database.execAsync(`PRAGMA foreign_keys = ON;`);
-
-    // Jos seedaus ei toimi, reloadaa kerran tämän kanssa.
-
-    /*
-    await database.execAsync(`
-      DROP TABLE IF EXISTS nutrition;
-      DROP TABLE IF EXISTS user_daily;
-      DROP TABLE IF EXISTS user_profile;
-      DROP TABLE IF EXISTS exercise_log;
-      DROP TABLE IF EXISTS workout_exercise;
-      DROP TABLE IF EXISTS workout;
-      DROP TABLE IF EXISTS exercise;
-    `);
-    */
  
     await createExerciseTable();
     await createWorkoutTable();
@@ -33,7 +19,13 @@ export const initDatabase = async () => {
     await createUserDailyTable();
     await createNutritionTable();
 
-     await seedDatabase();
+    // Seedataan vain jos tietokanta on tyhjä
+    const result = await database.getFirstAsync<{ count: number }>(
+      'SELECT COUNT(*) as count FROM exercise'
+    );
+    if (result?.count === 0) {
+      await seedDatabase();
+    }
  
     console.log('Tietokanta luotu.')
   } catch (error) {

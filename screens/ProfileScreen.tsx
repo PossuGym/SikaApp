@@ -7,15 +7,16 @@ import { ProfileMacroGoal } from "../components/profile/ProfileMacroGoal";
 import { ProfileStepGoal } from "../components/profile/ProfileStepGoal";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ActivityIndicator, Button, Card, Surface, useTheme } from 'react-native-paper';
+import { Button, Card, Surface, useTheme } from 'react-native-paper';
 import { Theme } from '../components/theme/Colors';
 import { useAuth } from "../hooks/useAuth";
 import ProfileSwitchTheme from "../components/profile/ProfileSwitchTheme";
 import { useBackup } from "../hooks/useBackup";
+import { DemoDataButton } from "../components/profile/DemoDataButton";
 
 export default function ProfileScreen() {
   const { handleSignOut, authLoading } = useAuth();
-  const { handleBackup, handleRestore, isLoading, error} = useBackup();
+  const { handleBackup, handleRestore, isLoading } = useBackup();
   const tabBarHeight = useBottomTabBarHeight();
   const insets = useSafeAreaInsets();
   const theme = useTheme();
@@ -23,7 +24,6 @@ export default function ProfileScreen() {
 
   return (
     <Surface style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      {isLoading && <ActivityIndicator size="small" color={theme.colors.primary} />}
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={{
@@ -41,8 +41,6 @@ export default function ProfileScreen() {
         <ProfileSetWeight />
         <ProfileMacroGoal />
         <ProfileStepGoal />
-        <ProfileGetEmail />
-        <ProfileAccountDetails />
         <Card elevation={2}>
           <Card.Content>
             <Button
@@ -50,16 +48,18 @@ export default function ProfileScreen() {
               mode="contained"
               buttonColor={theme.colors.primary}
               onPress={handleBackup}
+              loading={isLoading}
               disabled={isLoading}>
-                Varmuuskopioi pilveen
+                {isLoading ? 'Varmuuskopioidaan...' : 'Varmuuskopioi pilveen'}
             </Button>
             <Button
               style={styles.button}
               mode="contained"
               buttonColor={theme.colors.primary}
               onPress={handleRestore}
+              loading={isLoading}
               disabled={isLoading}>
-                Palauta pilvestä
+                {isLoading ? 'Palautetaan...' : 'Palauta pilvestä'}
             </Button>
           </Card.Content>
         </Card>
@@ -75,6 +75,7 @@ export default function ProfileScreen() {
             </Button>
           </Card.Content>
         </Card>
+        <DemoDataButton/>
       </ScrollView>
     </Surface>
   );
