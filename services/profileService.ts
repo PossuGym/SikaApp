@@ -7,6 +7,10 @@ export const profileService = {
     async getUserProfile(): Promise<Profile|null> {
         return await userRepository.getUserProfile();
     },
+    async getStepsGoal(): Promise<number> {
+        const profile = await userRepository.getUserProfile();
+        return profile?.steps_goal ?? 0;
+    },
     async updateHeight(height: number): Promise<boolean> {
         const profile = await userRepository.getUserProfile();
         const steps_goal = profile?.steps_goal ?? 0;

@@ -2,6 +2,7 @@ import { View, StyleSheet } from "react-native";
 import { Card, Surface, Text,  useTheme } from "react-native-paper";
 import Timer from "../components/homePage/Timer";
 import { FavoriteCard } from "../components/homePage/FavoriteCard";
+import { StepProgressWidget } from "../components/homePage/StepProgressWidget";
 import { useWorkout } from "../store/useWorkoutStore";
 import { Theme } from "../components/theme/Colors";
 import { HeaderCard } from "../components/theme/HeaderCard";
@@ -38,7 +39,10 @@ export function Homepage() {
 
         <View style={styles.widgetsContainer}>
           <HeaderCard title="Widgetit" style={styles.headerCard}/>
-          <Timer/>
+          <View style={styles.widgetsRow}>
+            <Timer/>
+            <StepProgressWidget />
+          </View>
         </View>
     
     </Surface>
@@ -66,5 +70,12 @@ const styles = StyleSheet.create({
   },
   widgetsContainer: {
     marginTop: Theme.spacing.lg,
+  },
+  widgetsRow: {
+    marginHorizontal: Theme.spacing.lg,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Theme.spacing.md,
+    alignItems: "center",
   },
 });
