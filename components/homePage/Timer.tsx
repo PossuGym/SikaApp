@@ -90,8 +90,8 @@ export const Timer = () => {
 
 const styles = StyleSheet.create({
   card: {
-    width: 160,
-    alignSelf: 'center',
+    width: '100%',
+    height: 210,
     paddingVertical: Theme.spacing.sm,
     paddingHorizontal: Theme.spacing.md,
   },
@@ -99,7 +99,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     alignSelf: 'center',
     fontWeight: 'bold',
-    marginVertical: Theme.spacing.lg,
+    marginTop: Theme.spacing.xl,
+    marginBottom: Theme.spacing.lg,
   },
   buttonContainer: {
     flexDirection: 'row',

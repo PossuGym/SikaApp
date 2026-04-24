@@ -40,8 +40,12 @@ export function Homepage() {
         <View style={styles.widgetsContainer}>
           <HeaderCard title="Widgetit" style={styles.headerCard}/>
           <View style={styles.widgetsRow}>
-            <Timer/>
-            <StepProgressWidget />
+            <View style={styles.widgetSlot}>
+              <Timer/>
+            </View>
+            <View style={styles.widgetSlot}>
+              <StepProgressWidget />
+            </View>
           </View>
         </View>
     
@@ -76,6 +80,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: Theme.spacing.md,
-    alignItems: "center",
+    alignItems: "stretch",
+  },
+  widgetSlot: {
+    flexBasis: '48%',
+    maxWidth: '48%',
+    minWidth: 150,
   },
 });
