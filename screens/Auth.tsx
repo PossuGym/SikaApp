@@ -18,19 +18,21 @@ export default function Auth() {
           onChangeText={(text) => setEmail(text)}
           value={email}
           placeholder="email@address.com"
+          placeholderTextColor={theme.colors.onSurfaceVariant}
           autoCapitalize="none"
           style={[styles.input, { borderColor: theme.colors.outline, color: theme.colors.onSurface }]}
         />
       </View>
       <View style={styles.verticallySpaced}>
-        <Text style={styles.label}>Password</Text>
+        <Text style={[styles.label, { color: theme.colors.onSurfaceVariant }]}>Password</Text>
         <TextInput
           onChangeText={(text) => setPassword(text)}
           value={password}
           secureTextEntry={true}
           placeholder="Password"
+          placeholderTextColor={theme.colors.onSurfaceVariant}
           autoCapitalize="none"
-          style={styles.input}
+          style={[styles.input, { borderColor: theme.colors.outline, color: theme.colors.onSurface }]}
         />
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
