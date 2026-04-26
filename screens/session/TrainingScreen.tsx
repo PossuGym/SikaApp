@@ -40,7 +40,7 @@ export default function TrainingScreen() {
           <HeaderCard title={title} style={styles.headerCard}/>
         )}
         ItemSeparatorComponent={() => <View style={{ height: Theme.spacing.md }} />}
-        contentContainerStyle={[styles.listContent, { paddingBottom: tabBarHeight + Theme.spacing.xxl }]}
+        contentContainerStyle={[styles.listContent, { paddingBottom: tabBarHeight + Theme.spacing.xxl + 100}]}
         ListEmptyComponent={
           <Text variant="bodyMedium" style={styles.emptyText}>
             Ei treeniohjelmia
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginVertical: Theme.spacing.lg,
   },
   listContent: {
-    paddingBottom: 0,
+    paddingBottom: 10,
     paddingTop: Theme.spacing.xs,
     marginHorizontal: Theme.spacing.lg,
   },
