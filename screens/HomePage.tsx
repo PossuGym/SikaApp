@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { Card, Surface, Text,  useTheme } from "react-native-paper";
 import Timer from "../components/homePage/Timer";
 import { FavoriteCard } from "../components/homePage/FavoriteCard";
@@ -14,6 +14,7 @@ export function Homepage() {
 
   return (
     <Surface style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 200 }}>
 
         <HeaderCard title="Suosikit" style={styles.headerCard}/>
 
@@ -48,7 +49,7 @@ export function Homepage() {
             </View>
           </View>
         </View>
-    
+      </ScrollView>
     </Surface>
   );
 }
