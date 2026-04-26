@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { SegmentedButtons, Text, Button, Menu, useTheme } from 'react-native-paper';
 import { Theme } from '../theme/Colors';
 import { useExerciseStats } from '../../hooks/useExerciseStats';
@@ -23,6 +23,7 @@ export const ExerciseStatsView = () => {
     setSelectedExerciseId,
     getMaxesPeriodData,
     getProgressionPeriodData,
+    loading,
   } = useExerciseStats();
 
   const chartData = useMemo(() => {
@@ -42,6 +43,14 @@ export const ExerciseStatsView = () => {
     setSelectedExerciseId(id);
     closeMenu();
   };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={theme.colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
@@ -147,5 +156,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: Theme.spacing.lg
+  },
+  loadingContainer: {
+    flex: 1,
+    minHeight: 250,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

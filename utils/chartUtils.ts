@@ -4,8 +4,11 @@
 
 import { Dimensions } from "react-native";
 
-// Vakio Gifted Charts kaavion leveyden sovittamiseen näytölle.
-export const CHART_WIDTH = Dimensions.get('window').width - 115;
+// Funtio Gifted Charts kaavion leveyden sovittamiseen näytölle.
+export function getChartWidth(): number {
+  const width = Dimensions.get('window').width;
+  return width > 0 ? width - 115 : 300; // fallback jos width on 0
+}
 
 // Kaavion yksittäinen arvo/piste
 export type ChartPoint = {
