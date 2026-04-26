@@ -4,8 +4,8 @@
     "slug": "SikaApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/app-icon.png",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -19,23 +19,31 @@
     },
     "android": {
       "permissions": [
-        "android.permission.ACTIVITY_RECOGNITION",
         "android.permission.ACTIVITY_RECOGNITION"
       ],
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
+        "foregroundImage": "./assets/app-icon.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.SikaApp"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "package": "com.mobiilikehitysprojekti.sikaapp"
     },
     "plugins": [
       "expo-sqlite"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "699993c2-c545-4dd8-b562-afa8cf4d26bf"
+      }
+    },
+    "owner": "mobiilikehitysprojekti",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/699993c2-c545-4dd8-b562-afa8cf4d26bf"
+    }
   }
 }
