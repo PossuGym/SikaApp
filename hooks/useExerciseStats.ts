@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 import { Exercise, ExerciseLog } from "../types/types";
 import { exerciseService } from "../services/exerciseService";
 import { exerciseLogService } from "../services/exerciseLogService";
-import { CHART_WIDTH, PeriodResult, calcAxis } from "../utils/chartUtils";
+import { getChartWidth, PeriodResult, calcAxis } from "../utils/chartUtils";
 import { calcLinearTrend } from "../utils/mathUtils";
 
 /**
@@ -14,6 +14,7 @@ export const useExerciseStats = () => {
   const [allExercises, setAllExercises] = useState<Exercise[]>([]);
   const [selectedExerciseId, setSelectedExerciseId] = useState<number | null>(null);
   const [logs, setLogs] = useState<ExerciseLog[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Ladataan alussa kaikki liikkeet, joilla on historiaa, ja asetetaan oletusvalinta.
@@ -27,6 +28,8 @@ export const useExerciseStats = () => {
         }
       } catch (error) {
         Alert.alert("Virhe", "Liikkeiden haku epäonnistui.");
+      } finally {
+        setLoading(false);
       }
     };
     loadInitialData();
@@ -58,7 +61,8 @@ export const useExerciseStats = () => {
   }, [selectedExerciseId]);
 
   // Funktio "Maksimit"-kuvaajan datan hakemiseen
-    const getMaxesPeriodData = useCallback((days: number): PeriodResult => {
+  const getMaxesPeriodData = useCallback((days: number): PeriodResult => {
+    const chartWidth = getChartWidth();
     const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
     const maxLogs = logs
       .filter(log => log.reps === 1 && log.date >= cutoff)
@@ -67,7 +71,7 @@ export const useExerciseStats = () => {
     const data = values.map(value => ({ value }));
 
     const change = values.length > 1 ? +(values.at(-1)! - values[0]).toFixed(1) : null;
-    const { yMin, chartMaxValue, spacing } = calcAxis(values, CHART_WIDTH);
+    const { yMin, chartMaxValue, spacing } = calcAxis(values, chartWidth);
     const trendData = calcLinearTrend(values).map(value => ({ value }));
 
     return { data, trendData, yMin, chartMaxValue, spacing, change };
@@ -75,6 +79,7 @@ export const useExerciseStats = () => {
 
   // Funktio "Kehitys"-kuvaajan datan hakemiseen
   const getProgressionPeriodData = useCallback((days: number): PeriodResult => {
+    const chartWidth = getChartWidth();
     const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
     const relevantLogs = logs.filter(log => log.reps != null && log.reps > 1 && log.date >= cutoff);
 
@@ -93,7 +98,7 @@ export const useExerciseStats = () => {
     const data = values.map(value => ({ value }));
 
     const change = values.length > 1 ? +(values.at(-1)! - values[0]).toFixed(1) : null;
-    const { yMin, chartMaxValue, spacing } = calcAxis(values, CHART_WIDTH);
+    const { yMin, chartMaxValue, spacing } = calcAxis(values, chartWidth);
     const trendData = calcLinearTrend(values).map(value => ({ value }));
 
     return { data, trendData, yMin, chartMaxValue, spacing, change };
@@ -105,6 +110,7 @@ export const useExerciseStats = () => {
     setSelectedExerciseId,
     getMaxesPeriodData,
     getProgressionPeriodData,
-    refresh
+    refresh,
+    loading
   };
 };

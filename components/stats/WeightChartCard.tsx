@@ -2,9 +2,8 @@ import { StyleSheet, View } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
 import { Card, Text, useTheme } from 'react-native-paper';
 import { Theme } from '../theme/Colors';
-import { ChartPoint, applyLabels, CHART_WIDTH } from '../../utils/chartUtils';
+import { ChartPoint, applyLabels, getChartWidth} from '../../utils/chartUtils';
  
-
 type Props = {
   title: string;
   data: ChartPoint[];
@@ -20,6 +19,7 @@ export const WeightChartCard = ({
   chartMaxValue, spacing, change
 }: Props) => {
   const { colors, dark } = useTheme();
+  const chartWidth = getChartWidth();
   // Piilotetaan pallurat kokonaan, jos niitä on yli 30
   const hideDataPoints = data.length > 30;
 
@@ -35,7 +35,7 @@ export const WeightChartCard = ({
 
   // Trendiviivan piirtämiseen tarvitaan kaksi päällekkäistä kaaviota, nämä ovat niiden yhteiset parametrit.
   const sharedProps = {
-    CHART_WIDTH,
+    chartWidth,
     yAxisOffset: yMin,
     maxValue: chartMaxValue,
     noOfSections: 3,
@@ -97,7 +97,7 @@ export const WeightChartCard = ({
               <LineChart
                 {...sharedProps}
                 data={trendData}
-                width={CHART_WIDTH - 50} // Trendiviiva vähän lyhyemmäksi
+                width={chartWidth - 50} // Trendiviiva vähän lyhyemmäksi
                 color={trendColor}
                 thickness={1}
                 curved
